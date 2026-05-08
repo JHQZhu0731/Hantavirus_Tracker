@@ -23,6 +23,10 @@
     }
     *, *::before, *::after { box-sizing: border-box; }
 
+    /* ── set Arial at the root so every element inherits it ─────────────── */
+    html {
+      font-family: Arial, Helvetica, sans-serif;
+    }
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
@@ -31,8 +35,8 @@
       color: var(--ink);
       background: var(--paper);
     }
-    /* enforce Arial everywhere — override any element defaults */
-    * { font-family: inherit; }
+    /* enforce Arial on elements browsers may not auto-inherit (table, caption, input…) */
+    *, *::before, *::after { font-family: Arial, Helvetica, sans-serif; }
 
     a { color: var(--violet-dk); }
     a:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
@@ -110,6 +114,7 @@
       border-bottom: 1px solid var(--rule);
     }
     .kicker-sm {
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.11em;
@@ -181,6 +186,7 @@
       border-bottom: 1px solid var(--rule);
     }
     .section-label {
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.1em;
@@ -205,12 +211,14 @@
       display: block;
     }
     .fig-caption {
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 0.78rem;
       color: var(--muted);
       margin: 0.45rem 0 0;
       max-width: 52rem;
     }
     .explainer {
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 0.88rem;
       color: var(--ink-soft);
       max-width: 46rem;
@@ -316,10 +324,12 @@
     .dt-table {
       width: 100%;
       min-width: 34rem;
+      font-family: Arial, Helvetica, sans-serif;
       border-collapse: collapse;
       font-size: 0.88rem;
     }
     .dt-table thead th {
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 0.65rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -336,6 +346,7 @@
     .dt-table tbody tr { border-bottom: 1px solid var(--rule); }
     .dt-table tbody tr:last-child { border-bottom: none; }
     .dt-table tbody td, .dt-table tbody th {
+      font-family: Arial, Helvetica, sans-serif;
       padding: 0.7rem 0.6rem 0.7rem 0;
       vertical-align: top;
       line-height: 1.45;
@@ -375,9 +386,11 @@
     table.data {
       width: 100%;
       border-collapse: collapse;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 0.86rem;
     }
     table.data caption {
+      font-family: Arial, Helvetica, sans-serif;
       text-align: left;
       font-size: 0.7rem;
       letter-spacing: 0.1em;
@@ -386,12 +399,14 @@
       margin-bottom: 0.5rem;
     }
     table.data th, table.data td {
+      font-family: Arial, Helvetica, sans-serif;
       border-bottom: 1px solid var(--rule);
       padding: 0.5rem 0.35rem;
       vertical-align: top;
       text-align: left;
     }
     table.data thead th {
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 0.68rem;
       text-transform: uppercase;
       letter-spacing: 0.07em;
@@ -484,19 +499,22 @@
         <div class="flow-svg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 500" role="img" aria-label="MV Hondius flow: 147 aboard, 8 HPS-compatible cases, 3 deaths — as of 7 May 2026"><title>MV Hondius flow: 147 aboard, 8 HPS-compatible cases, 3 deaths — as of 7 May 2026</title><rect width="840" height="500" fill="#f9f9f7"/><g>
     <path d="M74.00,72.00 C169.00,72.00 169.00,72.00 264.00,72.00 L264.00,292.00 C169.00,292.00 169.00,292.00 74.00,292.00Z" fill="#e5dff4" fill-opacity="0.80"/>
     <path d="M74.00,300.00 C169.00,300.00 169.00,300.00 264.00,300.00 L264.00,400.00 C169.00,400.00 169.00,400.00 74.00,400.00Z" fill="#d8d0ee" fill-opacity="0.80"/>
-    <path d="M280.00,300.00 C375.00,300.00 375.00,300.00 470.00,300.00 L470.00,367.50 C375.00,367.50 375.00,337.50 280.00,337.50Z" fill="#cfc6e4" fill-opacity="0.72"/>
-    <path d="M280.00,337.50 C375.00,337.50 375.00,367.50 470.00,367.50 L470.00,390.00 C375.00,390.00 375.00,350.00 280.00,350.00Z" fill="#cfc6e4" fill-opacity="0.72"/>
-    <path d="M280.00,350.00 C375.00,350.00 375.00,390.00 470.00,390.00 L470.00,457.50 C375.00,457.50 375.00,387.50 280.00,387.50Z" fill="#cfc6e4" fill-opacity="0.72"/>
-    <path d="M280.00,387.50 C375.00,387.50 375.00,457.50 470.00,457.50 L470.00,480.00 C375.00,480.00 375.00,400.00 280.00,400.00Z" fill="#cfc6e4" fill-opacity="0.72"/>
+    <path d="M280.00,300.00 C375.00,300.00 375.00,300.00 470.00,300.00 L470.00,345.00 C375.00,345.00 375.00,325.00 280.00,325.00Z" fill="#1565C0" fill-opacity="0.30"/>
+    <path d="M280.00,325.00 C375.00,325.00 375.00,345.00 470.00,345.00 L470.00,367.50 C375.00,367.50 375.00,337.50 280.00,337.50Z" fill="#E65100" fill-opacity="0.30"/>
+    <path d="M280.00,337.50 C375.00,337.50 375.00,367.50 470.00,367.50 L470.00,390.00 C375.00,390.00 375.00,350.00 280.00,350.00Z" fill="#0D47A1" fill-opacity="0.30"/>
+    <path d="M280.00,350.00 C375.00,350.00 375.00,390.00 470.00,390.00 L470.00,457.50 C375.00,457.50 375.00,387.50 280.00,387.50Z" fill="#6A1B9A" fill-opacity="0.30"/>
+    <path d="M280.00,387.50 C375.00,387.50 375.00,457.50 470.00,457.50 L470.00,480.00 C375.00,480.00 375.00,400.00 280.00,400.00Z" fill="#B71C1C" fill-opacity="0.30"/>
   </g><g>
-    <rect x="58.0" y="72.00" width="16" height="220.00" fill="#57068c" rx="2"/>
+    <rect x="58.0" y="72.00" width="16" height="131.70" fill="#57068c" rx="2"/>
+    <rect x="58.0" y="203.70" width="16" height="88.30" fill="#9b5ec4" rx="2"/>
     <rect x="58.0" y="300.00" width="16" height="100.00" fill="#7b3aac" rx="2"/>
     <rect x="264.0" y="72.00" width="16" height="220.00" fill="#57068c" rx="2"/>
     <rect x="264.0" y="300.00" width="16" height="100.00" fill="#7b3aac" rx="2"/>
-    <rect x="470.0" y="300.00" width="16" height="67.50" fill="#4a1942" rx="2"/>
-    <rect x="470.0" y="367.50" width="16" height="22.50" fill="#8B1A1A" rx="2"/>
-    <rect x="470.0" y="390.00" width="16" height="67.50" fill="#57068c" rx="2"/>
-    <rect x="470.0" y="457.50" width="16" height="22.50" fill="#9b7cb8" rx="2"/>
+    <rect x="470.0" y="300.00" width="16" height="45.00" fill="#1565C0" rx="2"/>
+    <rect x="470.0" y="345.00" width="16" height="22.50" fill="#E65100" rx="2"/>
+    <rect x="470.0" y="367.50" width="16" height="22.50" fill="#0D47A1" rx="2"/>
+    <rect x="470.0" y="390.00" width="16" height="67.50" fill="#6A1B9A" rx="2"/>
+    <rect x="470.0" y="457.50" width="16" height="22.50" fill="#B71C1C" rx="2"/>
   </g><g>
     <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="700" fill="#aaa" text-anchor="middle" x="66.0" y="47">HEAD</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="8px" fill="#ccc" text-anchor="middle" x="66.0" y="59">n = 147</text>
@@ -505,35 +523,59 @@
     <text font-family="Arial,Helvetica,sans-serif" font-size="8px" fill="#ccc" text-anchor="middle" x="272.0" y="59">Contacts / Cluster</text>
     <line x1="272.0" y1="63" x2="272.0" y2="72" stroke="#ddd" stroke-width="1"/>
     <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="700" fill="#aaa" text-anchor="middle" x="478.0" y="47">OUTCOMES</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="8px" fill="#ccc" text-anchor="middle" x="478.0" y="59">6 May 2026</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8px" fill="#ccc" text-anchor="middle" x="478.0" y="59">7 May 2026</text>
     <line x1="478.0" y1="63" x2="478.0" y2="72" stroke="#ddd" stroke-width="1"/>
   </g><g>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="11px" font-weight="700" fill="#121212" x="88.00" y="212.90">HEAD</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="10.5px" font-weight="400" fill="#121212" x="88.00" y="226.90">n = 147 aboard</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="400" fill="#5a5a5a" x="88.00" y="240.90">Values: [139, 8]</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#999" x="88.00" y="254.90">2 May 2026 — EWRS</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#999" x="88.00" y="268.90">7 May 2026 — ECDC</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="7.5px" font-weight="700" fill="#aaa" x="512.0" y="52">OUTCOME BY NATIONALITY</text>
+    <rect x="512.0" y="58" width="9" height="9" fill="#57068c" rx="1"/>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" fill="#555" x="525.0" y="66">Passengers (88)</text>
+    <rect x="622.0" y="58" width="9" height="9" fill="#9b5ec4" rx="1"/>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" fill="#555" x="635.0" y="66">Crew (59)</text>
+    <line x1="512.0" y1="73" x2="712.0" y2="73" stroke="#e0e0e0" stroke-width="0.8"/>
+    <rect x="512.0" y="75" width="9" height="9" fill="#1565C0" rx="1"/>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" fill="#333" x="525.0" y="82">Netherlands † [NL] · 2</text>
+    <rect x="512.0" y="94" width="9" height="9" fill="#E65100" rx="1"/>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" fill="#333" x="525.0" y="101">Germany † [DE] · 1</text>
+    <rect x="512.0" y="113" width="9" height="9" fill="#0D47A1" rx="1"/>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" fill="#333" x="525.0" y="120">United Kingdom [GB] · 1</text>
+    <rect x="512.0" y="132" width="9" height="9" fill="#6A1B9A" rx="1"/>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" fill="#333" x="525.0" y="139">Nationality TBC [?] · 3</text>
+    <rect x="512.0" y="151" width="9" height="9" fill="#B71C1C" rx="1"/>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" fill="#333" x="525.0" y="158">Switzerland [CH] · 1</text>
+  </g><g>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="11px" font-weight="700" fill="#121212" x="88.00" y="212.90">147 aboard</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10.5px" font-weight="400" fill="#121212" x="88.00" y="226.90">88 passengers · 59 crew</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#57068c" x="88.00" y="240.90">NL · GB · DE · CH · ES · BE · FR · GR · IE · PL · PT + 12 others</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#999" x="88.00" y="254.90">EWRS: 2 May 2026</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#999" x="88.00" y="268.90">ECDC: 7 May 2026</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="11px" font-weight="700" fill="#121212" x="294.00" y="165.90">Contacts (monitoring)</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="10.5px" font-weight="400" fill="#121212" x="294.00" y="179.90">n = 139</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="400" fill="#5a5a5a" x="294.00" y="193.90">Precautionary pool</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="400" fill="#57068c" x="294.00" y="207.90">Predict: not infected</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="11px" font-weight="700" fill="#121212" x="294.00" y="333.90">Cluster</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="10.5px" font-weight="400" fill="#121212" x="294.00" y="347.90">n = 8 · 3 PCR+</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10.5px" font-weight="400" fill="#121212" x="294.00" y="347.90">n = 8 · 5 PCR+</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="400" fill="#5a5a5a" x="294.00" y="361.90">HPS-compatible illness</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="700" fill="#8b1a1a" x="294.00" y="375.90">Predict: ANDV</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="700" fill="#bbb" x="500.00" y="165.90">Under monitoring</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="400" fill="#bbb" x="500.00" y="179.90">n = 139</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#ccc" x="500.00" y="193.90">No confirmed infections</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#ccc" x="500.00" y="207.90">as of 6 May 2026</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="700" fill="#121212" x="500.00" y="328.85">Fatal · 3</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#5a5a5a" x="500.00" y="342.85">Confirmed hantavirus</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="700" fill="#121212" x="500.00" y="374.20">ICU (S. Africa) · 1</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#5a5a5a" x="500.00" y="387.20">Evacuated — S. Africa ICU</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="700" fill="#121212" x="500.00" y="418.85">Transferred (ES) · 3</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#5a5a5a" x="500.00" y="432.85">On board; medical assist.</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="700" fill="#121212" x="500.00" y="464.20">Post-disembark (CH) · 1</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#5a5a5a" x="500.00" y="477.20">Diagnosed post-disembark (CH)</text>
-  </g><text font-family="Arial,Helvetica,sans-serif" font-size="8px" fill="#ccc" x="8" y="492">Bar heights are visual — not proportional. 7 cases / 149 aboard = 4.7%.</text></svg></div>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#ccc" x="500.00" y="207.90">as of 7 May 2026</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="700" fill="#121212" x="500.00" y="309.90">Fatal · 2</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="700" fill="#1565C0" x="500.00" y="323.90">Netherlands [NL]</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="400" fill="#5a5a5a" x="500.00" y="337.90">Dutch couple — index cases</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="700" fill="#121212" x="500.00" y="345.00">Fatal · 1</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="700" fill="#E65100" x="500.00" y="357.50">Germany [DE]</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="400" fill="#5a5a5a" x="500.00" y="370.00">Died on board, 2 May 2026</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="700" fill="#121212" x="500.00" y="367.50">ICU · 1</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="700" fill="#0D47A1" x="500.00" y="380.00">United Kingdom [GB]</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="400" fill="#5a5a5a" x="500.00" y="392.50">S. Africa ICU, improving</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="700" fill="#121212" x="500.00" y="411.15">Transferred · 3</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="700" fill="#6A1B9A" x="500.00" y="425.15">Nationality TBC [?]</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="400" fill="#5a5a5a" x="500.00" y="439.15">Canary Islands, Spain</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="700" fill="#121212" x="500.00" y="457.50">Post-disembark · 1</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="700" fill="#B71C1C" x="500.00" y="470.00">Switzerland [CH]</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="400" fill="#5a5a5a" x="500.00" y="482.50">Diagnosed post-disembark, 6 May</text>
+  </g><text font-family="Arial,Helvetica,sans-serif" font-size="8px" fill="#ccc" x="8" y="492">Bar heights are visual — not proportional. 8 cases / 147 aboard = 5.4%. † = fatal.</text></svg></div>
         <p class="fig-caption">
           Ribbon widths follow ECDC counts for the ship split
           (139 contacts vs. 8 cluster).
@@ -655,9 +697,11 @@
         Use these official feeds; edit <code>data/outbreaks.json</code> and rebuild when new data arrive.
       </p>
       <ul class="sources-ul">
+        <li><a href="https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON599">WHO DON599 &mdash; MV Hondius cluster (4 May 2026)</a></li>
+        <li><a href="https://www.ecdc.europa.eu/en/publications-data/hantavirus-associated-cluster-illness-cruise-ship-ecdc-assessment-and">ECDC &mdash; Cruise ship cluster assessment (6 May 2026)</a></li>
         <li><a href="https://www.cdc.gov/hantavirus/hps/index.html">CDC &mdash; HPS overview</a></li>
         <li><a href="https://www.ecdc.europa.eu/en/infectious-disease-topics/hantavirus-infection">ECDC &mdash; Hantavirus factsheet</a></li>
-        <li><a href="https://www.who.int/emergencies/disease-outbreak-news">WHO &mdash; Disease Outbreak News</a></li>
+        <li><a href="https://www.who.int/emergencies/disease-outbreak-news">WHO &mdash; Disease Outbreak News (all)</a></li>
         <li><a href="https://www.paho.org/en/topics/hantavirus">PAHO &mdash; Hantavirus Americas</a></li>
         <li><a href="https://promedmail.org/">ProMED-mail (search &ldquo;hantavirus&rdquo;)</a></li>
       </ul>
@@ -689,7 +733,6 @@
 <tr><th scope="row">Yosemite National Park HPS</th><td>United States</td><td>2012</td><td>10</td><td>3</td><td>Sin Nombre virus</td><td><a href="https://www.cdc.gov/hantavirus/hps/index.html">CDC HPS information</a></td></tr>
 <tr><th scope="row">PUUV / HFRS cluster (Baden-Württemberg)</th><td>Germany</td><td>2012</td><td>814</td><td>—</td><td>Puumala virus (HFRS)</td><td><a href="https://www.eurosurveillance.org/content/10.2807/ese.17.28.20218-en">Eurosurveillance — record HFRS year in Germany</a></td></tr>
 <tr><th scope="row">Finland — endemic nephropathy (PUUV)</th><td>Finland</td><td>2011</td><td>3,134</td><td>—</td><td>Puumala virus</td><td><a href="https://www.eurosurveillance.org/content/10.2807/ese.16.17.19878-en">Eurosurveillance — Finland HFRS 2011</a></td></tr>
-<tr><th scope="row">China — national HFRS burden (reported year)</th><td>China</td><td>1994</td><td>112,786</td><td>—</td><td>Multiple orthohantaviruses (HFRS)</td><td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3294515/">PMC / Emerging Infectious Diseases — China HFRS trends</a></td></tr>
 <tr><th scope="row">Chile — ANDV / HPS (illustrative national focus)</th><td>Chile</td><td>2019</td><td>—</td><td>—</td><td>Andes virus lineage</td><td><a href="https://www.cdc.gov/hantavirus/about/andesvirus.html">CDC — Andes virus background</a></td></tr>
 <tr><th scope="row">Paraguay — HPS cases (public reporting year)</th><td>Paraguay</td><td>2019</td><td>12</td><td>—</td><td>Laguna Negra / regional orthohantavirus</td><td><a href="https://www.paho.org/en/topics/hantavirus">PAHO — HPS in the Americas (verify year)</a></td></tr>
 <tr><th scope="row">Brazil — HPS foci (illustrative)</th><td>Brazil</td><td>2015</td><td>—</td><td>—</td><td>Juquitiba / regional variants</td><td><a href="https://www.paho.org/en/topics/hantavirus">PAHO hantavirus</a></td></tr>
@@ -701,7 +744,7 @@
   </main>
 
   <footer>
-    <p><strong>Built:</strong> 2026-05-08 19:59 UTC</p>
+    <p><strong>Built:</strong> 2026-05-08 20:14 UTC</p>
     <p><strong>R&#x2080; citation:</strong>
       <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2009040">Martinez et al., NEJM &mdash; Andes person-to-person transmission</a>.
     </p>
