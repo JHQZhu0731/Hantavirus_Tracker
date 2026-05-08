@@ -179,8 +179,19 @@ def build_sankey_svg(sk: dict, esc) -> str:
             for i, (t, w, c, sz) in enumerate(rows)
         )
 
-    nat_note  = sk.get("nationalities_note", "23 nationalities")
-    nat_short = nat_note.split(":")[1].strip() if ":" in nat_note else nat_note
+    # Build a compact nationality string that fits in the ~200 px HEAD label zone.
+    # e.g. "23 nationalities: NL · GB · DE · CH · ES · BE ..." → "NL · GB · DE · CH · ES + 18 more"
+    nat_note = sk.get("nationalities_note", "")
+    try:
+        total_nat = int("".join(c for c in nat_note.split(":")[0] if c.isdigit()))
+        raw       = nat_note.split(": ", 1)[1] if ": " in nat_note else nat_note
+        codes     = [p.strip() for p in raw.split(" \u00b7 ") if 2 <= len(p.strip()) <= 3]
+        shown     = 5
+        nat_disp  = " \u00b7 ".join(codes[:shown])
+        if total_nat > shown:
+            nat_disp += f" + {total_nat - shown} more"
+    except (ValueError, IndexError):
+        nat_disp = nat_note[:40] if nat_note else "23 nationalities"
 
     lbls = []
 
@@ -188,7 +199,7 @@ def build_sankey_svg(sk: dict, esc) -> str:
     lbls.append(block(x0r + 16, (y_c0 + y_k1) / 2, [
         (f"{ship} aboard",                     "700", "#121212", "11"),
         (f"{pax} pax \u00b7 {crew} crew",      "400", "#444",   "10"),
-        (nat_short,                            "400", "#57068c", "8.5"),
+        (nat_disp,                             "400", "#6a2fa0", "9"),
         (f"EWRS: {sk['ewrs_notification']}",   "400", "#bbb",   "8"),
         (f"ECDC: {sk['ecdc_assessment']}",     "400", "#bbb",   "8"),
     ]))
@@ -766,6 +777,7 @@ def main() -> None:
       width: 100%;
       height: auto;
       display: block;
+      min-width: 600px; /* keeps SVG legible on phones; .flow-svg scrolls */
     }}
     .fig-caption {{
       font-family: Arial, Helvetica, sans-serif;
@@ -1037,6 +1049,68 @@ def main() -> None:
     }}
     footer p {{ margin: 0.25rem 0; }}
     footer ul {{ margin: 0.5rem 0 0; padding-left: 1.1rem; }}
+
+    /* ── mobile-first responsive overrides ─────────────────────────────────── */
+    @media (max-width: 640px) {{
+
+      /* page header */
+      .page-header {{ padding: 0.8rem 1rem; }}
+      .page-title  {{ font-size: 1.2rem; }}
+      .page-sub    {{ font-size: 0.82rem; }}
+
+      /* main wrapper */
+      main {{ padding: 0.65rem 0.65rem 2.5rem; gap: 0.65rem; }}
+
+      /* panels */
+      .panel         {{ padding: 0.8rem 0.85rem; }}
+      .cruise-header {{ padding: 0.8rem 0.85rem 0.65rem; }}
+      .headline      {{ font-size: clamp(1rem, 5vw, 1.35rem); }}
+
+      /* stat strip: 2 × 2 grid on small screens */
+      .stat-strip {{ flex-wrap: wrap; }}
+      .stat       {{ flex: 0 0 50%; }}
+      .stat:nth-child(2) {{ border-right: none; }}
+      .stat-n     {{ font-size: 1.7rem; }}
+
+      /* flow diagram: SVG has min-width 600px so it's readable; div scrolls */
+      .flow-wrap  {{ padding: 0.8rem 0.85rem 0.6rem; }}
+      .flow-svg   {{ overflow-x: auto; -webkit-overflow-scrolling: touch; }}
+
+      /* colour legend below SVG */
+      .nat-legend {{ font-size: 0.68rem; gap: 0.2rem 0.55rem; margin-top: 0.55rem; }}
+
+      /* scenario cards: single column */
+      .scen-wrap  {{ padding: 0.8rem 0.85rem; }}
+      .scen-strip {{ grid-template-columns: 1fr; gap: 0.6rem; }}
+
+      /* timeline: narrow date column */
+      .tl-wrap {{ padding: 0.8rem 0.85rem; }}
+      .tl-item {{ grid-template-columns: 5rem 1fr; gap: 0 0.5rem; }}
+      .tl-date {{ font-size: 0.75rem; }}
+
+      /* situation snapshot: single-column dl */
+      .snapshot-grid {{ padding: 0.8rem 0.85rem 0.5rem; }}
+      .snap-dl       {{ grid-template-columns: 1fr; gap: 0; }}
+      .snap-dl dt    {{ margin-top: 0.7rem; font-size: 0.78rem; }}
+      .snap-dl dd    {{ font-size: 0.86rem; }}
+
+      /* decision tree already has horizontal scroll via .dt-scroll */
+      .dt-wrap {{ padding: 0.8rem 0.85rem; }}
+
+      /* sources grid: single column */
+      .sources-ul {{ grid-template-columns: 1fr; }}
+
+      /* R₀ panel: stacks naturally (already single-col on narrow grid) */
+
+      /* footer */
+      footer {{ padding: 0.8rem 1rem 2rem; }}
+    }}
+
+    /* slightly less padding on medium tablets too */
+    @media (max-width: 900px) {{
+      main {{ padding: 1rem 1rem 2.5rem; }}
+      .panel, .cruise-header {{ padding: 0.9rem 1rem; }}
+    }}
   </style>
 </head>
 <body>

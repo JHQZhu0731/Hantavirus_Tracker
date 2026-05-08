@@ -209,6 +209,7 @@
       width: 100%;
       height: auto;
       display: block;
+      min-width: 600px; /* keeps SVG legible on phones; .flow-svg scrolls */
     }
     .fig-caption {
       font-family: Arial, Helvetica, sans-serif;
@@ -480,6 +481,68 @@
     }
     footer p { margin: 0.25rem 0; }
     footer ul { margin: 0.5rem 0 0; padding-left: 1.1rem; }
+
+    /* ── mobile-first responsive overrides ─────────────────────────────────── */
+    @media (max-width: 640px) {
+
+      /* page header */
+      .page-header { padding: 0.8rem 1rem; }
+      .page-title  { font-size: 1.2rem; }
+      .page-sub    { font-size: 0.82rem; }
+
+      /* main wrapper */
+      main { padding: 0.65rem 0.65rem 2.5rem; gap: 0.65rem; }
+
+      /* panels */
+      .panel         { padding: 0.8rem 0.85rem; }
+      .cruise-header { padding: 0.8rem 0.85rem 0.65rem; }
+      .headline      { font-size: clamp(1rem, 5vw, 1.35rem); }
+
+      /* stat strip: 2 × 2 grid on small screens */
+      .stat-strip { flex-wrap: wrap; }
+      .stat       { flex: 0 0 50%; }
+      .stat:nth-child(2) { border-right: none; }
+      .stat-n     { font-size: 1.7rem; }
+
+      /* flow diagram: SVG has min-width 600px so it's readable; div scrolls */
+      .flow-wrap  { padding: 0.8rem 0.85rem 0.6rem; }
+      .flow-svg   { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+      /* colour legend below SVG */
+      .nat-legend { font-size: 0.68rem; gap: 0.2rem 0.55rem; margin-top: 0.55rem; }
+
+      /* scenario cards: single column */
+      .scen-wrap  { padding: 0.8rem 0.85rem; }
+      .scen-strip { grid-template-columns: 1fr; gap: 0.6rem; }
+
+      /* timeline: narrow date column */
+      .tl-wrap { padding: 0.8rem 0.85rem; }
+      .tl-item { grid-template-columns: 5rem 1fr; gap: 0 0.5rem; }
+      .tl-date { font-size: 0.75rem; }
+
+      /* situation snapshot: single-column dl */
+      .snapshot-grid { padding: 0.8rem 0.85rem 0.5rem; }
+      .snap-dl       { grid-template-columns: 1fr; gap: 0; }
+      .snap-dl dt    { margin-top: 0.7rem; font-size: 0.78rem; }
+      .snap-dl dd    { font-size: 0.86rem; }
+
+      /* decision tree already has horizontal scroll via .dt-scroll */
+      .dt-wrap { padding: 0.8rem 0.85rem; }
+
+      /* sources grid: single column */
+      .sources-ul { grid-template-columns: 1fr; }
+
+      /* R₀ panel: stacks naturally (already single-col on narrow grid) */
+
+      /* footer */
+      footer { padding: 0.8rem 1rem 2rem; }
+    }
+
+    /* slightly less padding on medium tablets too */
+    @media (max-width: 900px) {
+      main { padding: 1rem 1rem 2.5rem; }
+      .panel, .cruise-header { padding: 0.9rem 1rem; }
+    }
   </style>
 </head>
 <body>
@@ -560,7 +623,7 @@
   </g><g>
     <text font-family="Arial,Helvetica,sans-serif" font-size="11px" font-weight="700" fill="#121212" x="94.0" y="196.9">147 aboard</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="400" fill="#444" x="94.0" y="210.9">88 pax · 59 crew</text>
-    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="400" fill="#57068c" x="94.0" y="224.9">NL · GB · DE · CH · ES · BE · FR · GR · IE · PL · PT + 12 others</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#6a2fa0" x="94.0" y="224.9">NL · GB · DE · CH · ES + 18 more</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="8px" font-weight="400" fill="#bbb" x="94.0" y="238.9">EWRS: 2 May 2026</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="8px" font-weight="400" fill="#bbb" x="94.0" y="252.9">ECDC: 7 May 2026</text>
     <text font-family="Arial,Helvetica,sans-serif" font-size="11px" font-weight="700" fill="#121212" x="344.0" y="158.9">Contacts</text>
@@ -755,7 +818,7 @@
   </main>
 
   <footer>
-    <p><strong>Built:</strong> 2026-05-08 20:25 UTC</p>
+    <p><strong>Built:</strong> 2026-05-08 20:37 UTC</p>
     <p><strong>R&#x2080; citation:</strong>
       <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2009040">Martinez et al., NEJM &mdash; Andes person-to-person transmission</a>.
     </p>
