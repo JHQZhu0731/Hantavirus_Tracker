@@ -21,38 +21,6 @@
       "source_url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON599"
     },
     {
-      "id": "chile-2026-andv",
-      "label": "Chile — Andes virus / HPS (Jan–May 2026)",
-      "label_zh": "智利 — 安第斯病毒/HPS（2026年1–5月）",
-      "country": "Chile",
-      "region": "9 regions; central and southern Chile",
-      "lat": -38.0,
-      "lng": -71.5,
-      "year": 2026,
-      "cases": 39,
-      "deaths": 13,
-      "virus": "Andes virus (ANDV) — dominant strain, long-tailed mouse reservoir",
-      "transmission_note": "33% CFR in 2026, significantly higher than 18% in 2025. Distributed across 9 regions.",
-      "source_name": "SWI swissinfo.ch / Chile Ministry of Health (May 2026)",
-      "source_url": "https://www.swissinfo.ch/spa/chile-registra-39-casos-de-hantavirus-en-lo-que-va-de-2026-y-un-aumento-de-la-letalidad/91376634"
-    },
-    {
-      "id": "americas-2025-baseline",
-      "label": "Americas — HPS baseline (2025, epi week 47)",
-      "label_zh": "美洲地区 — HPS基线（2025年第47周）",
-      "country": "Multi-country (Americas region)",
-      "region": "8 countries reporting — PAHO/WHO aggregate",
-      "lat": -10.0,
-      "lng": -62.0,
-      "year": 2025,
-      "cases": 229,
-      "deaths": 59,
-      "virus": "Multiple orthohantaviruses (Andes, Sin Nombre, Laguna Negra, others)",
-      "transmission_note": "25.7% CFR across 8 reporting countries. Source: WHO DON599 footnote.",
-      "source_name": "WHO DON599 — PAHO Americas 2025 HPS data",
-      "source_url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON599"
-    },
-    {
       "id": "us-four-corners-1993",
       "label": "Four Corners HPS cluster",
       "label_zh": "美国四角地区HPS群聚事件",
