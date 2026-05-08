@@ -323,6 +323,24 @@ def build_cruise_section(c: dict) -> str:
     else:
         scen_block = ""
 
+    # Timeline
+    timeline_html = ""
+    if c.get("timeline"):
+        items = []
+        for evt in c["timeline"]:
+            items.append(
+                f'<li class="tl-item">'
+                f'<span class="tl-date">{esc(evt["date"])}</span>'
+                f'<span class="tl-event">{esc(evt["event"])}</span>'
+                f'</li>'
+            )
+        timeline_html = (
+            f'<div class="tl-wrap">'
+            f'<h3 class="section-label">Outbreak timeline</h3>'
+            f'<ol class="tl-list">{"".join(items)}</ol>'
+            f'</div>'
+        )
+
     # Decision tree rows
     dt_rows = []
     for i, node in enumerate(c["decision_tree"], start=1):
@@ -369,16 +387,21 @@ def build_cruise_section(c: dict) -> str:
     {svg_block}
     {scen_block}
 
+    {timeline_html}
+
     <div class="snapshot-grid">
       <div class="snapshot-block">
         <h3 class="section-label">Situation snapshot</h3>
         <dl class="snap-dl">
-          <dt>Notification</dt><dd>{esc(snap["notification"])}</dd>
-          <dt>Setting</dt><dd>{esc(snap["setting"])}</dd>
-          <dt>Cases (6 May)</dt><dd>{esc(snap["counts_as_of_6_may"])}</dd>
-          <dt>Laboratory</dt><dd>{esc(snap["laboratory"])}</dd>
-          <dt>Working hypothesis</dt><dd>{esc(snap["working_hypothesis"])}</dd>
-          <dt>EU/EEA population risk</dt><dd>{esc(snap["risk_eu_population"])}</dd>
+          <dt>Notification</dt><dd>{esc(snap.get("notification",""))}</dd>
+          <dt>Vessel</dt><dd>{esc(snap.get("vessel", snap.get("setting","—")))}</dd>
+          <dt>Itinerary</dt><dd>{esc(snap.get("itinerary","—"))}</dd>
+          <dt>Persons aboard</dt><dd>{esc(snap.get("persons_aboard","—"))}</dd>
+          <dt>Cases (7 May)</dt><dd>{esc(snap.get("counts_as_of_7_may", snap.get("counts_as_of_6_may","—")))}</dd>
+          <dt>Laboratory</dt><dd>{esc(snap.get("laboratory",""))}</dd>
+          <dt>Index cases</dt><dd>{esc(snap.get("index_cases","—"))}</dd>
+          <dt>Working hypothesis</dt><dd>{esc(snap.get("working_hypothesis",""))}</dd>
+          <dt>Population risk</dt><dd>{esc(snap.get("risk_eu_population",""))}</dd>
         </dl>
       </div>
     </div>
@@ -471,7 +494,7 @@ def main() -> None:
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta http-equiv="refresh" content="86400"/>
+  <meta http-equiv="refresh" content="3600"/>
   <title>Hantavirus Tracker &mdash; 2026 cruise cluster &amp; R&#x2080; context</title>
   <meta name="description" content="ECDC-sourced flow diagram and decision tree for the 2026 cruise-ship hantavirus cluster, plus R\u2080 data and historical outbreak table."/>
   <style>
@@ -499,6 +522,8 @@ def main() -> None:
       color: var(--ink);
       background: var(--paper);
     }}
+    /* enforce Arial everywhere — override any element defaults */
+    * {{ font-family: inherit; }}
 
     a {{ color: var(--violet-dk); }}
     a:focus-visible {{ outline: 2px solid var(--violet); outline-offset: 2px; }}
@@ -584,7 +609,7 @@ def main() -> None:
       margin: 0 0 0.35rem;
     }}
     .headline {{
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: clamp(1.2rem, 2.2vw, 1.65rem);
       font-weight: 700;
       line-height: 1.15;
@@ -593,7 +618,7 @@ def main() -> None:
       margin: 0 0 0.55rem;
     }}
     .deck {{
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 0.97rem;
       color: var(--ink-soft);
       line-height: 1.5;
@@ -741,6 +766,34 @@ def main() -> None:
     }}
     .snap-dl dt {{ color: var(--muted); font-weight: 600; margin: 0; }}
     .snap-dl dd {{ margin: 0; line-height: 1.5; }}
+
+    /* ── timeline ──────────────────────────────────────────────────────────── */
+    .tl-wrap {{
+      padding: 1.1rem 1.25rem;
+      border-bottom: 1px solid var(--rule);
+    }}
+    .tl-list {{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }}
+    .tl-item {{
+      display: grid;
+      grid-template-columns: 7rem 1fr;
+      gap: 0 1rem;
+      padding: 0.42rem 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.88rem;
+      align-items: baseline;
+    }}
+    .tl-item:last-child {{ border-bottom: none; }}
+    .tl-date {{
+      font-weight: 700;
+      color: var(--violet);
+      white-space: nowrap;
+      font-size: 0.82rem;
+    }}
+    .tl-event {{ color: var(--ink); line-height: 1.45; }}
 
     /* ── decision tree ─────────────────────────────────────────────────────── */
     .dt-wrap {{
