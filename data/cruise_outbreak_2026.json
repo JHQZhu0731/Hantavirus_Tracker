@@ -1,66 +1,82 @@
 {
-  "label": "Hantavirus-associated cluster on a Dutch-flag cruise ship (2026)",
-  "deck": "Facts below follow the European Centre for Disease Prevention and Control preliminary assessment of 6 May 2026. The incident is described as rapidly evolving.",
+  "label": "Hantavirus-associated cluster on Dutch-flag cruise ship MV Hondius (2026)",
+  "deck": "Multi-country outbreak. WHO Disease Outbreak News DON599 issued 4 May 2026; CBC/WHO updated 7 May 2026. Investigation ongoing — further cases possible within the 45-day monitoring window.",
   "primary_source": {
-    "name": "ECDC — Hantavirus-associated cluster of illness on a cruise ship",
-    "url": "https://www.ecdc.europa.eu/en/publications-data/hantavirus-associated-cluster-illness-cruise-ship-ecdc-assessment-and"
+    "name": "WHO DON599 — Hantavirus cluster, multi-country (4 May 2026)",
+    "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON599"
   },
   "secondary_source": {
-    "name": "WHO — Response to hantavirus cases linked to a cruise ship",
-    "url": "https://www.who.int/papuanewguinea/news/detail-global/07-05-2026-who-s-response-to-hantavirus-cases-linked-to-a-cruise-ship"
+    "name": "ECDC — Hantavirus-associated cluster, cruise ship (6 May 2026)",
+    "url": "https://www.ecdc.europa.eu/en/publications-data/hantavirus-associated-cluster-illness-cruise-ship-ecdc-assessment-and"
   },
   "situation_snapshot": {
-    "notification": "ECDC notified 2 May 2026 by the Netherlands through the EU Early Warning and Response System (EWRS).",
-    "setting": "Cruise ship in the South Atlantic; Dutch flag; ~149 people on board from 23 nationalities (including passengers and crew from multiple EU/EEA countries).",
-    "counts_as_of_6_may": "Seven cases in the hantavirus-associated cluster: three deaths; one person medically evacuated to South Africa and in intensive care; two symptomatic on board; one person diagnosed after disembarking and returning to Switzerland.",
-    "laboratory": "Samples from two patients PCR-positive for hantavirus; one additional patient PCR-positive for Andes virus (ANDV). Further laboratory work ongoing.",
-    "working_hypothesis": "Some travellers may have been exposed to ANDV in Argentina before embarkation (endemic area), with subsequent transmission to others on board during close, prolonged contact in a closed setting.",
-    "risk_eu_population": "ECDC: risk to the general EU/EEA population from spread off the ship is assessed as very low when infection prevention and control measures are applied; ANDV rodent reservoir is not expected to establish in Europe."
+    "notification": "2 May 2026 — WHO notified by UK IHR Focal Point; ECDC notified by Netherlands via EWRS.",
+    "vessel": "MV Hondius, Dutch flag, operated by Oceanwide Expeditions. Departed Ushuaia, Argentina 1 April 2026.",
+    "itinerary": "Ushuaia → Antarctica → South Georgia → Nightingale Island → Tristan da Cunha → St. Helena → Ascension Island → Cabo Verde → Canary Islands (Spain).",
+    "persons_aboard": "147 total: 88 passengers + 59 crew; 23 nationalities (EU/EEA countries include BE, DE, ES, FR, GR, IE, NL, PL, PT).",
+    "counts_as_of_7_may": "8 cases total; 5 confirmed by PCR as of 7 May (WHO); 3 deaths; 1 ICU in South Africa (improving); 3 transferred to Canary Islands; 1 diagnosed post-disembark (Switzerland).",
+    "laboratory": "PCR-confirmed ANDV (Andes virus) in multiple patients. South Africa NICD confirmed Case 3 on 2 May; Dutch woman (Case 2) confirmed 4 May; Swiss man (Case 5) confirmed 6 May. Serology, sequencing and metagenomics ongoing at Institut Pasteur de Dakar.",
+    "index_cases": "Cases 1 and 2 (Dutch couple) had travelled through Argentina, Chile, and Uruguay for ~4 months before boarding — believed primary zoonotic exposure pre-embarkation.",
+    "working_hypothesis": "Zoonotic acquisition by index cases in South America (endemic Andes virus rodent reservoir); subsequent limited person-to-person transmission in closed-ship setting.",
+    "risk_eu_population": "WHO and ECDC: global and EU/EEA population risk assessed as low. WHO: 'not the start of a pandemic.' ANDV reservoir absent from European rodents. All contacts advised 45-day symptom monitoring."
   },
+  "timeline": [
+    {"date": "1 Apr 2026",  "event": "MV Hondius departs Ushuaia, Argentina (147 aboard)."},
+    {"date": "6 Apr 2026",  "event": "Case 1 (Dutch male, 70) develops fever, headache, diarrhoea on board."},
+    {"date": "11 Apr 2026", "event": "Case 1 dies aboard; respiratory distress. Ship between South Georgia and St. Helena."},
+    {"date": "24 Apr 2026", "event": "Case 2 (Dutch female, 69, wife of Case 1) disembarks at St. Helena with GI symptoms. Body of Case 1 removed."},
+    {"date": "25 Apr 2026", "event": "Case 2 deteriorates on flight to Johannesburg."},
+    {"date": "26 Apr 2026", "event": "Case 2 dies at Johannesburg hospital. Case 3 (British male) evacuated from Ascension Island to South Africa ICU."},
+    {"date": "2 May 2026",  "event": "Case 4 (German female) dies on board. South Africa lab confirms hantavirus PCR-positive in Case 3 — first lab confirmation, 21 days after first death."},
+    {"date": "3 May 2026",  "event": "WHO announces investigation. Ship moored off Cabo Verde."},
+    {"date": "4 May 2026",  "event": "WHO DON599 issued: 7 cases (2 confirmed, 5 suspected), 3 deaths. Dutch woman (Case 2) post-mortem PCR confirmed."},
+    {"date": "6 May 2026",  "event": "ECDC assessment published. Swiss man (Case 5) PCR confirmed. Ship heads to Canary Islands."},
+    {"date": "7 May 2026",  "event": "5 of 8 suspected cases confirmed (WHO briefing). 3 symptomatic passengers transferred to Spain for care."}
+  ],
   "sankey": {
     "ewrs_notification": "2 May 2026",
-    "ecdc_assessment": "6 May 2026",
-    "ship_n": 149,
-    "cluster_n": 7,
-    "contacts_n": 142,
-    "values_head": [142, 7, 0],
-    "head_rules": [
-      "All people on board (closed vessel)",
-      "EU EWRS notification (Netherlands)"
-    ],
-    "split_rule": "Precautionary contact pool vs. persons in the seven-case hantavirus cluster (ECDC 6 May)",
+    "ecdc_assessment": "7 May 2026",
+    "ship_n": 147,
+    "passengers_n": 88,
+    "crew_n": 59,
+    "nationalities_note": "23 nationalities: NL · GB · DE · CH · ES · BE · FR · GR · IE · PL · PT + 12 others",
+    "cluster_n": 8,
+    "contacts_n": 139,
+    "values_head": [139, 8, 0],
+    "split_rule": "Precautionary pool (139) vs. 8-case hantavirus cluster — WHO DON599",
+    "outcome_rule": "3 deaths (NL ×2, DE ×1); 1 ICU S. Africa (GB); 3 transferred Canary Islands (nat. TBC); 1 Switzerland (CH)",
     "outcomes": [
-      { "label": "Fatal", "count": 3, "color": "#4a1942" },
-      { "label": "ICU (medevac ZA)", "count": 1, "color": "#6b2d5c" },
-      { "label": "Symptomatic on board", "count": 2, "color": "#57068c" },
-      { "label": "Post-disembark (CH)", "count": 1, "color": "#9b7cb8" }
+      { "label": "Fatal",         "nat": "Netherlands",    "nat_code": "NL", "count": 2, "color": "#1565C0", "detail": "Dutch couple — index cases",        "is_death": true },
+      { "label": "Fatal",         "nat": "Germany",        "nat_code": "DE", "count": 1, "color": "#E65100", "detail": "Died on board, 2 May 2026",          "is_death": true },
+      { "label": "ICU",           "nat": "United Kingdom", "nat_code": "GB", "count": 1, "color": "#0D47A1", "detail": "S. Africa ICU, improving" },
+      { "label": "Transferred",   "nat": "Nationality TBC","nat_code": "?",  "count": 3, "color": "#6A1B9A", "detail": "Canary Islands, Spain" },
+      { "label": "Post-disembark","nat": "Switzerland",    "nat_code": "CH", "count": 1, "color": "#B71C1C", "detail": "Diagnosed post-disembark, 6 May" }
     ],
-    "outcome_rule": "Cluster of seven: severe HPS-compatible illness; PCR hantavirus (n=2) and ANDV (n=1) among confirmations to date",
-    "prediction_horizon_days": 28,
-    "prediction_note": "Scenario bands are illustrative only: they blend observed counts with simple branching intuition (post-control R≈0.96 vs. delayed isolation). They are not ECDC or WHO forecasts.",
+    "prediction_horizon_days": 45,
+    "prediction_note": "45-day monitoring window per WHO guidance (incubation up to 8 weeks). Scenario projections below are illustrative — they are not WHO or ECDC forecasts.",
     "scenarios": [
       {
-        "label": "Strong on-board IPC",
-        "rule": "Analogous to Andes post-control R≈0.96",
-        "values_line": "142 monitored · few new conversions",
-        "predict": "7–10 cumulative infected",
-        "weight": 0.45,
+        "label": "Strong IPC (optimistic)",
+        "rule": "R ≈ 0.96 — analogous to Andes post-control (Epuyén 2019 NEJM)",
+        "values_line": "Isolation + quarantine maintained throughout",
+        "predict": "8–12 total infected",
+        "weight": 0.50,
         "flow_color": "#dfd6ec"
       },
       {
-        "label": "Base (incubation tail)",
-        "rule": "Some contacts still inside 7–42 d window",
-        "values_line": "delayed PCR / mild index",
-        "predict": "10–16 cumulative infected",
+        "label": "Base case (incubation tail)",
+        "rule": "Some contacts in 7–42 day window yet to develop symptoms",
+        "values_line": "Delayed PCR-positive results expected",
+        "predict": "12–18 total infected",
         "weight": 0.35,
         "flow_color": "#c5b3dc"
       },
       {
-        "label": "Stress test",
-        "rule": "Crowding + late isolation (upper tail)",
-        "values_line": "not current official scenario",
-        "predict": "14–26 cumulative infected",
-        "weight": 0.20,
+        "label": "Stress test (late isolation)",
+        "rule": "Social mixing before full isolation; upper-tail estimate",
+        "values_line": "Not current ECDC/WHO assessment",
+        "predict": "18–28 total infected",
+        "weight": 0.15,
         "flow_color": "#a384c9"
       }
     ]
@@ -68,45 +84,45 @@
   "decision_tree": [
     {
       "level": 0,
-      "if": "Unexplained cluster of severe febrile illness with respiratory and/or gastrointestinal features on a passenger vessel, especially after time ashore in South America.",
-      "then": "Treat as a public health event: activate ship medical surge, line list, exposure history (ports, excursions, cabin contacts), and notify competent authorities per flag state, port state, and international health regulations as applicable.",
-      "note": "Matches the initial signal ECDC describes from the Dutch notification."
+      "if": "Unexplained cluster of severe febrile illness with respiratory / GI features on a passenger vessel, especially after transit through South America.",
+      "then": "Declare a public health event of concern on board: activate medical surge, create line list, collect exposure histories (ports, excursions, animal contact, close contacts), notify flag state and competent port authority under IHR 2005.",
+      "note": "Matches the 2 May 2026 UK IHR notification that triggered WHO response (DON599)."
     },
     {
       "level": 1,
-      "if": "Any person develops rapid progression to pneumonia, acute respiratory distress, or shock.",
-      "then": "Arrange urgent medical evacuation to a facility that can provide intensive supportive care; obtain diagnostic samples before or during transfer.",
-      "note": "ECDC reports at least four of seven cases progressed rapidly; one evacuee tested hantavirus PCR-positive on 3 May."
+      "if": "Any person develops fever with rapid progression to pneumonia, ARDS, or shock.",
+      "then": "Medical evacuation to a facility with full ICU capability as a priority; collect blood/respiratory specimens before or during transfer; notify receiving country.",
+      "note": "Cases 3 and 4 illustrate rapid deterioration: Case 3 evacuated Ascension → South Africa ICU; Case 4 died 4 days after symptom onset."
     },
     {
       "level": 1,
-      "if": "PCR shows hantavirus and/or ANDV, or clinical picture strongly suggests HPS in an appropriate exposure context.",
-      "then": "Isolate confirmed and suspected cases on board where feasible; cohort nursing; trace and monitor close contacts; reinforce hand hygiene, respiratory etiquette, and distancing.",
-      "note": "ECDC: ANDV person-to-person transmission is rare but documented with close, prolonged contact."
+      "if": "PCR or serology confirms hantavirus / ANDV, or clinical picture is strongly consistent and other pathogens excluded.",
+      "then": "Cohort-nurse confirmed and suspected cases; strict cabin isolation; trace all close contacts (shared cabin, meals, activities); apply droplet + contact precautions; airborne precautions for aerosol-generating procedures.",
+      "note": "ECDC: person-to-person ANDV transmission documented with close prolonged contact; all 147 aboard treated as contacts (closed environment)."
     },
     {
       "level": 2,
-      "if": "Early in investigation, everyone on board shares common indoor spaces and social activities (closed environment).",
-      "then": "Apply the precautionary principle: consider all on board close contacts until epidemiology refines risk tiers.",
-      "note": "Explicit in ECDC risk assessment for this cluster."
+      "if": "Closed vessel environment — everyone shares social spaces and activities.",
+      "then": "Apply precautionary principle: treat all aboard as close contacts until epidemiological investigation refines risk tiers.",
+      "note": "Explicit in both WHO DON599 and ECDC assessment for this cluster."
     },
     {
       "level": 1,
-      "if": "Symptomatic patient will disembark or be transferred between jurisdictions.",
-      "then": "Use PCR and/or serology for diagnosis; communicate that negative tests early in illness may not exclude infection; give written follow-up and reporting instructions.",
-      "note": "ECDC recommendations; EURL network can assist EU labs lacking ANDV capacity."
+      "if": "Patient will disembark or transfer between jurisdictions.",
+      "then": "Provide written symptom-monitoring instructions for 45 days (up to 8-week incubation possible). Ensure receiving jurisdiction is notified. PCR / serology at time of disembarkation — note that negative tests early in illness do not exclude infection.",
+      "note": "WHO advises 45-day monitoring window. Swiss case (Case 5) identified post-disembark at St. Helena — underlines need for follow-up."
     },
     {
       "level": 1,
       "if": "Healthcare facility receives a patient from the ship or an epidemiologically linked contact.",
-      "then": "Apply standard and droplet precautions; escalate to airborne precautions if aerosol-generating procedures are performed.",
-      "note": "ECDC IPC guidance for ANDV-compatible illness."
+      "then": "Standard + droplet precautions for all suspect/confirmed ANDV cases; escalate to airborne precautions for aerosol-generating procedures. Document exposure history; alert IHR focal point if transferring across borders.",
+      "note": "WHO and ECDC IPC guidance; secondary healthcare-worker infections documented in prior ANDV outbreaks."
     },
     {
       "level": 1,
-      "if": "Media or port communities ask whether shore-side outbreaks are likely in Europe.",
-      "then": "Cite reservoir ecology: ANDV is not expected to establish in European rodents; focus messaging on case/contact management rather than widespread community contagion.",
-      "note": "ECDC stresses very low EU/EEA population risk under proper controls."
+      "if": "Media, passengers, or shore-side communities ask whether widespread community spread is likely.",
+      "then": "Cite WHO assessment: global risk low. ANDV rodent reservoir absent from Europe. Transmission requires close, prolonged contact — not airborne spread comparable to COVID-19.",
+      "note": "WHO Director-General Tedros, 7 May 2026: 'Not the start of a pandemic.' Low EU/EEA population risk affirmed by ECDC."
     }
   ]
 }

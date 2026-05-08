@@ -80,29 +80,43 @@ def _cubic_ribbon(x0: float, x1: float,
 
 def build_sankey_svg(sk: dict, esc) -> str:
     """
-    Three-column flow diagram (HEAD → SPLIT → OUTCOMES) with nationality colours.
-    Bar heights are VISUAL (not proportional) — noted in the diagram.
+    Three-column flow diagram: HEAD → SPLIT → OUTCOMES.
+    Legend is rendered as HTML below the SVG (see build_cruise_section).
+    Bar heights are VISUAL — not proportional to population size.
+
+    Layout philosophy
+    -----------------
+    • Wide column gaps (232 px HEAD→SPLIT, 192 px SPLIT→OUTCOMES) give each
+      label column plenty of horizontal breathing room.
+    • H_out=290 means the smallest outcome segment (1 case = 1/8 of 290 ≈ 36 px)
+      can still hold two lines of text without overlap.
+    • Outcome labels adapt: 3 lines when segment ≥ 60 px, 2 lines otherwise.
+    • The top ≈ 270 px of the right column is reserved for the muted contacts
+      monitoring note, well above the outcome band which starts at y≈278.
     """
-    ship = int(sk["ship_n"])
+    ship      = int(sk["ship_n"])
     cluster_n = int(sk["cluster_n"])
     contacts_n = int(sk["contacts_n"])
-    outcomes = sk["outcomes"]
+    outcomes  = sk["outcomes"]
     if sum(int(o["count"]) for o in outcomes) != cluster_n:
         raise ValueError("outcome counts must sum to cluster_n")
 
-    W, H = 840, 500
-    BAR = 16
-    F = 'font-family="Arial,Helvetica,sans-serif"'
+    W, H = 900, 630
+    BAR  = 18
+    F    = 'font-family="Arial,Helvetica,sans-serif"'
 
-    # ── bar x edges (3 columns) ───────────────────────────────────────────────
-    x0l, x0r = 58.0, 74.0    # col0 HEAD
-    x1l, x1r = 264.0, 280.0  # col1 SPLIT
-    x2l, x2r = 470.0, 486.0  # col2 OUTCOMES
+    # ── column x edges ────────────────────────────────────────────────────────
+    x0l, x0r = 60.0, 78.0    # HEAD bar   (label starts at 94)
+    x1l, x1r = 310.0, 328.0  # SPLIT bar  (232 px gap → 200 px HEAD label room)
+    x2l, x2r = 520.0, 538.0  # OUTCOMES bar (192 px gap → 170 px SPLIT label room)
+    #                           right label area: 554 → 890 (336 px — very spacious)
 
-    # ── vertical layout: visual scale, NOT proportional ──────────────────────
-    y_c0, y_c1 = 72.0, 292.0   # contacts segment  (220 px visual)
-    y_k0, y_k1 = 300.0, 400.0  # cluster segment   (100 px visual)
-    H_out = 180.0               # outcomes fan height
+    # ── vertical layout ───────────────────────────────────────────────────────
+    y_c0, y_c1 = 80.0, 270.0   # contacts band: 190 px visual
+    y_k0, y_k1 = 278.0, 360.0  # cluster band:   82 px visual
+    # outcome fan: 290 px total → 1 case = 36.25 px (fits 2 text lines)
+    H_out = 290.0
+
     out_segs: list[tuple[float, float, dict]] = []
     y_cur = y_k0
     for o in outcomes:
@@ -110,40 +124,41 @@ def build_sankey_svg(sk: dict, esc) -> str:
         out_segs.append((y_cur, y_cur + H_out * frac, o))
         y_cur += H_out * frac
 
-    # ── ribbon paths ─────────────────────────────────────────────────────────
+    # ── ribbons ───────────────────────────────────────────────────────────────
     def ribbon(xa, xb, ya0, ya1, yb0, yb1, fill, op=0.80):
         d = _cubic_ribbon(xa, xb, ya0, ya1, yb0, yb1)
         return f'<path d="{d}" fill="{fill}" fill-opacity="{op:.2f}"/>'
 
+    # HEAD → SPLIT: contacts pass-through + cluster pass-through
     ribs = [
         ribbon(x0r, x1l, y_c0, y_c1, y_c0, y_c1, "#e5dff4"),
         ribbon(x0r, x1l, y_k0, y_k1, y_k0, y_k1, "#d8d0ee"),
     ]
+    # SPLIT → OUTCOMES: cluster fans out to each outcome band
     y_src = y_k0
     for y_a, y_b, o in out_segs:
-        frac = int(o["count"]) / cluster_n
+        frac  = int(o["count"]) / cluster_n
         src_h = (y_k1 - y_k0) * frac
-        # tint ribbon with the outcome's nationality colour at low opacity
-        ribs.append(ribbon(x1r, x2l, y_src, y_src + src_h, y_a, y_b, o["color"], 0.30))
+        ribs.append(ribbon(x1r, x2l, y_src, y_src + src_h, y_a, y_b, o["color"], 0.28))
         y_src += src_h
     ribs_s = "\n    ".join(ribs)
 
-    # ── bars ─────────────────────────────────────────────────────────────────
+    # ── bars ──────────────────────────────────────────────────────────────────
     def rect(xl, y0, h, col):
-        return f'<rect x="{xl:.1f}" y="{y0:.2f}" width="{BAR}" height="{h:.2f}" fill="{col}" rx="2"/>'
+        return (f'<rect x="{xl:.1f}" y="{y0:.2f}" width="{BAR}" '
+                f'height="{h:.2f}" fill="{col}" rx="2"/>')
 
-    # col0: split contacts bar into passengers (dark) / crew (lighter)
-    pax  = int(sk.get("passengers_n", 88))
-    crew = int(sk.get("crew_n", 59))
+    pax   = int(sk.get("passengers_n", 88))
+    crew  = int(sk.get("crew_n", 59))
     pax_h  = (y_c1 - y_c0) * pax  / ship
     crew_h = (y_c1 - y_c0) * crew / ship
 
     bars = [
-        rect(x0l, y_c0,          pax_h,  "#57068c"),   # passengers
-        rect(x0l, y_c0 + pax_h,  crew_h, "#9b5ec4"),   # crew (lighter violet)
-        rect(x0l, y_k0, y_k1 - y_k0, "#7b3aac"),        # cluster (col0)
-        rect(x1l, y_c0, y_c1 - y_c0, "#57068c"),        # contacts (col1)
-        rect(x1l, y_k0, y_k1 - y_k0, "#7b3aac"),        # cluster (col1)
+        rect(x0l, y_c0,          pax_h,       "#57068c"),  # pax (HEAD)
+        rect(x0l, y_c0 + pax_h,  crew_h,      "#9b5ec4"),  # crew (HEAD)
+        rect(x0l, y_k0, y_k1-y_k0,            "#7b3aac"),  # cluster (HEAD)
+        rect(x1l, y_c0, y_c1-y_c0,            "#57068c"),  # contacts (SPLIT)
+        rect(x1l, y_k0, y_k1-y_k0,            "#7b3aac"),  # cluster (SPLIT)
     ]
     for y_a, y_b, o in out_segs:
         bars.append(rect(x2l, y_a, y_b - y_a, o["color"]))
@@ -152,134 +167,117 @@ def build_sankey_svg(sk: dict, esc) -> str:
     # ── text helpers ──────────────────────────────────────────────────────────
     LH = 14.0
 
-    def line(x, y, txt, w="400", c="#121212", sz="10.5"):
-        return (
-            f'<text {F} font-size="{sz}px" font-weight="{w}" '
-            f'fill="{c}" x="{x:.2f}" y="{y:.2f}">{esc(str(txt))}</text>'
-        )
+    def txt(x, y, t, w="400", c="#121212", sz="10"):
+        return (f'<text {F} font-size="{sz}px" font-weight="{w}" '
+                f'fill="{c}" x="{x:.1f}" y="{y:.1f}">{esc(str(t))}</text>')
 
-    def label_block(x, y_center, lines):
-        n = len(lines)
-        y0 = y_center - n * LH / 2 + LH * 0.85
+    def block(x, yc, rows):
+        n  = len(rows)
+        y0 = yc - n * LH / 2 + LH * 0.85
         return "\n    ".join(
-            line(x, y0 + i * LH, txt, w, c, sz)
-            for i, (txt, w, c, sz) in enumerate(lines)
+            txt(x, y0 + i * LH, t, w, c, sz)
+            for i, (t, w, c, sz) in enumerate(rows)
         )
 
-    nat_note = sk.get("nationalities_note", "23 nationalities")
-    # shorten for the bar label area (keep it concise)
+    nat_note  = sk.get("nationalities_note", "23 nationalities")
     nat_short = nat_note.split(":")[1].strip() if ":" in nat_note else nat_note
 
     lbls = []
 
-    # HEAD (col0) — pax/crew breakdown + nationality summary
-    lbls.append(label_block(x0r + 14, (y_c0 + y_k1) / 2, [
-        (f"{ship} aboard",                         "700", "#121212", "11"),
-        (f"{pax} passengers \u00b7 {crew} crew",   "400", "#121212", "10.5"),
-        (nat_short,                                "400", "#57068c", "9"),
-        (f"EWRS: {sk['ewrs_notification']}",        "400", "#999",   "9"),
-        (f"ECDC: {sk['ecdc_assessment']}",          "400", "#999",   "9"),
+    # ── HEAD label (col0, right) — generous 200 px horizontal room ────────────
+    lbls.append(block(x0r + 16, (y_c0 + y_k1) / 2, [
+        (f"{ship} aboard",                     "700", "#121212", "11"),
+        (f"{pax} pax \u00b7 {crew} crew",      "400", "#444",   "10"),
+        (nat_short,                            "400", "#57068c", "8.5"),
+        (f"EWRS: {sk['ewrs_notification']}",   "400", "#bbb",   "8"),
+        (f"ECDC: {sk['ecdc_assessment']}",     "400", "#bbb",   "8"),
     ]))
 
-    # Contacts (col1 upper)
-    lbls.append(label_block(x1r + 14, (y_c0 + y_c1) / 2, [
-        ("Contacts (monitoring)",    "700", "#121212", "11"),
-        (f"n = {contacts_n}",        "400", "#121212", "10.5"),
-        ("Precautionary pool",       "400", "#5a5a5a", "9.5"),
-        ("Predict: not infected",    "400", "#57068c", "9.5"),
+    # ── SPLIT contacts label (col1, right, upper band) ────────────────────────
+    lbls.append(block(x1r + 16, (y_c0 + y_c1) / 2, [
+        ("Contacts",              "700", "#121212", "11"),
+        (f"n = {contacts_n}",     "400", "#121212", "10"),
+        ("Precautionary pool",    "400", "#5a5a5a", "9"),
+        ("Predict: not infected", "400", "#57068c", "9"),
     ]))
 
-    # Cluster (col1 lower)
-    lbls.append(label_block(x1r + 14, (y_k0 + y_k1) / 2, [
-        ("Cluster",                        "700", "#121212", "11"),
-        (f"n = {cluster_n} \u00b7 5 PCR+", "400", "#121212", "10.5"),
-        ("HPS-compatible illness",          "400", "#5a5a5a", "9.5"),
-        ("Predict: ANDV",                   "700", "#8b1a1a", "9.5"),
+    # ── SPLIT cluster label (col1, right, lower band) ─────────────────────────
+    lbls.append(block(x1r + 16, (y_k0 + y_k1) / 2, [
+        ("Cluster",                       "700", "#121212", "11"),
+        (f"n = {cluster_n} \u00b7 5 PCR+","400", "#121212", "10"),
+        ("Predict: ANDV",                 "700", "#8b1a1a", "9"),
     ]))
 
-    # Contacts terminal (col2 area, top, muted)
-    lbls.append(label_block(x2r + 14, (y_c0 + y_c1) / 2, [
-        ("Under monitoring",          "700", "#bbb", "10"),
-        (f"n = {contacts_n}",         "400", "#bbb", "9.5"),
-        ("No confirmed infections",   "400", "#ccc", "9"),
-        ("as of 7 May 2026",          "400", "#ccc", "9"),
+    # ── OUTCOMES contacts-end label (col2, right, upper band — muted) ─────────
+    lbls.append(block(x2r + 16, (y_c0 + y_c1) / 2, [
+        ("Under monitoring",       "700", "#bbb",  "10"),
+        (f"n = {contacts_n}",      "400", "#bbb",  "9"),
+        ("No infections confirmed","400", "#ccc",  "8.5"),
+        ("as of 7 May 2026",       "400", "#ccc",  "8.5"),
     ]))
 
-    # Outcome labels (col2 right) — nationality on line 2, detail on line 3
+    # ── OUTCOMES outcome labels (col2, right, outcome bands) ──────────────────
+    # Adaptive: 3 lines when segment ≥ 60 px, 2 lines for smaller segments
     for y_a, y_b, o in out_segs:
-        seg_h = y_b - y_a
-        sz = "9" if seg_h < 32 else "10"
-        lh2 = 12.5 if seg_h < 32 else LH
-        mid = (y_a + y_b) / 2
+        seg_h    = y_b - y_a
+        mid      = (y_a + y_b) / 2
         nat      = o.get("nat", "")
         nat_code = o.get("nat_code", "")
         detail   = o.get("detail", "")
         bar_col  = o["color"]
         nat_disp = f"{nat} [{nat_code}]" if nat else nat_code
-        y0 = mid - lh2 + lh2 * 0.10
-        lbls.append(
-            line(x2r + 14, y0,          f"{o['label']} \u00b7 {int(o['count'])}", "700", "#121212", sz)
-            + "\n    " +
-            line(x2r + 14, y0 + lh2,    nat_disp,  "700", bar_col, sz)
-            + "\n    " +
-            line(x2r + 14, y0 + lh2*2,  detail,    "400", "#5a5a5a", "8.5")
-        )
+        lbl_line = f"{o['label']} \u00b7 {int(o['count'])}"
+
+        if seg_h >= 60:
+            lh = 13.0
+            y0 = mid - lh + lh * 0.15
+            lbls.append(
+                txt(x2r+16, y0,       lbl_line, "700", "#121212", "10")
+                + "\n    " +
+                txt(x2r+16, y0+lh,    nat_disp, "700", bar_col,   "10")
+                + "\n    " +
+                txt(x2r+16, y0+lh*2,  detail,   "400", "#666",    "8.5")
+            )
+        else:
+            lh = 12.0
+            y0 = mid - lh * 0.5 + lh * 0.1
+            lbls.append(
+                txt(x2r+16, y0,    lbl_line, "700", "#121212", "9.5")
+                + "\n    " +
+                txt(x2r+16, y0+lh, nat_disp, "700", bar_col,   "9.5")
+            )
 
     lbls_s = "\n    ".join(lbls)
 
-    # ── nationality legend (upper-right whitespace, x≈510..840, y≈40..210) ──
-    lx = 512.0
-    legend_items = [
-        f'<text {F} font-size="7.5px" font-weight="700" fill="#aaa" x="{lx}" y="52">OUTCOME BY NATIONALITY</text>',
-        # pax/crew legend
-        f'<rect x="{lx}" y="58" width="9" height="9" fill="#57068c" rx="1"/>',
-        f'<text {F} font-size="8.5px" fill="#555" x="{lx+13}" y="66">Passengers ({pax})</text>',
-        f'<rect x="{lx+110}" y="58" width="9" height="9" fill="#9b5ec4" rx="1"/>',
-        f'<text {F} font-size="8.5px" fill="#555" x="{lx+123}" y="66">Crew ({crew})</text>',
-        f'<line x1="{lx}" y1="73" x2="{lx+200}" y2="73" stroke="#e0e0e0" stroke-width="0.8"/>',
-    ]
-    for i, o in enumerate(outcomes):
-        ry  = 82 + i * 19
-        nat = o.get("nat", o["label"])
-        code = o.get("nat_code", "")
-        cnt  = int(o["count"])
-        death_sfx = " \u2020" if o.get("is_death") else ""
-        legend_items += [
-            f'<rect x="{lx}" y="{ry - 7}" width="9" height="9" fill="{o["color"]}" rx="1"/>',
-            f'<text {F} font-size="8.5px" fill="#333" x="{lx+13}" y="{ry}">'
-            f'{esc(nat)}{esc(death_sfx)} [{esc(code)}] \u00b7 {cnt}</text>',
-        ]
-    legend_s = "\n    ".join(legend_items)
-
     # ── column headers ────────────────────────────────────────────────────────
     col_info = [
-        (66.0,  "HEAD",     f"n = {ship}"),
-        (272.0, "SPLIT",    "Contacts / Cluster"),
-        (478.0, "OUTCOMES", "7 May 2026"),
+        (x0l + BAR/2, "HEAD",     f"n = {ship}"),
+        (x1l + BAR/2, "SPLIT",    "Contacts / Cluster"),
+        (x2l + BAR/2, "OUTCOMES", "7 May 2026"),
     ]
     hdrs = []
     for cx, title, sub in col_info:
         hdrs += [
-            f'<text {F} font-size="8.5px" font-weight="700" fill="#aaa" '
+            f'<text {F} font-size="8.5px" font-weight="700" fill="#bbb" '
             f'text-anchor="middle" x="{cx:.1f}" y="47">{esc(title)}</text>',
             f'<text {F} font-size="8px" fill="#ccc" '
             f'text-anchor="middle" x="{cx:.1f}" y="59">{esc(sub)}</text>',
-            f'<line x1="{cx:.1f}" y1="63" x2="{cx:.1f}" y2="72" '
+            f'<line x1="{cx:.1f}" y1="63" x2="{cx:.1f}" y2="73" '
             f'stroke="#ddd" stroke-width="1"/>',
         ]
     hdrs_s = "\n    ".join(hdrs)
 
     deaths_total = sum(int(o["count"]) for o in outcomes if o.get("is_death"))
     note = (
-        f'<text {F} font-size="8px" fill="#ccc" x="8" y="{H - 8}">'
+        f'<text {F} font-size="7.5px" fill="#ccc" x="8" y="{H-8}">'
         f'Bar heights are visual \u2014 not proportional. '
-        f'{cluster_n} cases / {ship} aboard = {cluster_n/ship*100:.1f}%. '
+        f'{cluster_n}/{ship} = {cluster_n/ship*100:.1f}% case rate. '
         f'\u2020 = fatal.</text>'
     )
 
     title_txt = esc(
-        f"MV Hondius flow: {ship} aboard, {cluster_n} HPS-compatible cases, "
-        f"{deaths_total} deaths \u2014 as of {sk['ecdc_assessment']}"
+        f"MV Hondius: {ship} aboard, {cluster_n} cases, "
+        f"{deaths_total} deaths \u2014 {sk['ecdc_assessment']}"
     )
 
     return (
@@ -290,7 +288,6 @@ def build_sankey_svg(sk: dict, esc) -> str:
         f'<g>\n    {ribs_s}\n  </g>'
         f'<g>\n    {bars_s}\n  </g>'
         f'<g>\n    {hdrs_s}\n  </g>'
-        f'<g>\n    {legend_s}\n  </g>'
         f'<g>\n    {lbls_s}\n  </g>'
         f'{note}'
         f'</svg>'
@@ -322,16 +319,46 @@ def build_cruise_section(c: dict) -> str:
 
     svg_block = ""
     if sk:
-        svg_str = build_sankey_svg(sk, esc)
+        svg_str  = build_sankey_svg(sk, esc)
+        pax_sk   = int(sk.get("passengers_n", 88))
+        crew_sk  = int(sk.get("crew_n", 59))
+
+        def chip(color: str, label: str) -> str:
+            return (
+                f'<span class="nat-item">'
+                f'<span class="nat-chip" style="background:{color}"></span>'
+                f'{esc(label)}'
+                f'</span>'
+            )
+
+        leg_items = [
+            chip("#57068c", f"Passengers ({pax_sk})"),
+            chip("#9b5ec4", f"Crew ({crew_sk})"),
+            '<span class="nat-div"></span>',
+        ]
+        for o in sk["outcomes"]:
+            nat   = o.get("nat", o["label"])
+            code  = o.get("nat_code", "")
+            cnt   = int(o["count"])
+            sfx   = " \u2020" if o.get("is_death") else ""
+            olbl  = o["label"].lower()
+            leg_items.append(chip(o["color"], f"{nat} [{code}] \u00b7 {cnt}{sfx} \u2014 {olbl}"))
+
+        legend_html = (
+            f'<div class="nat-legend" aria-label="Colour legend">'
+            f'{"".join(leg_items)}'
+            f'</div>'
+        )
+
         svg_block = f"""
       <div class="flow-wrap" role="region" aria-labelledby="flow-heading">
         <h3 class="section-label" id="flow-heading">Population flow &amp; outcomes</h3>
         <div class="flow-svg">{svg_str}</div>
         <p class="fig-caption">
-          Ribbon widths follow ECDC counts for the ship split
-          ({esc(str(sk['contacts_n']))} contacts vs. {cluster_n} cluster).
-          Bar heights are visual only.
+          Ribbon widths reflect ECDC counts: {esc(str(sk['contacts_n']))} contacts
+          vs. {cluster_n} cluster cases. Bar heights are visual only.
         </p>
+        {legend_html}
       </div>"""
 
     # 28-day scenario cards from JSON
@@ -746,6 +773,38 @@ def main() -> None:
       color: var(--muted);
       margin: 0.45rem 0 0;
       max-width: 52rem;
+    }}
+    /* ── nationality / outcome legend (HTML, below SVG) ───────────────────── */
+    .nat-legend {{
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.25rem 1rem;
+      margin-top: 0.7rem;
+      padding-top: 0.55rem;
+      border-top: 1px solid var(--rule);
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+    }}
+    .nat-item {{
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }}
+    .nat-chip {{
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }}
+    .nat-div {{
+      width: 1px;
+      height: 1em;
+      background: var(--rule);
+      margin: 0 0.25rem;
     }}
     .explainer {{
       font-family: Arial, Helvetica, sans-serif;

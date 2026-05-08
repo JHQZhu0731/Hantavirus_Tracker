@@ -1,0 +1,39 @@
+name: Hourly Tracker Update
+
+on:
+  schedule:
+    # Runs at the top of every hour (UTC)
+    - cron: "0 * * * *"
+  workflow_dispatch:   # allows manual trigger from GitHub Actions tab
+
+permissions:
+  contents: write      # needed to push the rebuilt index.html
+
+jobs:
+  rebuild-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Rebuild index.html
+        run: python3 scripts/build_tracker.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto-update $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
