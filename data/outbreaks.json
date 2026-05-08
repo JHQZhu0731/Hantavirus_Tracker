@@ -7,6 +7,7 @@
     {
       "id": "cruise-ship-2026-andv-cluster",
       "label": "MV Hondius — multi-country Andes virus cluster",
+      "label_zh": "MV Hondius — 多国安第斯病毒群聚事件",
       "country": "Multi-country (vessel: South Atlantic; medevac: S. Africa, Spain)",
       "region": "Departed Ushuaia, Argentina 1 Apr 2026; 23 nationalities",
       "lat": -18.0,
@@ -22,6 +23,7 @@
     {
       "id": "chile-2026-andv",
       "label": "Chile — Andes virus / HPS (Jan–May 2026)",
+      "label_zh": "智利 — 安第斯病毒/HPS（2026年1–5月）",
       "country": "Chile",
       "region": "9 regions; central and southern Chile",
       "lat": -38.0,
@@ -37,6 +39,7 @@
     {
       "id": "americas-2025-baseline",
       "label": "Americas — HPS baseline (2025, epi week 47)",
+      "label_zh": "美洲地区 — HPS基线（2025年第47周）",
       "country": "Multi-country (Americas region)",
       "region": "8 countries reporting — PAHO/WHO aggregate",
       "lat": -10.0,
@@ -52,6 +55,7 @@
     {
       "id": "us-four-corners-1993",
       "label": "Four Corners HPS cluster",
+      "label_zh": "美国四角地区HPS群聚事件",
       "country": "United States",
       "region": "NM / AZ / CO / UT",
       "lat": 36.2,
@@ -67,6 +71,7 @@
     {
       "id": "argentina-el-bolson-1996",
       "label": "El Bolsón ANDV outbreak",
+      "label_zh": "阿根廷埃尔博尔松安第斯病毒疫情",
       "country": "Argentina",
       "region": "Río Negro",
       "lat": -41.96,
@@ -82,6 +87,7 @@
     {
       "id": "argentina-epuyen-2018",
       "label": "Epuyén ANDV outbreak",
+      "label_zh": "阿根廷埃普延安第斯病毒疫情",
       "country": "Argentina",
       "region": "Chubut",
       "lat": -42.93,
@@ -97,6 +103,7 @@
     {
       "id": "us-yosemite-2012",
       "label": "Yosemite National Park HPS",
+      "label_zh": "美国约塞米蒂国家公园HPS事件",
       "country": "United States",
       "region": "California",
       "lat": 37.74,
@@ -112,6 +119,7 @@
     {
       "id": "germany-baden-wuerttemberg-2012",
       "label": "PUUV / HFRS cluster (Baden-Württemberg)",
+      "label_zh": "德国巴登-符腾堡PUUV/HFRS群聚事件",
       "country": "Germany",
       "region": "Baden-Württemberg",
       "lat": 48.78,
@@ -127,6 +135,7 @@
     {
       "id": "finland-hfrs-endemic",
       "label": "Finland — endemic nephropathy (PUUV)",
+      "label_zh": "芬兰 — 普马拉病毒地方性肾病（PUUV）",
       "country": "Finland",
       "region": "National (illustrative centroid)",
       "lat": 64.0,
@@ -142,6 +151,7 @@
     {
       "id": "chile-andes-linked",
       "label": "Chile — ANDV / HPS (illustrative national focus)",
+      "label_zh": "智利 — 安第斯病毒/HPS（全国重点区域）",
       "country": "Chile",
       "region": "Santiago (administrative centroid)",
       "lat": -33.45,
@@ -157,6 +167,7 @@
     {
       "id": "paraguay-2019",
       "label": "Paraguay — HPS cases (public reporting year)",
+      "label_zh": "巴拉圭 — HPS病例（公开报告年度）",
       "country": "Paraguay",
       "region": "Asunción area",
       "lat": -25.26,
@@ -172,6 +183,7 @@
     {
       "id": "brazil-hps-focus",
       "label": "Brazil — HPS foci (illustrative)",
+      "label_zh": "巴西 — HPS疫情焦点（示意）",
       "country": "Brazil",
       "region": "São Paulo state (Juquitiba-related reports)",
       "lat": -23.55,

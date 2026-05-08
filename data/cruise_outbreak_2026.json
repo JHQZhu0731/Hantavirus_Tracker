@@ -1,6 +1,8 @@
 {
   "label": "Hantavirus-associated cluster on Dutch-flag cruise ship MV Hondius (2026)",
+  "label_zh": "荷兰籍游轮MV Hondius汉坦病毒相关群聚事件（2026年）",
   "deck": "Multi-country outbreak. WHO Disease Outbreak News DON599 issued 4 May 2026; CBC/WHO updated 7 May 2026. Investigation ongoing — further cases possible within the 45-day monitoring window.",
+  "deck_zh": "多国疫情。世卫组织疾病暴发消息DON599于2026年5月4日发布；CBC/世卫组织5月7日更新。调查持续进行——45天监测窗口内可能出现新增病例。",
   "primary_source": {
     "name": "WHO DON599 — Hantavirus cluster, multi-country (4 May 2026)",
     "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON599"
@@ -21,17 +23,28 @@
     "risk_eu_population": "WHO and ECDC: global and EU/EEA population risk assessed as low. WHO: 'not the start of a pandemic.' ANDV reservoir absent from European rodents. All contacts advised 45-day symptom monitoring."
   },
   "timeline": [
-    {"date": "1 Apr 2026",  "event": "MV Hondius departs Ushuaia, Argentina (147 aboard)."},
-    {"date": "6 Apr 2026",  "event": "Case 1 (Dutch male, 70) develops fever, headache, diarrhoea on board."},
-    {"date": "11 Apr 2026", "event": "Case 1 dies aboard; respiratory distress. Ship between South Georgia and St. Helena."},
-    {"date": "24 Apr 2026", "event": "Case 2 (Dutch female, 69, wife of Case 1) disembarks at St. Helena with GI symptoms. Body of Case 1 removed."},
-    {"date": "25 Apr 2026", "event": "Case 2 deteriorates on flight to Johannesburg."},
-    {"date": "26 Apr 2026", "event": "Case 2 dies at Johannesburg hospital. Case 3 (British male) evacuated from Ascension Island to South Africa ICU."},
-    {"date": "2 May 2026",  "event": "Case 4 (German female) dies on board. South Africa lab confirms hantavirus PCR-positive in Case 3 — first lab confirmation, 21 days after first death."},
-    {"date": "3 May 2026",  "event": "WHO announces investigation. Ship moored off Cabo Verde."},
-    {"date": "4 May 2026",  "event": "WHO DON599 issued: 7 cases (2 confirmed, 5 suspected), 3 deaths. Dutch woman (Case 2) post-mortem PCR confirmed."},
-    {"date": "6 May 2026",  "event": "ECDC assessment published. Swiss man (Case 5) PCR confirmed. Ship heads to Canary Islands."},
-    {"date": "7 May 2026",  "event": "5 of 8 suspected cases confirmed (WHO briefing). 3 symptomatic passengers transferred to Spain for care."}
+    {"date": "1 Apr 2026",  "event": "MV Hondius departs Ushuaia, Argentina (147 aboard).",
+     "event_zh": "MV Hondius从阿根廷乌斯怀亚出发（147人在船）。"},
+    {"date": "6 Apr 2026",  "event": "Case 1 (Dutch male, 70) develops fever, headache, diarrhoea on board.",
+     "event_zh": "1号病例（荷兰男性，70岁）在船上出现发热、头痛、腹泻。"},
+    {"date": "11 Apr 2026", "event": "Case 1 dies aboard; respiratory distress. Ship between South Georgia and St. Helena.",
+     "event_zh": "1号病例在船上死亡；呼吸窘迫。船位于南乔治亚岛与圣赫勒拿岛之间。"},
+    {"date": "24 Apr 2026", "event": "Case 2 (Dutch female, 69, wife of Case 1) disembarks at St. Helena with GI symptoms. Body of Case 1 removed.",
+     "event_zh": "2号病例（荷兰女性，69岁，1号病例妻子）携胃肠道症状在圣赫勒拿岛下船。1号病例遗体运离。"},
+    {"date": "25 Apr 2026", "event": "Case 2 deteriorates on flight to Johannesburg.",
+     "event_zh": "2号病例在飞往约翰内斯堡的航班上病情恶化。"},
+    {"date": "26 Apr 2026", "event": "Case 2 dies at Johannesburg hospital. Case 3 (British male) evacuated from Ascension Island to South Africa ICU.",
+     "event_zh": "2号病例在约翰内斯堡医院死亡。3号病例（英国男性）从阿森松岛撤离至南非重症监护室。"},
+    {"date": "2 May 2026",  "event": "Case 4 (German female) dies on board. South Africa lab confirms hantavirus PCR-positive in Case 3 — first lab confirmation, 21 days after first death.",
+     "event_zh": "4号病例（德国女性）在船上死亡。南非实验室确认3号病例汉坦病毒PCR阳性——首次实验室确认，距首次死亡已21天。"},
+    {"date": "3 May 2026",  "event": "WHO announces investigation. Ship moored off Cabo Verde.",
+     "event_zh": "世卫组织宣布调查。船停泊在佛得角外海。"},
+    {"date": "4 May 2026",  "event": "WHO DON599 issued: 7 cases (2 confirmed, 5 suspected), 3 deaths. Dutch woman (Case 2) post-mortem PCR confirmed.",
+     "event_zh": "世卫组织DON599发布：7例（2例确诊，5例疑似），3例死亡。荷兰女性（2号病例）死后PCR确认。"},
+    {"date": "6 May 2026",  "event": "ECDC assessment published. Swiss man (Case 5) PCR confirmed. Ship heads to Canary Islands.",
+     "event_zh": "欧洲疾控中心评估报告发布。瑞士男性（5号病例）PCR确认。船前往加那利群岛。"},
+    {"date": "7 May 2026",  "event": "5 of 8 suspected cases confirmed (WHO briefing). 3 symptomatic passengers transferred to Spain for care.",
+     "event_zh": "8例疑似病例中5例确认（世卫组织简报）。3名有症状乘客转运至西班牙接受治疗。"}
   ],
   "sankey": {
     "ewrs_notification": "2 May 2026",
@@ -57,7 +70,9 @@
     "scenarios": [
       {
         "label": "Strong IPC (optimistic)",
+        "label_zh": "严格感控（乐观情景）",
         "rule": "R ≈ 0.96 — analogous to Andes post-control (Epuyén 2019 NEJM)",
+        "rule_zh": "R ≈ 0.96 — 类比安第斯干预后（埃普延2019年NEJM）",
         "values_line": "Isolation + quarantine maintained throughout",
         "predict": "8–12 total infected",
         "weight": 0.50,
@@ -65,7 +80,9 @@
       },
       {
         "label": "Base case (incubation tail)",
+        "label_zh": "基线情景（潜伏期尾部）",
         "rule": "Some contacts in 7–42 day window yet to develop symptoms",
+        "rule_zh": "部分接触者处于7–42天窗口期，尚未出现症状",
         "values_line": "Delayed PCR-positive results expected",
         "predict": "12–18 total infected",
         "weight": 0.35,
@@ -73,7 +90,9 @@
       },
       {
         "label": "Stress test (late isolation)",
+        "label_zh": "压力测试（迟滞隔离）",
         "rule": "Social mixing before full isolation; upper-tail estimate",
+        "rule_zh": "完全隔离前已有社交混合；上限估计",
         "values_line": "Not current ECDC/WHO assessment",
         "predict": "18–28 total infected",
         "weight": 0.15,
@@ -85,44 +104,65 @@
     {
       "level": 0,
       "if": "Unexplained cluster of severe febrile illness with respiratory / GI features on a passenger vessel, especially after transit through South America.",
+      "if_zh": "客船上出现无法解释的严重发热性疾病群聚，伴有呼吸道/消化道症状，尤其是途经南美洲后。",
       "then": "Declare a public health event of concern on board: activate medical surge, create line list, collect exposure histories (ports, excursions, animal contact, close contacts), notify flag state and competent port authority under IHR 2005.",
-      "note": "Matches the 2 May 2026 UK IHR notification that triggered WHO response (DON599)."
+      "then_zh": "在船上宣布公共卫生关注事件：启动医疗应急、建立病例清单、收集接触史（港口、岸上游览、动物接触、密切接触者），根据《国际卫生条例》2005年通知旗国和主管港口当局。",
+      "note": "Matches the 2 May 2026 UK IHR notification that triggered WHO response (DON599).",
+      "note_zh": "符合2026年5月2日英国IHR联络点触发世卫组织应对的通报（DON599）。"
     },
     {
       "level": 1,
       "if": "Any person develops fever with rapid progression to pneumonia, ARDS, or shock.",
+      "if_zh": "任何人出现发热并迅速进展为肺炎、急性呼吸窘迫综合征或休克。",
       "then": "Medical evacuation to a facility with full ICU capability as a priority; collect blood/respiratory specimens before or during transfer; notify receiving country.",
-      "note": "Cases 3 and 4 illustrate rapid deterioration: Case 3 evacuated Ascension → South Africa ICU; Case 4 died 4 days after symptom onset."
+      "then_zh": "优先医疗转运至具备完整重症监护能力的设施；在转运前或转运中采集血液/呼吸道标本；通知接收国。",
+      "note": "Cases 3 and 4 illustrate rapid deterioration: Case 3 evacuated Ascension → South Africa ICU; Case 4 died 4 days after symptom onset.",
+      "note_zh": "3号和4号病例说明病情迅速恶化：3号病例从阿森松岛撤离至南非重症监护室；4号病例出现症状4天后死亡。"
     },
     {
       "level": 1,
       "if": "PCR or serology confirms hantavirus / ANDV, or clinical picture is strongly consistent and other pathogens excluded.",
+      "if_zh": "PCR或血清学确认汉坦病毒/安第斯病毒，或临床表现高度吻合且其他病原体已排除。",
       "then": "Cohort-nurse confirmed and suspected cases; strict cabin isolation; trace all close contacts (shared cabin, meals, activities); apply droplet + contact precautions; airborne precautions for aerosol-generating procedures.",
-      "note": "ECDC: person-to-person ANDV transmission documented with close prolonged contact; all 147 aboard treated as contacts (closed environment)."
+      "then_zh": "对确诊和疑似病例进行同病种护理；严格舱室隔离；追踪所有密切接触者（共住舱室、用餐、活动）；实施飞沫+接触防护；产生气溶胶操作时实施空气防护。",
+      "note": "ECDC: person-to-person ANDV transmission documented with close prolonged contact; all 147 aboard treated as contacts (closed environment).",
+      "note_zh": "欧洲疾控中心：已记录密切持续接触的安第斯病毒人传人传播；147名在船人员均视为接触者（密闭环境）。"
     },
     {
       "level": 2,
       "if": "Closed vessel environment — everyone shares social spaces and activities.",
+      "if_zh": "密闭船舶环境——所有人共享社交空间和活动。",
       "then": "Apply precautionary principle: treat all aboard as close contacts until epidemiological investigation refines risk tiers.",
-      "note": "Explicit in both WHO DON599 and ECDC assessment for this cluster."
+      "then_zh": "应用预防原则：在流行病学调查明确风险层级之前，将所有在船人员视为密切接触者。",
+      "note": "Explicit in both WHO DON599 and ECDC assessment for this cluster.",
+      "note_zh": "世卫组织DON599和欧洲疾控中心评估均明确提出此要求。"
     },
     {
       "level": 1,
       "if": "Patient will disembark or transfer between jurisdictions.",
+      "if_zh": "患者将下船或在不同司法管辖区间转运。",
       "then": "Provide written symptom-monitoring instructions for 45 days (up to 8-week incubation possible). Ensure receiving jurisdiction is notified. PCR / serology at time of disembarkation — note that negative tests early in illness do not exclude infection.",
-      "note": "WHO advises 45-day monitoring window. Swiss case (Case 5) identified post-disembark at St. Helena — underlines need for follow-up."
+      "then_zh": "提供45天症状监测书面指导（潜伏期最长可达8周）。确保通知接收管辖区。下船时进行PCR/血清学检测——注意早期阴性结果不能排除感染。",
+      "note": "WHO advises 45-day monitoring window. Swiss case (Case 5) identified post-disembark at St. Helena — underlines need for follow-up.",
+      "note_zh": "世卫组织建议45天监测窗口。5号病例（瑞士人）在圣赫勒拿岛下船后被识别——强调跟踪随访的必要性。"
     },
     {
       "level": 1,
       "if": "Healthcare facility receives a patient from the ship or an epidemiologically linked contact.",
+      "if_zh": "医疗机构接收来自船上或流行病学相关接触者的患者。",
       "then": "Standard + droplet precautions for all suspect/confirmed ANDV cases; escalate to airborne precautions for aerosol-generating procedures. Document exposure history; alert IHR focal point if transferring across borders.",
-      "note": "WHO and ECDC IPC guidance; secondary healthcare-worker infections documented in prior ANDV outbreaks."
+      "then_zh": "对所有疑似/确诊安第斯病毒病例实施标准+飞沫防护；产生气溶胶操作时升级为空气防护。记录接触史；如跨境转运，通知IHR联络点。",
+      "note": "WHO and ECDC IPC guidance; secondary healthcare-worker infections documented in prior ANDV outbreaks.",
+      "note_zh": "世卫组织和欧洲疾控中心感染防控指南；既往安第斯病毒疫情中已记录继发性医护人员感染。"
     },
     {
       "level": 1,
       "if": "Media, passengers, or shore-side communities ask whether widespread community spread is likely.",
+      "if_zh": "媒体、乘客或岸上社区询问是否可能出现广泛社区传播。",
       "then": "Cite WHO assessment: global risk low. ANDV rodent reservoir absent from Europe. Transmission requires close, prolonged contact — not airborne spread comparable to COVID-19.",
-      "note": "WHO Director-General Tedros, 7 May 2026: 'Not the start of a pandemic.' Low EU/EEA population risk affirmed by ECDC."
+      "then_zh": "引用世卫组织评估：全球风险低。欧洲不存在安第斯病毒啮齿动物储存宿主。传播需要密切、持续接触——不同于类似新冠的空气传播。",
+      "note": "WHO Director-General Tedros, 7 May 2026: 'Not the start of a pandemic.' Low EU/EEA population risk affirmed by ECDC.",
+      "note_zh": "世卫组织总干事谭德塞，2026年5月7日：'这不是一场大流行的开始。'欧洲疾控中心确认欧盟/欧洲经济区人群风险低。"
     }
   ]
 }

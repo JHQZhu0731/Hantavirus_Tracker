@@ -15,9 +15,221 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA_PATH = ROOT / "data" / "outbreaks.json"
+DATA_PATH  = ROOT / "data" / "outbreaks.json"
 CRUISE_PATH = ROOT / "data" / "cruise_outbreak_2026.json"
-OUT_HTML = ROOT / "index.html"
+OUT_HTML   = ROOT / "index.html"
+OUT_HTML_ZH = ROOT / "zh" / "index.html"
+
+# ── translated outcome / nationality labels ───────────────────────────────────
+_OUTCOME_ZH: dict[str, str] = {
+    "Fatal":         "死亡",
+    "ICU":           "重症监护",
+    "Transferred":   "转运",
+    "Post-disembark":"下船后确诊",
+}
+_NAT_ZH: dict[str, str] = {
+    "Netherlands":    "荷兰",
+    "Germany":        "德国",
+    "United Kingdom": "英国",
+    "Nationality TBC":"国籍待定",
+    "Switzerland":    "瑞士",
+}
+
+# ── UI string tables ──────────────────────────────────────────────────────────
+STRINGS: dict[str, dict[str, str]] = {
+    "en": {
+        "html_lang":       "en",
+        "page_title_full": "Hantavirus Tracker \u2014 2026 cruise cluster &amp; R\u2080 context",
+        "meta_desc":       "ECDC-sourced flow diagram and decision tree for the 2026 cruise-ship hantavirus cluster, plus R\u2080 data and historical outbreak table.",
+        "skip":            "Skip to main content",
+        "kicker":          "Zoonotic &amp; person-to-person context",
+        "page_title":      "Hantavirus Tracker",
+        "page_sub":        ("<strong>May\u202026 cruise-ship cluster</strong> &mdash; population flow diagram, "
+                            "decision tree, and 45-day scenarios from ECDC&rsquo;s preliminary assessment. "
+                            "Below: historical outbreak table and literature-based R&#x2080; context. "
+                            "Page auto-refreshes every hour."),
+        "switch_label":    "中文版",
+        "switch_href_en":  "zh/index.html",
+        "switch_href_zh":  "../index.html",
+        "stat_aboard":     "Aboard",
+        "stat_cases":      "Cases",
+        "stat_deaths":     "Deaths",
+        "stat_cfr":        "Case fatality",
+        "flow_heading":    "Population flow &amp; outcomes",
+        "fig_cap":         "Ribbon widths reflect ECDC counts: {cn} contacts vs. {kn} cluster cases. Bar heights are visual only.",
+        "svg_head":        "HEAD",
+        "svg_split":       "SPLIT",
+        "svg_outcomes":    "OUTCOMES",
+        "svg_split_sub":   "Contacts / Cluster",
+        "contacts_lbl":    "Contacts",
+        "contacts_p1":     "Precautionary pool",
+        "contacts_p2":     "Predict: not infected",
+        "cluster_lbl":     "Cluster",
+        "cluster_p1":      "Predict: ANDV",
+        "monitor_lbl":     "Under monitoring",
+        "monitor_p1":      "No infections confirmed",
+        "monitor_p2":      "as of 7 May 2026",
+        "pax_lbl":         "pax",
+        "crew_lbl":        "crew",
+        "leg_pax":         "Passengers",
+        "leg_crew":        "Crew",
+        "scen_hz":         "{hz}-day cumulative infection scenarios",
+        "scen_note":       "(illustrative \u2014 not ECDC/WHO forecasts)",
+        "tl_heading":      "Outbreak timeline",
+        "snap_heading":    "Situation snapshot",
+        "snap_notif":      "Notification",
+        "snap_vessel":     "Vessel",
+        "snap_itinerary":  "Itinerary",
+        "snap_persons":    "Persons aboard",
+        "snap_counts":     "Cases (7 May)",
+        "snap_lab":        "Laboratory",
+        "snap_index":      "Index cases",
+        "snap_hypo":       "Working hypothesis",
+        "snap_risk":       "Population risk",
+        "dt_heading":      "Decision tree for investigators and clinicians",
+        "dt_explainer":    ("Each row is one branch: <em>if</em> the signal applies, take the control step. "
+                            "Teaching schematic from ECDC&rsquo;s preliminary assessment &mdash; not a substitute "
+                            "for national protocols or shipboard medical orders."),
+        "dt_col_num":      "#",
+        "dt_col_if":       "If you see\u2026",
+        "dt_col_then":     "Then do\u2026",
+        "dt_col_why":      "ECDC framing",
+        "r0_heading":      "R&#x2080; &amp; Spread Speed",
+        "r0_intro":        ("Orthohantaviruses are primarily <strong>rodent-borne</strong>. "
+                            "Person-to-person transmission is documented for "
+                            "<strong>Andes virus</strong> under close-contact conditions. "
+                            "Sin&nbsp;Nombre&ndash;type HPS in the U.S. is treated as a dead-end zoonotic spillover."),
+        "r0_pre_lbl":      "Andes (pre-control)",
+        "r0_post_lbl":     "Andes (post-control)",
+        "r0_dbl_lbl":      "Doubling (illustrative)",
+        "r0_snv_lbl":      "Sin Nombre (U.S. HPS)",
+        "r0_pre_val":      "<strong>{rp:g}</strong> &mdash; median R, Epu&yacute;n 2018&ndash;19",
+        "r0_post_val":     "<strong>{ro:g}</strong> &mdash; after isolation &amp; quarantine",
+        "r0_dbl_val":      "~{g}-day generations at R={rp:g} &rarr; scale &asymp; <strong>{td}</strong>",
+        "r0_snv_val":      "Human-to-human R &asymp; <strong>0</strong> for sustained spread",
+        "r0_src":          "Source",
+        "r0_src_txt":      "Martinez et al., NEJM 2020 &mdash; Andes person-to-person transmission",
+        "r0_src_note":     "R values describe the Epu&yacute;n outbreak, not a global constant.",
+        "r0_proj_intro":   "Crude geometric branching from a seed of <strong>{seed}</strong> index cases; ~<strong>{g}</strong>-day generation interval. Illustrative only.",
+        "r0_proj_cap":     "Cumulative modeled infections by generation",
+        "r0_col_gen":      "Gen.",
+        "r0_col_days":     "Days elapsed",
+        "r0_col_cum":      "Cumulative (crude)",
+        "src_heading":     "Public Sources to Monitor",
+        "src_intro":       "No single live API covers all orthohantavirus events. Use these official feeds; edit <code>data/outbreaks.json</code> and rebuild when new data arrive.",
+        "tbl_heading":     "Historical Outbreak Table",
+        "tbl_caption":     "Curated events and sources",
+        "tbl_event":       "Event",
+        "tbl_country":     "Country",
+        "tbl_year":        "Year",
+        "tbl_cases":       "Cases",
+        "tbl_deaths":      "Deaths",
+        "tbl_virus":       "Virus / syndrome",
+        "tbl_source":      "Source",
+        "ft_built":        "Built",
+        "ft_r0_lbl":       "R&#x2080; citation",
+        "ft_r0_txt":       "Martinez et al., NEJM &mdash; Andes person-to-person transmission",
+        "ft_cdc_lbl":      "CDC transmission",
+        "ft_cdc_txt":      "HPS transmission overview",
+        "ft_refresh":      "Hourly browser reload; data refresh requires running <code>scripts/build_tracker.py</code>.",
+        "ft_disclaimer":   "Not medical advice; consult public health authorities for outbreak response.",
+    },
+    "zh": {
+        "html_lang":       "zh-Hans",
+        "page_title_full": "汉坦病毒追踪器 \u2014 2026年游轮群聚事件",
+        "meta_desc":       "基于欧洲疾控中心评估的2026年游轮汉坦病毒群聚事件人口流向图与决策树，附基本再生数及历史疫情汇总。",
+        "skip":            "跳至主要内容",
+        "kicker":          "人畜共患与人传人背景",
+        "page_title":      "汉坦病毒追踪器",
+        "page_sub":        ("<strong>2026年游轮群聚事件</strong> &mdash; 人口流向图、"
+                            "决策树及欧洲疾控中心初步评估的45天情景预测。"
+                            "下方：历史疫情汇总表与文献基本再生数（R&#x2080;）背景。"
+                            "页面每小时自动刷新。"),
+        "switch_label":    "English",
+        "switch_href_en":  "zh/index.html",
+        "switch_href_zh":  "../index.html",
+        "stat_aboard":     "在船人数",
+        "stat_cases":      "病例数",
+        "stat_deaths":     "死亡数",
+        "stat_cfr":        "病死率",
+        "flow_heading":    "人口流向图与结局",
+        "fig_cap":         "色带宽度反映欧洲疾控中心计数：{cn}名接触者对比{kn}例群聚病例。柱状高度仅为视觉表示。",
+        "svg_head":        "总体",
+        "svg_split":       "分组",
+        "svg_outcomes":    "结局",
+        "svg_split_sub":   "接触者 / 病例群",
+        "contacts_lbl":    "接触者",
+        "contacts_p1":     "预防性隔离池",
+        "contacts_p2":     "预测：未感染",
+        "cluster_lbl":     "病例群",
+        "cluster_p1":      "预测：安第斯病毒",
+        "monitor_lbl":     "监测中",
+        "monitor_p1":      "暂无确诊感染",
+        "monitor_p2":      "截至2026年5月7日",
+        "pax_lbl":         "乘客",
+        "crew_lbl":        "船员",
+        "leg_pax":         "乘客",
+        "leg_crew":        "船员",
+        "scen_hz":         "{hz}天累计感染情景",
+        "scen_note":       "（仅供参考 \u2014 非欧洲疾控中心/世卫组织预测）",
+        "tl_heading":      "疫情时间轴",
+        "snap_heading":    "情况快报",
+        "snap_notif":      "通报",
+        "snap_vessel":     "船舶",
+        "snap_itinerary":  "行程",
+        "snap_persons":    "在船人数",
+        "snap_counts":     "病例（5月7日）",
+        "snap_lab":        "实验室",
+        "snap_index":      "指示病例",
+        "snap_hypo":       "工作假说",
+        "snap_risk":       "人群风险",
+        "dt_heading":      "调查人员和临床医生决策树",
+        "dt_explainer":    ("每行为一个分支：若信号符合，则执行控制步骤。"
+                            "本示意图基于欧洲疾控中心初步评估 &mdash; 不可替代国家协议或船上医疗指令。"),
+        "dt_col_num":      "序",
+        "dt_col_if":       "若发现\u2026",
+        "dt_col_then":     "则\u2026",
+        "dt_col_why":      "欧洲疾控中心依据",
+        "r0_heading":      "基本再生数（R&#x2080;）与传播速度",
+        "r0_intro":        ("正汉坦病毒主要为<strong>啮齿动物传播</strong>。"
+                            "已记录<strong>安第斯病毒</strong>在密切接触条件下可发生人传人传播。"
+                            "美国无名病毒（Sin Nombre）型HPS视为死端人畜共患溢出。"),
+        "r0_pre_lbl":      "安第斯（干预前）",
+        "r0_post_lbl":     "安第斯（干预后）",
+        "r0_dbl_lbl":      "倍增时间（示意）",
+        "r0_snv_lbl":      "无名病毒（美国HPS）",
+        "r0_pre_val":      "<strong>{rp:g}</strong> &mdash; 埃普延2018–19年中位R值",
+        "r0_post_val":     "<strong>{ro:g}</strong> &mdash; 隔离与检疫后",
+        "r0_dbl_val":      "约{g}天一代，R={rp:g} &rarr; 规模约 &asymp; <strong>{td}</strong>",
+        "r0_snv_val":      "持续人传人R &asymp; <strong>0</strong>",
+        "r0_src":          "来源",
+        "r0_src_txt":      "Martinez等，《新英格兰医学杂志》2020年 &mdash; 安第斯病毒人传人传播",
+        "r0_src_note":     "R值描述埃普延疫情，非全球常数。",
+        "r0_proj_intro":   "以<strong>{seed}</strong>个指示病例为种子的粗略几何分支；约<strong>{g}</strong>天一代；仅供参考。",
+        "r0_proj_cap":     "按代次累计模型感染数",
+        "r0_col_gen":      "代次",
+        "r0_col_days":     "已过天数",
+        "r0_col_cum":      "累计（粗略）",
+        "src_heading":     "监测数据来源",
+        "src_intro":       "目前无单一实时API覆盖全部正汉坦病毒事件。请使用以下官方渠道；有新数据时编辑<code>data/outbreaks.json</code>并重新构建。",
+        "tbl_heading":     "历史疫情汇总表",
+        "tbl_caption":     "精选事件与来源",
+        "tbl_event":       "事件",
+        "tbl_country":     "国家/地区",
+        "tbl_year":        "年份",
+        "tbl_cases":       "病例数",
+        "tbl_deaths":      "死亡数",
+        "tbl_virus":       "病毒/综合征",
+        "tbl_source":      "来源",
+        "ft_built":        "构建时间",
+        "ft_r0_lbl":       "R&#x2080; 引用",
+        "ft_r0_txt":       "Martinez等，《新英格兰医学杂志》 &mdash; 安第斯病毒人传人传播",
+        "ft_cdc_lbl":      "美国疾控中心传播说明",
+        "ft_cdc_txt":      "HPS传播概述",
+        "ft_refresh":      "每小时浏览器自动刷新；需重新运行<code>scripts/build_tracker.py</code>以更新数据。",
+        "ft_disclaimer":   "本页面不构成医疗建议；请咨询当地公共卫生机构进行疫情应对。",
+    },
+}
 
 
 # ── data loaders ─────────────────────────────────────────────────────────────
@@ -78,7 +290,7 @@ def _cubic_ribbon(x0: float, x1: float,
     )
 
 
-def build_sankey_svg(sk: dict, esc) -> str:
+def build_sankey_svg(sk: dict, esc, S: dict, lang: str = "en") -> str:
     """
     Three-column flow diagram: HEAD → SPLIT → OUTCOMES.
     Legend is rendered as HTML below the SVG (see build_cruise_section).
@@ -195,36 +407,40 @@ def build_sankey_svg(sk: dict, esc) -> str:
 
     lbls = []
 
+    aboard_lbl = S.get("stat_aboard", "Aboard")
+    pax_word   = S["pax_lbl"]
+    crew_word  = S["crew_lbl"]
+
     # ── HEAD label (col0, right) — generous 200 px horizontal room ────────────
     lbls.append(block(x0r + 16, (y_c0 + y_k1) / 2, [
-        (f"{ship} aboard",                     "700", "#121212", "11"),
-        (f"{pax} pax \u00b7 {crew} crew",      "400", "#444",   "10"),
-        (nat_disp,                             "400", "#6a2fa0", "9"),
-        (f"EWRS: {sk['ewrs_notification']}",   "400", "#bbb",   "8"),
-        (f"ECDC: {sk['ecdc_assessment']}",     "400", "#bbb",   "8"),
+        (f"{ship} {aboard_lbl}",                           "700", "#121212", "11"),
+        (f"{pax} {pax_word} \u00b7 {crew} {crew_word}",   "400", "#444",   "10"),
+        (nat_disp,                                         "400", "#6a2fa0", "9"),
+        (f"EWRS: {sk['ewrs_notification']}",               "400", "#bbb",   "8"),
+        (f"ECDC: {sk['ecdc_assessment']}",                 "400", "#bbb",   "8"),
     ]))
 
     # ── SPLIT contacts label (col1, right, upper band) ────────────────────────
     lbls.append(block(x1r + 16, (y_c0 + y_c1) / 2, [
-        ("Contacts",              "700", "#121212", "11"),
+        (S["contacts_lbl"],       "700", "#121212", "11"),
         (f"n = {contacts_n}",     "400", "#121212", "10"),
-        ("Precautionary pool",    "400", "#5a5a5a", "9"),
-        ("Predict: not infected", "400", "#57068c", "9"),
+        (S["contacts_p1"],        "400", "#5a5a5a", "9"),
+        (S["contacts_p2"],        "400", "#57068c", "9"),
     ]))
 
     # ── SPLIT cluster label (col1, right, lower band) ─────────────────────────
     lbls.append(block(x1r + 16, (y_k0 + y_k1) / 2, [
-        ("Cluster",                       "700", "#121212", "11"),
+        (S["cluster_lbl"],                "700", "#121212", "11"),
         (f"n = {cluster_n} \u00b7 5 PCR+","400", "#121212", "10"),
-        ("Predict: ANDV",                 "700", "#8b1a1a", "9"),
+        (S["cluster_p1"],                 "700", "#8b1a1a", "9"),
     ]))
 
     # ── OUTCOMES contacts-end label (col2, right, upper band — muted) ─────────
     lbls.append(block(x2r + 16, (y_c0 + y_c1) / 2, [
-        ("Under monitoring",       "700", "#bbb",  "10"),
-        (f"n = {contacts_n}",      "400", "#bbb",  "9"),
-        ("No infections confirmed","400", "#ccc",  "8.5"),
-        ("as of 7 May 2026",       "400", "#ccc",  "8.5"),
+        (S["monitor_lbl"],  "700", "#bbb",  "10"),
+        (f"n = {contacts_n}","400", "#bbb", "9"),
+        (S["monitor_p1"],   "400", "#ccc",  "8.5"),
+        (S["monitor_p2"],   "400", "#ccc",  "8.5"),
     ]))
 
     # ── OUTCOMES outcome labels (col2, right, outcome bands) ──────────────────
@@ -232,12 +448,15 @@ def build_sankey_svg(sk: dict, esc) -> str:
     for y_a, y_b, o in out_segs:
         seg_h    = y_b - y_a
         mid      = (y_a + y_b) / 2
+        raw_lbl  = o["label"]
+        lbl_str  = _OUTCOME_ZH.get(raw_lbl, raw_lbl) if lang == "zh" else raw_lbl
         nat      = o.get("nat", "")
         nat_code = o.get("nat_code", "")
         detail   = o.get("detail", "")
         bar_col  = o["color"]
-        nat_disp = f"{nat} [{nat_code}]" if nat else nat_code
-        lbl_line = f"{o['label']} \u00b7 {int(o['count'])}"
+        nat_str  = _NAT_ZH.get(nat, nat) if lang == "zh" else nat
+        nat_disp = f"{nat_str} [{nat_code}]" if nat_str else nat_code
+        lbl_line = f"{lbl_str} \u00b7 {int(o['count'])}"
 
         if seg_h >= 60:
             lh = 13.0
@@ -262,9 +481,9 @@ def build_sankey_svg(sk: dict, esc) -> str:
 
     # ── column headers ────────────────────────────────────────────────────────
     col_info = [
-        (x0l + BAR/2, "HEAD",     f"n = {ship}"),
-        (x1l + BAR/2, "SPLIT",    "Contacts / Cluster"),
-        (x2l + BAR/2, "OUTCOMES", "7 May 2026"),
+        (x0l + BAR/2, S["svg_head"],     f"n = {ship}"),
+        (x1l + BAR/2, S["svg_split"],    S["svg_split_sub"]),
+        (x2l + BAR/2, S["svg_outcomes"], "7 May 2026"),
     ]
     hdrs = []
     for cx, title, sub in col_info:
@@ -307,7 +526,7 @@ def build_sankey_svg(sk: dict, esc) -> str:
 
 # ── cruise section builder ────────────────────────────────────────────────────
 
-def build_cruise_section(c: dict) -> str:
+def build_cruise_section(c: dict, S: dict, lang: str = "en") -> str:
     esc = html_escape
     snap = c["situation_snapshot"]
     prim = c["primary_source"]
@@ -315,10 +534,10 @@ def build_cruise_section(c: dict) -> str:
     sk = c.get("sankey")
 
     # stat strip values
-    ship = int(sk["ship_n"]) if sk else 147
+    ship      = int(sk["ship_n"])    if sk else 147
     cluster_n = int(sk["cluster_n"]) if sk else 8
-    deaths = sum(int(o["count"]) for o in sk["outcomes"] if o.get("is_death")) if sk else 3
-    cfr_pct = round(deaths / cluster_n * 100)
+    deaths    = sum(int(o["count"]) for o in sk["outcomes"] if o.get("is_death")) if sk else 3
+    cfr_pct   = round(deaths / cluster_n * 100)
 
     sec_link = ""
     if sec:
@@ -330,7 +549,7 @@ def build_cruise_section(c: dict) -> str:
 
     svg_block = ""
     if sk:
-        svg_str  = build_sankey_svg(sk, esc)
+        svg_str  = build_sankey_svg(sk, esc, S, lang)
         pax_sk   = int(sk.get("passengers_n", 88))
         crew_sk  = int(sk.get("crew_n", 59))
 
@@ -343,17 +562,19 @@ def build_cruise_section(c: dict) -> str:
             )
 
         leg_items = [
-            chip("#57068c", f"Passengers ({pax_sk})"),
-            chip("#9b5ec4", f"Crew ({crew_sk})"),
+            chip("#57068c", f"{S['leg_pax']} ({pax_sk})"),
+            chip("#9b5ec4", f"{S['leg_crew']} ({crew_sk})"),
             '<span class="nat-div"></span>',
         ]
         for o in sk["outcomes"]:
-            nat   = o.get("nat", o["label"])
-            code  = o.get("nat_code", "")
-            cnt   = int(o["count"])
-            sfx   = " \u2020" if o.get("is_death") else ""
-            olbl  = o["label"].lower()
-            leg_items.append(chip(o["color"], f"{nat} [{code}] \u00b7 {cnt}{sfx} \u2014 {olbl}"))
+            raw_nat = o.get("nat", o["label"])
+            nat_l   = _NAT_ZH.get(raw_nat, raw_nat) if lang == "zh" else raw_nat
+            raw_lbl = o["label"]
+            lbl_l   = _OUTCOME_ZH.get(raw_lbl, raw_lbl) if lang == "zh" else raw_lbl
+            code    = o.get("nat_code", "")
+            cnt     = int(o["count"])
+            sfx     = " \u2020" if o.get("is_death") else ""
+            leg_items.append(chip(o["color"], f"{nat_l} [{code}] \u00b7 {cnt}{sfx} \u2014 {lbl_l}"))
 
         legend_html = (
             f'<div class="nat-legend" aria-label="Colour legend">'
@@ -361,14 +582,12 @@ def build_cruise_section(c: dict) -> str:
             f'</div>'
         )
 
+        fig_cap = S["fig_cap"].format(cn=sk["contacts_n"], kn=cluster_n)
         svg_block = f"""
       <div class="flow-wrap" role="region" aria-labelledby="flow-heading">
-        <h3 class="section-label" id="flow-heading">Population flow &amp; outcomes</h3>
+        <h3 class="section-label" id="flow-heading">{S['flow_heading']}</h3>
         <div class="flow-svg">{svg_str}</div>
-        <p class="fig-caption">
-          Ribbon widths reflect ECDC counts: {esc(str(sk['contacts_n']))} contacts
-          vs. {cluster_n} cluster cases. Bar heights are visual only.
-        </p>
+        <p class="fig-caption">{fig_cap}</p>
         {legend_html}
       </div>"""
 
@@ -380,19 +599,21 @@ def build_cruise_section(c: dict) -> str:
         cards_html = []
         card_classes = ["scen-a", "scen-b", "scen-c"]
         for i, s in enumerate(scenarios[:3]):
-            cls = card_classes[i] if i < len(card_classes) else "scen-a"
+            cls   = card_classes[i] if i < len(card_classes) else "scen-a"
+            slbl  = s.get("label_zh", s["label"])  if lang == "zh" else s["label"]
+            srule = s.get("rule_zh",  s["rule"])    if lang == "zh" else s["rule"]
             cards_html.append(
                 f'<div class="scen-card {cls}">'
-                f'<p class="scen-label">{esc(chr(65 + i))}. {esc(s["label"])}</p>'
+                f'<p class="scen-label">{esc(chr(65 + i))}. {esc(slbl)}</p>'
                 f'<p class="scen-pred">{esc(s["predict"])}</p>'
-                f'<p class="scen-rule">{esc(s["rule"])}</p>'
+                f'<p class="scen-rule">{esc(srule)}</p>'
                 f'</div>'
             )
         cards_s = "\n        ".join(cards_html)
         scen_block = (
             f'<div class="scen-wrap">'
-            f'<h3 class="section-label">{hz}-day cumulative infection scenarios '
-            f'<span class="label-note">(illustrative — not ECDC/WHO forecasts)</span></h3>'
+            f'<h3 class="section-label">{S["scen_hz"].format(hz=hz)} '
+            f'<span class="label-note">{S["scen_note"]}</span></h3>'
             f'<p class="explainer">{esc(sk["prediction_note"])}</p>'
             f'<div class="scen-strip">{cards_s}</div>'
             f'</div>'
@@ -405,15 +626,16 @@ def build_cruise_section(c: dict) -> str:
     if c.get("timeline"):
         items = []
         for evt in c["timeline"]:
+            ev_text = evt.get("event_zh", evt["event"]) if lang == "zh" else evt["event"]
             items.append(
                 f'<li class="tl-item">'
                 f'<span class="tl-date">{esc(evt["date"])}</span>'
-                f'<span class="tl-event">{esc(evt["event"])}</span>'
+                f'<span class="tl-event">{esc(ev_text)}</span>'
                 f'</li>'
             )
         timeline_html = (
             f'<div class="tl-wrap">'
-            f'<h3 class="section-label">Outbreak timeline</h3>'
+            f'<h3 class="section-label">{S["tl_heading"]}</h3>'
             f'<ol class="tl-list">{"".join(items)}</ol>'
             f'</div>'
         )
@@ -421,24 +643,30 @@ def build_cruise_section(c: dict) -> str:
     # Decision tree rows
     dt_rows = []
     for i, node in enumerate(c["decision_tree"], start=1):
-        depth = int(node["level"])
-        pad = 0.5 + depth * 1.1
+        depth    = int(node["level"])
+        pad      = 0.5 + depth * 1.1
+        if_text  = node.get("if_zh",   node["if"])   if lang == "zh" else node["if"]
+        then_text= node.get("then_zh", node["then"])  if lang == "zh" else node["then"]
+        note_text= node.get("note_zh", node["note"])  if lang == "zh" else node["note"]
         dt_rows.append(
             f'<tr class="dt-d{depth}">'
             f'<th scope="row" class="dt-num">{i}</th>'
-            f'<td class="dt-if" style="padding-left:{pad:.2f}rem">{esc(node["if"])}</td>'
-            f'<td class="dt-then">{esc(node["then"])}</td>'
-            f'<td class="dt-why">{esc(node["note"])}</td>'
+            f'<td class="dt-if" style="padding-left:{pad:.2f}rem">{esc(if_text)}</td>'
+            f'<td class="dt-then">{esc(then_text)}</td>'
+            f'<td class="dt-why">{esc(note_text)}</td>'
             f'</tr>'
         )
     dt_s = "\n          ".join(dt_rows)
+
+    label_disp = c.get("label_zh", c["label"]) if lang == "zh" else c["label"]
+    deck_disp  = c.get("deck_zh",  c["deck"])  if lang == "zh" else c["deck"]
 
     return f"""
   <section class="cruise-panel" aria-labelledby="cruise-heading">
     <div class="cruise-header">
       <p class="kicker-sm">MV Hondius · South Atlantic · May 2026</p>
-      <h2 class="headline" id="cruise-heading">{esc(c["label"])}</h2>
-      <p class="deck">{esc(c["deck"])}</p>
+      <h2 class="headline" id="cruise-heading">{esc(label_disp)}</h2>
+      <p class="deck">{esc(deck_disp)}</p>
       <p class="src-line"><a href="{esc(prim["url"])}">{esc(prim["name"])}</a></p>
       {sec_link}
     </div>
@@ -446,19 +674,19 @@ def build_cruise_section(c: dict) -> str:
     <div class="stat-strip" role="list" aria-label="Key figures">
       <div class="stat" role="listitem">
         <span class="stat-n">{ship}</span>
-        <span class="stat-label">Aboard</span>
+        <span class="stat-label">{S["stat_aboard"]}</span>
       </div>
       <div class="stat stat-cluster" role="listitem">
         <span class="stat-n">{cluster_n}</span>
-        <span class="stat-label">Cases</span>
+        <span class="stat-label">{S["stat_cases"]}</span>
       </div>
       <div class="stat stat-fatal" role="listitem">
         <span class="stat-n">{deaths}</span>
-        <span class="stat-label">Deaths</span>
+        <span class="stat-label">{S["stat_deaths"]}</span>
       </div>
       <div class="stat stat-cfr" role="listitem">
         <span class="stat-n">{cfr_pct}%</span>
-        <span class="stat-label">Case fatality</span>
+        <span class="stat-label">{S["stat_cfr"]}</span>
       </div>
     </div>
     {svg_block}
@@ -468,36 +696,32 @@ def build_cruise_section(c: dict) -> str:
 
     <div class="snapshot-grid">
       <div class="snapshot-block">
-        <h3 class="section-label">Situation snapshot</h3>
+        <h3 class="section-label">{S["snap_heading"]}</h3>
         <dl class="snap-dl">
-          <dt>Notification</dt><dd>{esc(snap.get("notification",""))}</dd>
-          <dt>Vessel</dt><dd>{esc(snap.get("vessel", snap.get("setting","—")))}</dd>
-          <dt>Itinerary</dt><dd>{esc(snap.get("itinerary","—"))}</dd>
-          <dt>Persons aboard</dt><dd>{esc(snap.get("persons_aboard","—"))}</dd>
-          <dt>Cases (7 May)</dt><dd>{esc(snap.get("counts_as_of_7_may", snap.get("counts_as_of_6_may","—")))}</dd>
-          <dt>Laboratory</dt><dd>{esc(snap.get("laboratory",""))}</dd>
-          <dt>Index cases</dt><dd>{esc(snap.get("index_cases","—"))}</dd>
-          <dt>Working hypothesis</dt><dd>{esc(snap.get("working_hypothesis",""))}</dd>
-          <dt>Population risk</dt><dd>{esc(snap.get("risk_eu_population",""))}</dd>
+          <dt>{S["snap_notif"]}</dt><dd>{esc(snap.get("notification",""))}</dd>
+          <dt>{S["snap_vessel"]}</dt><dd>{esc(snap.get("vessel", snap.get("setting","—")))}</dd>
+          <dt>{S["snap_itinerary"]}</dt><dd>{esc(snap.get("itinerary","—"))}</dd>
+          <dt>{S["snap_persons"]}</dt><dd>{esc(snap.get("persons_aboard","—"))}</dd>
+          <dt>{S["snap_counts"]}</dt><dd>{esc(snap.get("counts_as_of_7_may", snap.get("counts_as_of_6_may","—")))}</dd>
+          <dt>{S["snap_lab"]}</dt><dd>{esc(snap.get("laboratory",""))}</dd>
+          <dt>{S["snap_index"]}</dt><dd>{esc(snap.get("index_cases","—"))}</dd>
+          <dt>{S["snap_hypo"]}</dt><dd>{esc(snap.get("working_hypothesis",""))}</dd>
+          <dt>{S["snap_risk"]}</dt><dd>{esc(snap.get("risk_eu_population",""))}</dd>
         </dl>
       </div>
     </div>
 
     <div class="dt-wrap">
-      <h3 class="section-label">Decision tree for investigators and clinicians</h3>
-      <p class="explainer">
-        Each row is one branch: <em>if</em> the signal applies, take the control step.
-        Teaching schematic from ECDC's preliminary assessment — not a substitute
-        for national protocols or shipboard medical orders.
-      </p>
+      <h3 class="section-label">{S["dt_heading"]}</h3>
+      <p class="explainer">{S["dt_explainer"]}</p>
       <div class="dt-scroll" role="region" aria-label="Decision tree" tabindex="0">
         <table class="dt-table">
           <thead>
             <tr>
-              <th scope="col" class="dt-num">#</th>
-              <th scope="col" class="dt-if-h">If you see&hellip;</th>
-              <th scope="col">Then do&hellip;</th>
-              <th scope="col" class="dt-why-h">ECDC framing</th>
+              <th scope="col" class="dt-num">{S["dt_col_num"]}</th>
+              <th scope="col" class="dt-if-h">{S["dt_col_if"]}</th>
+              <th scope="col">{S["dt_col_then"]}</th>
+              <th scope="col" class="dt-why-h">{S["dt_col_why"]}</th>
             </tr>
           </thead>
           <tbody>
@@ -511,19 +735,20 @@ def build_cruise_section(c: dict) -> str:
 
 # ── outbreak table ────────────────────────────────────────────────────────────
 
-def build_table_rows(outbreaks: list) -> str:
+def build_table_rows(outbreaks: list, lang: str = "en") -> str:
     rows = []
     for o in outbreaks:
-        cases = o.get("cases")
-        deaths = o.get("deaths")
-        cases_s = f"{cases:,}" if isinstance(cases, int) else "—"
-        deaths_s = f"{deaths:,}" if isinstance(deaths, int) else "—"
-        label = html_escape(o.get("label", ""))
-        country = html_escape(o.get("country", ""))
-        year = html_escape(str(o.get("year", "")))
-        virus = html_escape(o.get("virus", ""))
-        url = html_escape(o.get("source_url", "#"))
-        src = html_escape(o.get("source_name", "Source"))
+        cases    = o.get("cases")
+        deaths   = o.get("deaths")
+        cases_s  = f"{cases:,}"  if isinstance(cases, int)  else "\u2014"
+        deaths_s = f"{deaths:,}" if isinstance(deaths, int) else "\u2014"
+        raw_lbl  = o.get("label_zh", o.get("label", "")) if lang == "zh" else o.get("label", "")
+        label    = html_escape(raw_lbl)
+        country  = html_escape(o.get("country", ""))
+        year     = html_escape(str(o.get("year", "")))
+        virus    = html_escape(o.get("virus", ""))
+        url      = html_escape(o.get("source_url", "#"))
+        src      = html_escape(o.get("source_name", "Source"))
         rows.append(
             f'<tr><th scope="row">{label}</th><td>{country}</td>'
             f'<td>{year}</td><td>{cases_s}</td><td>{deaths_s}</td>'
@@ -558,22 +783,39 @@ def main() -> None:
     proj_rows_s = "\n            ".join(proj_rows)
 
     network_note = try_fetch_cdc_status()
-    built = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    built  = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     cruise = load_cruise()
-    cruise_html = (
-        build_cruise_section(cruise) if cruise
-        else '<section class="cruise-panel"><p>Missing cruise_outbreak_2026.json.</p></section>'
-    )
-    table_body = build_table_rows(outbreaks)
 
-    html = f"""<!DOCTYPE html>
-<html lang="en">
+    for lang in ("en", "zh"):
+        S          = STRINGS[lang]
+        OUT        = OUT_HTML if lang == "en" else OUT_HTML_ZH
+        OUT.parent.mkdir(parents=True, exist_ok=True)
+        switch_href = S["switch_href_en"] if lang == "en" else S["switch_href_zh"]
+        lang_bar = (
+            f'<div class="lang-bar">'
+            f'<a href="{switch_href}">{S["switch_label"]}</a>'
+            f'</div>'
+        )
+        cruise_html = (
+            build_cruise_section(cruise, S, lang) if cruise
+            else '<section class="cruise-panel"><p>Missing cruise_outbreak_2026.json.</p></section>'
+        )
+        table_body = build_table_rows(outbreaks, lang)
+
+        # Extract R0 display strings for this language
+        r0_pre_val  = S["r0_pre_val"].format(rp=r_pre)
+        r0_post_val = S["r0_post_val"].format(ro=r_post)
+        r0_dbl_val  = S["r0_dbl_val"].format(g=int(g), rp=r_pre, td=html_escape(td_s))
+        r0_proj_intro = S["r0_proj_intro"].format(seed=seed, g=int(g))
+
+        html = f"""<!DOCTYPE html>
+<html lang="{S['html_lang']}">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <meta http-equiv="refresh" content="3600"/>
-  <title>Hantavirus Tracker &mdash; 2026 cruise cluster &amp; R&#x2080; context</title>
-  <meta name="description" content="ECDC-sourced flow diagram and decision tree for the 2026 cruise-ship hantavirus cluster, plus R\u2080 data and historical outbreak table."/>
+  <title>{S['page_title_full']}</title>
+  <meta name="description" content="{S['meta_desc']}"/>
   <style>
     :root {{
       --violet:      #57068c;
@@ -1050,6 +1292,22 @@ def main() -> None:
     footer p {{ margin: 0.25rem 0; }}
     footer ul {{ margin: 0.5rem 0 0; padding-left: 1.1rem; }}
 
+    /* ── language switcher bar ──────────────────────────────────────────────── */
+    .lang-bar {{
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--violet);
+      text-align: right;
+      padding: 0.3rem 1.5rem;
+      font-size: 0.78rem;
+    }}
+    .lang-bar a {{
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }}
+    .lang-bar a:hover {{ text-decoration: underline; }}
+
     /* ── mobile-first responsive overrides ─────────────────────────────────── */
     @media (max-width: 640px) {{
 
@@ -1114,16 +1372,12 @@ def main() -> None:
   </style>
 </head>
 <body>
-  <a class="skip" href="#main">Skip to main content</a>
+  {lang_bar}
+  <a class="skip" href="#main">{S["skip"]}</a>
   <header class="page-header">
-    <p class="page-kicker">Zoonotic &amp; person-to-person context</p>
-    <h1 class="page-title">Hantavirus Tracker</h1>
-    <p class="page-sub">
-      <strong>May 2026 cruise-ship cluster</strong> &mdash; population flow diagram,
-      decision tree, and 28-day scenarios from ECDC&rsquo;s preliminary assessment.
-      Below: historical outbreak table and literature-based R&#x2080; context.
-      Page auto-refreshes every 24 h; rebuild the HTML daily to update the timestamp.
-    </p>
+    <p class="page-kicker">{S["kicker"]}</p>
+    <h1 class="page-title">{S["page_title"]}</h1>
+    <p class="page-sub">{S["page_sub"]}</p>
   </header>
 
   <main id="main">
@@ -1131,45 +1385,35 @@ def main() -> None:
     {cruise_html}
 
     <section class="panel" aria-labelledby="r0-heading">
-      <h2 class="panel-title" id="r0-heading">R&#x2080; &amp; Spread Speed</h2>
+      <h2 class="panel-title" id="r0-heading">{S["r0_heading"]}</h2>
       <div class="r0-inner">
         <div>
-          <p style="margin:0 0 0.7rem;font-size:0.92rem;">
-            Orthohantaviruses are primarily <strong>rodent-borne</strong>.
-            Person-to-person transmission is documented for
-            <strong>Andes virus</strong> under close-contact conditions.
-            Sin&nbsp;Nombre&ndash;type HPS in the U.S. is treated as
-            a dead-end zoonotic spillover.
-          </p>
+          <p style="margin:0 0 0.7rem;font-size:0.92rem;">{S["r0_intro"]}</p>
           <dl class="metrics-dl">
-            <dt>Andes (pre-control)</dt>
-            <dd><strong>{r_pre:g}</strong> &mdash; median R, Epu&yacute;n 2018&ndash;19</dd>
-            <dt>Andes (post-control)</dt>
-            <dd><strong>{r_post:g}</strong> &mdash; after isolation &amp; quarantine</dd>
-            <dt>Doubling (illustrative)</dt>
-            <dd>~{int(g)}-day generations at R={r_pre:g} &rarr; scale &asymp; <strong>{html_escape(td_s)}</strong></dd>
-            <dt>Sin Nombre (U.S. HPS)</dt>
-            <dd>Human-to-human R &asymp; <strong>0</strong> for sustained spread</dd>
+            <dt>{S["r0_pre_lbl"]}</dt>
+            <dd>{r0_pre_val}</dd>
+            <dt>{S["r0_post_lbl"]}</dt>
+            <dd>{r0_post_val}</dd>
+            <dt>{S["r0_dbl_lbl"]}</dt>
+            <dd>{r0_dbl_val}</dd>
+            <dt>{S["r0_snv_lbl"]}</dt>
+            <dd>{S["r0_snv_val"]}</dd>
           </dl>
           <div class="callout">
-            <strong>Source:</strong>
-            Martinez et al., NEJM 2020 &mdash;
-            <a href="{html_escape(rref["andes_url"])}">Andes person-to-person transmission</a>.
-            R values describe the Epu&yacute;n outbreak, not a global constant.
+            <strong>{S["r0_src"]}:</strong>
+            <a href="{html_escape(rref["andes_url"])}">{S["r0_src_txt"]}</a>.
+            {S["r0_src_note"]}
           </div>
         </div>
         <div>
-          <p style="margin:0 0 0.5rem;font-size:0.88rem;">
-            Crude geometric branching from a seed of <strong>{seed}</strong> index cases;
-            ~<strong>{int(g)}</strong>-day generation interval. Illustrative only.
-          </p>
+          <p style="margin:0 0 0.5rem;font-size:0.88rem;">{r0_proj_intro}</p>
           <table class="data">
-            <caption>Cumulative modeled infections by generation</caption>
+            <caption>{S["r0_proj_cap"]}</caption>
             <thead>
               <tr>
-                <th scope="col">Gen.</th>
-                <th scope="col">Days elapsed</th>
-                <th scope="col">Cumulative (crude)</th>
+                <th scope="col">{S["r0_col_gen"]}</th>
+                <th scope="col">{S["r0_col_days"]}</th>
+                <th scope="col">{S["r0_col_cum"]}</th>
               </tr>
             </thead>
             <tbody>
@@ -1181,11 +1425,8 @@ def main() -> None:
     </section>
 
     <section class="panel" aria-labelledby="sources-heading">
-      <h2 class="panel-title" id="sources-heading">Public Sources to Monitor</h2>
-      <p style="margin:0 0 0.75rem;font-size:0.88rem;">
-        No single live API covers all orthohantavirus events.
-        Use these official feeds; edit <code>data/outbreaks.json</code> and rebuild when new data arrive.
-      </p>
+      <h2 class="panel-title" id="sources-heading">{S["src_heading"]}</h2>
+      <p style="margin:0 0 0.75rem;font-size:0.88rem;">{S["src_intro"]}</p>
       <ul class="sources-ul">
         <li><a href="https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON599">WHO DON599 &mdash; MV Hondius cluster (4 May 2026)</a></li>
         <li><a href="https://www.ecdc.europa.eu/en/publications-data/hantavirus-associated-cluster-illness-cruise-ship-ecdc-assessment-and">ECDC &mdash; Cruise ship cluster assessment (6 May 2026)</a></li>
@@ -1193,24 +1434,24 @@ def main() -> None:
         <li><a href="https://www.ecdc.europa.eu/en/infectious-disease-topics/hantavirus-infection">ECDC &mdash; Hantavirus factsheet</a></li>
         <li><a href="https://www.who.int/emergencies/disease-outbreak-news">WHO &mdash; Disease Outbreak News (all)</a></li>
         <li><a href="https://www.paho.org/en/topics/hantavirus">PAHO &mdash; Hantavirus Americas</a></li>
-        <li><a href="https://promedmail.org/">ProMED-mail (search &ldquo;hantavirus&rdquo;)</a></li>
+        <li><a href="https://promedmail.org/">ProMED-mail</a></li>
       </ul>
     </section>
 
     <section class="panel" aria-labelledby="table-heading">
-      <h2 class="panel-title" id="table-heading">Historical Outbreak Table</h2>
+      <h2 class="panel-title" id="table-heading">{S["tbl_heading"]}</h2>
       <div class="table-scroll-wrap">
         <table class="data">
-          <caption>Curated events and sources</caption>
+          <caption>{S["tbl_caption"]}</caption>
           <thead>
             <tr>
-              <th scope="col">Event</th>
-              <th scope="col">Country</th>
-              <th scope="col">Year</th>
-              <th scope="col">Cases</th>
-              <th scope="col">Deaths</th>
-              <th scope="col">Virus / syndrome</th>
-              <th scope="col">Source</th>
+              <th scope="col">{S["tbl_event"]}</th>
+              <th scope="col">{S["tbl_country"]}</th>
+              <th scope="col">{S["tbl_year"]}</th>
+              <th scope="col">{S["tbl_cases"]}</th>
+              <th scope="col">{S["tbl_deaths"]}</th>
+              <th scope="col">{S["tbl_virus"]}</th>
+              <th scope="col">{S["tbl_source"]}</th>
             </tr>
           </thead>
           <tbody>
@@ -1223,25 +1464,25 @@ def main() -> None:
   </main>
 
   <footer>
-    <p><strong>Built:</strong> {html_escape(built)}</p>
-    <p><strong>R&#x2080; citation:</strong>
-      <a href="{html_escape(rref["andes_url"])}">Martinez et al., NEJM &mdash; Andes person-to-person transmission</a>.
+    <p><strong>{S["ft_built"]}:</strong> {html_escape(built)}</p>
+    <p><strong>{S["ft_r0_lbl"]}:</strong>
+      <a href="{html_escape(rref["andes_url"])}">{S["ft_r0_txt"]}</a>.
     </p>
-    <p><strong>CDC transmission:</strong>
-      <a href="{html_escape(rref["sin_nombre_url"])}">HPS transmission overview</a>.
+    <p><strong>{S["ft_cdc_lbl"]}:</strong>
+      <a href="{html_escape(rref["sin_nombre_url"])}">{S["ft_cdc_txt"]}</a>.
     </p>
     {"<p><strong>Network check:</strong> " + html_escape(network_note) + "</p>" if network_note else ""}
     <ul>
-      <li>Daily browser reload set to 24 h; data refresh requires running <code>scripts/build_tracker.py</code>.</li>
-      <li>Not medical advice; consult public health authorities for outbreak response.</li>
+      <li>{S["ft_refresh"]}</li>
+      <li>{S["ft_disclaimer"]}</li>
     </ul>
   </footer>
 </body>
 </html>
 """
 
-    OUT_HTML.write_text(html, encoding="utf-8")
-    print(f"Wrote {OUT_HTML}")
+        OUT.write_text(html, encoding="utf-8")
+        print(f"Wrote {OUT}")
 
 
 if __name__ == "__main__":
