@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta http-equiv="refresh" content="86400"/>
+  <title>Hantavirus Tracker &mdash; 2026 cruise cluster &amp; R&#x2080; context</title>
+  <meta name="description" content="ECDC-sourced flow diagram and decision tree for the 2026 cruise-ship hantavirus cluster, plus R₀ data and historical outbreak table."/>
+  <style>
+    :root {
+      --violet:      #57068c;
+      --violet-dk:   #3d045f;
+      --violet-md:   #7b3aac;
+      --violet-lt:   #e8dff4;
+      --ink:         #121212;
+      --ink-soft:    #484848;
+      --muted:       #727272;
+      --rule:        #e2e2e2;
+      --paper:       #faf9f7;
+      --white:       #ffffff;
+      --fatal:       #8b1a1a;
+      --icu:         #cc4400;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper);
+    }
+
+    a { color: var(--violet-dk); }
+    a:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+
+    .skip {
+      position: absolute; left: -9999px; top: auto; width: 1px; height: 1px;
+      overflow: hidden;
+    }
+    .skip:focus {
+      position: static; width: auto; height: auto;
+      padding: 0.5rem 1rem; background: var(--white);
+    }
+
+    /* ── page header ───────────────────────────────────────────────────────── */
+    .page-header {
+      border-bottom: 3px solid var(--violet);
+      background: var(--white);
+      padding: 1.1rem 1.5rem 1rem;
+    }
+    .page-kicker {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.3rem;
+    }
+    .page-title {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .page-sub {
+      margin: 0.45rem 0 0;
+      max-width: 52rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* ── main wrapper ──────────────────────────────────────────────────────── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ── generic panel ─────────────────────────────────────────────────────── */
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 1.1rem 1.25rem;
+    }
+    .panel-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--violet);
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 0.4rem;
+      margin: 0 0 0.85rem;
+    }
+
+    /* ── cruise panel ──────────────────────────────────────────────────────── */
+    .cruise-panel {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-top: 4px solid var(--ink);
+    }
+    .cruise-header {
+      padding: 1.1rem 1.25rem 0.9rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .kicker-sm {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.35rem;
+    }
+    .headline {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin: 0 0 0.55rem;
+    }
+    .deck {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.97rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      margin: 0 0 0.6rem;
+      max-width: 44rem;
+    }
+    .src-line {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0 0 0.2rem;
+      line-height: 1.4;
+    }
+    .src-line a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ── stat strip ────────────────────────────────────────────────────────── */
+    .stat-strip {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .stat {
+      flex: 1;
+      padding: 0.9rem 1.25rem;
+      border-right: 1px solid var(--rule);
+      border-left: 4px solid var(--violet);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-cluster { border-left-color: var(--violet-md); }
+    .stat-fatal   { border-left-color: var(--fatal); }
+    .stat-cfr     { border-left-color: var(--icu); }
+    .stat-n {
+      display: block;
+      font-size: 2.15rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+    .stat-label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ── flow diagram ──────────────────────────────────────────────────────── */
+    .flow-wrap {
+      padding: 1.1rem 1.25rem 0.75rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin: 0 0 0.5rem;
+    }
+    .label-note {
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--muted);
+    }
+    .flow-svg {
+      width: 100%;
+      max-width: 840px;
+      overflow-x: auto;
+    }
+    .flow-svg svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .fig-caption {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin: 0.45rem 0 0;
+      max-width: 52rem;
+    }
+    .explainer {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      max-width: 46rem;
+      margin: 0 0 0.75rem;
+      line-height: 1.5;
+    }
+
+    /* ── scenario cards ────────────────────────────────────────────────────── */
+    .scen-wrap {
+      padding: 1.1rem 1.25rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .scen-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+      gap: 0.9rem;
+    }
+    .scen-card {
+      padding: 0.8rem 1rem;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-top: 3px solid;
+    }
+    .scen-a { border-top-color: var(--violet); }
+    .scen-b { border-top-color: var(--violet-md); }
+    .scen-c { border-top-color: var(--icu); }
+    .scen-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.4rem;
+    }
+    .scen-pred {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0 0 0.35rem;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .scen-rule {
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* ── snapshot ──────────────────────────────────────────────────────────── */
+    .snapshot-grid {
+      padding: 1.1rem 1.25rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .snap-dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: minmax(8rem, 12rem) 1fr;
+      gap: 0.4rem 1.25rem;
+      font-size: 0.88rem;
+      max-width: 52rem;
+    }
+    .snap-dl dt { color: var(--muted); font-weight: 600; margin: 0; }
+    .snap-dl dd { margin: 0; line-height: 1.5; }
+
+    /* ── decision tree ─────────────────────────────────────────────────────── */
+    .dt-wrap {
+      padding: 1.1rem 1.25rem 1.25rem;
+    }
+    .dt-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 0.5rem;
+    }
+    .dt-table {
+      width: 100%;
+      min-width: 34rem;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .dt-table thead th {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 700;
+      text-align: left;
+      padding: 0.55rem 0.6rem 0.45rem 0;
+      border-bottom: 2px solid var(--ink);
+      background: var(--paper);
+    }
+    .dt-table th.dt-num { width: 2.5rem; }
+    .dt-table th.dt-if-h { width: 30%; }
+    .dt-table th.dt-why-h { width: 28%; }
+    .dt-table tbody tr { border-bottom: 1px solid var(--rule); }
+    .dt-table tbody tr:last-child { border-bottom: none; }
+    .dt-table tbody td, .dt-table tbody th {
+      padding: 0.7rem 0.6rem 0.7rem 0;
+      vertical-align: top;
+      line-height: 1.45;
+    }
+    .dt-table .dt-num { color: var(--muted); font-weight: 700; }
+    .dt-table .dt-if { font-weight: 600; }
+    .dt-table .dt-why { font-size: 0.82rem; color: var(--ink-soft); }
+    tr.dt-d1 .dt-if { padding-left: 1.1rem; border-left: 3px solid #d9d9d9; }
+    tr.dt-d2 .dt-if { padding-left: 2.2rem; border-left: 3px solid #efefef; }
+
+    /* ── R0 panel ──────────────────────────────────────────────────────────── */
+    .r0-inner {
+      display: grid;
+      gap: 1.25rem;
+    }
+    @media (min-width: 700px) {
+      .r0-inner { grid-template-columns: 1fr 1fr; }
+    }
+    .metrics-dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.35rem 1rem;
+      font-size: 0.88rem;
+    }
+    .metrics-dl dt { color: var(--muted); font-weight: 600; margin: 0; }
+    .metrics-dl dd { margin: 0; }
+    .callout {
+      background: var(--violet-lt);
+      border-left: 4px solid var(--violet);
+      padding: 0.7rem 1rem;
+      margin: 0.85rem 0 0;
+      font-size: 0.88rem;
+    }
+
+    /* ── generic data table ────────────────────────────────────────────────── */
+    table.data {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    table.data caption {
+      text-align: left;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    table.data th, table.data td {
+      border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 0.35rem;
+      vertical-align: top;
+      text-align: left;
+    }
+    table.data thead th {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      font-weight: 700;
+      border-bottom: 2px solid var(--ink);
+    }
+    table.data tbody th { font-weight: 600; }
+    .table-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    /* ── sources list ──────────────────────────────────────────────────────── */
+    .sources-ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: 0.5rem;
+      font-size: 0.88rem;
+    }
+    .sources-ul li a {
+      display: block;
+      padding: 0.5rem 0.65rem;
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      color: var(--violet-dk);
+      text-decoration: none;
+    }
+    .sources-ul li a:hover { background: var(--violet-lt); }
+
+    /* ── footer ────────────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 1rem 1.5rem 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    footer p { margin: 0.25rem 0; }
+    footer ul { margin: 0.5rem 0 0; padding-left: 1.1rem; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header class="page-header">
+    <p class="page-kicker">Zoonotic &amp; person-to-person context</p>
+    <h1 class="page-title">Hantavirus Tracker</h1>
+    <p class="page-sub">
+      <strong>May 2026 cruise-ship cluster</strong> &mdash; population flow diagram,
+      decision tree, and 28-day scenarios from ECDC&rsquo;s preliminary assessment.
+      Below: historical outbreak table and literature-based R&#x2080; context.
+      Page auto-refreshes every 24 h; rebuild the HTML daily to update the timestamp.
+    </p>
+  </header>
+
+  <main id="main">
+
+    
+  <section class="cruise-panel" aria-labelledby="cruise-heading">
+    <div class="cruise-header">
+      <p class="kicker-sm">MV Hondius · South Atlantic · May 2026</p>
+      <h2 class="headline" id="cruise-heading">Hantavirus-associated cluster on a Dutch-flag cruise ship (2026)</h2>
+      <p class="deck">Facts below follow the European Centre for Disease Prevention and Control preliminary assessment of 6 May 2026. The incident is described as rapidly evolving.</p>
+      <p class="src-line"><a href="https://www.ecdc.europa.eu/en/publications-data/hantavirus-associated-cluster-illness-cruise-ship-ecdc-assessment-and">ECDC — Hantavirus-associated cluster of illness on a cruise ship</a></p>
+      <p class="src-line"><a href="https://www.who.int/papuanewguinea/news/detail-global/07-05-2026-who-s-response-to-hantavirus-cases-linked-to-a-cruise-ship">WHO — Response to hantavirus cases linked to a cruise ship</a></p>
+    </div>
+
+    <div class="stat-strip" role="list" aria-label="Key figures">
+      <div class="stat" role="listitem">
+        <span class="stat-n">149</span>
+        <span class="stat-label">Aboard</span>
+      </div>
+      <div class="stat stat-cluster" role="listitem">
+        <span class="stat-n">7</span>
+        <span class="stat-label">Cases</span>
+      </div>
+      <div class="stat stat-fatal" role="listitem">
+        <span class="stat-n">3</span>
+        <span class="stat-label">Deaths</span>
+      </div>
+      <div class="stat stat-cfr" role="listitem">
+        <span class="stat-n">43%</span>
+        <span class="stat-label">Case fatality</span>
+      </div>
+    </div>
+    
+      <div class="flow-wrap" role="region" aria-labelledby="flow-heading">
+        <h3 class="section-label" id="flow-heading">Population flow &amp; outcomes</h3>
+        <div class="flow-svg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 500" role="img" aria-label="MV Hondius flow: 149 aboard, 7 HPS-compatible cases, 3 deaths — as of 6 May 2026"><title>MV Hondius flow: 149 aboard, 7 HPS-compatible cases, 3 deaths — as of 6 May 2026</title><rect width="840" height="500" fill="#f9f9f7"/><g>
+    <path d="M74.00,72.00 C169.00,72.00 169.00,72.00 264.00,72.00 L264.00,292.00 C169.00,292.00 169.00,292.00 74.00,292.00Z" fill="#e5dff4" fill-opacity="0.80"/>
+    <path d="M74.00,300.00 C169.00,300.00 169.00,300.00 264.00,300.00 L264.00,400.00 C169.00,400.00 169.00,400.00 74.00,400.00Z" fill="#d8d0ee" fill-opacity="0.80"/>
+    <path d="M280.00,300.00 C375.00,300.00 375.00,300.00 470.00,300.00 L470.00,377.14 C375.00,377.14 375.00,342.86 280.00,342.86Z" fill="#cfc6e4" fill-opacity="0.72"/>
+    <path d="M280.00,342.86 C375.00,342.86 375.00,377.14 470.00,377.14 L470.00,402.86 C375.00,402.86 375.00,357.14 280.00,357.14Z" fill="#cfc6e4" fill-opacity="0.72"/>
+    <path d="M280.00,357.14 C375.00,357.14 375.00,402.86 470.00,402.86 L470.00,454.29 C375.00,454.29 375.00,385.71 280.00,385.71Z" fill="#cfc6e4" fill-opacity="0.72"/>
+    <path d="M280.00,385.71 C375.00,385.71 375.00,454.29 470.00,454.29 L470.00,480.00 C375.00,480.00 375.00,400.00 280.00,400.00Z" fill="#cfc6e4" fill-opacity="0.72"/>
+  </g><g>
+    <rect x="58.0" y="72.00" width="16" height="220.00" fill="#57068c" rx="2"/>
+    <rect x="58.0" y="300.00" width="16" height="100.00" fill="#7b3aac" rx="2"/>
+    <rect x="264.0" y="72.00" width="16" height="220.00" fill="#57068c" rx="2"/>
+    <rect x="264.0" y="300.00" width="16" height="100.00" fill="#7b3aac" rx="2"/>
+    <rect x="470.0" y="300.00" width="16" height="77.14" fill="#4a1942" rx="2"/>
+    <rect x="470.0" y="377.14" width="16" height="25.71" fill="#6b2d5c" rx="2"/>
+    <rect x="470.0" y="402.86" width="16" height="51.43" fill="#57068c" rx="2"/>
+    <rect x="470.0" y="454.29" width="16" height="25.71" fill="#9b7cb8" rx="2"/>
+  </g><g>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="700" fill="#aaa" text-anchor="middle" x="66.0" y="47">HEAD</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8px" fill="#ccc" text-anchor="middle" x="66.0" y="59">n = 149</text>
+    <line x1="66.0" y1="63" x2="66.0" y2="72" stroke="#ddd" stroke-width="1"/>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="700" fill="#aaa" text-anchor="middle" x="272.0" y="47">SPLIT</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8px" fill="#ccc" text-anchor="middle" x="272.0" y="59">Contacts / Cluster</text>
+    <line x1="272.0" y1="63" x2="272.0" y2="72" stroke="#ddd" stroke-width="1"/>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8.5px" font-weight="700" fill="#aaa" text-anchor="middle" x="478.0" y="47">OUTCOMES</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="8px" fill="#ccc" text-anchor="middle" x="478.0" y="59">6 May 2026</text>
+    <line x1="478.0" y1="63" x2="478.0" y2="72" stroke="#ddd" stroke-width="1"/>
+  </g><g>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="11px" font-weight="700" fill="#121212" x="88.00" y="212.90">HEAD</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10.5px" font-weight="400" fill="#121212" x="88.00" y="226.90">n = 149 aboard</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="400" fill="#5a5a5a" x="88.00" y="240.90">Values: [142, 7]</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#999" x="88.00" y="254.90">2 May 2026 — EWRS</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#999" x="88.00" y="268.90">6 May 2026 — ECDC</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="11px" font-weight="700" fill="#121212" x="294.00" y="165.90">Contacts (monitoring)</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10.5px" font-weight="400" fill="#121212" x="294.00" y="179.90">n = 142</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="400" fill="#5a5a5a" x="294.00" y="193.90">Precautionary pool</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="400" fill="#57068c" x="294.00" y="207.90">Predict: not infected</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="11px" font-weight="700" fill="#121212" x="294.00" y="333.90">Cluster</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10.5px" font-weight="400" fill="#121212" x="294.00" y="347.90">n = 7 · 3 PCR+</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="400" fill="#5a5a5a" x="294.00" y="361.90">HPS-compatible illness</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="700" fill="#8b1a1a" x="294.00" y="375.90">Predict: ANDV</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="700" fill="#bbb" x="500.00" y="165.90">Under monitoring</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9.5px" font-weight="400" fill="#bbb" x="500.00" y="179.90">n = 142</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#ccc" x="500.00" y="193.90">No confirmed infections</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#ccc" x="500.00" y="207.90">as of 6 May 2026</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="700" fill="#121212" x="500.00" y="333.67">Fatal · 3</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#5a5a5a" x="500.00" y="347.67">Confirmed hantavirus</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="700" fill="#121212" x="500.00" y="385.45">ICU (medevac ZA) · 1</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#5a5a5a" x="500.00" y="398.45">Evacuated — S. Africa ICU</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="10px" font-weight="700" fill="#121212" x="500.00" y="423.67">Symptomatic on board · 2</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#5a5a5a" x="500.00" y="437.67">On board; medical assist.</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="700" fill="#121212" x="500.00" y="462.59">Post-disembark (CH) · 1</text>
+    <text font-family="Arial,Helvetica,sans-serif" font-size="9px" font-weight="400" fill="#5a5a5a" x="500.00" y="475.59">Diagnosed post-disembark (CH)</text>
+  </g><text font-family="Arial,Helvetica,sans-serif" font-size="8px" fill="#ccc" x="8" y="492">Bar heights are visual — not proportional. 7 cases / 149 aboard = 4.7%.</text></svg></div>
+        <p class="fig-caption">
+          Ribbon widths follow ECDC counts for the ship split
+          (142 contacts vs. 7 cluster).
+          Bar heights are visual only.
+        </p>
+      </div>
+    <div class="scen-wrap"><h3 class="section-label">28-day cumulative infection scenarios <span class="label-note">(illustrative — not ECDC/WHO forecasts)</span></h3><p class="explainer">Scenario bands are illustrative only: they blend observed counts with simple branching intuition (post-control R≈0.96 vs. delayed isolation). They are not ECDC or WHO forecasts.</p><div class="scen-strip"><div class="scen-card scen-a"><p class="scen-label">A. Strong on-board IPC</p><p class="scen-pred">7–10 cumulative infected</p><p class="scen-rule">Analogous to Andes post-control R≈0.96</p></div>
+        <div class="scen-card scen-b"><p class="scen-label">B. Base (incubation tail)</p><p class="scen-pred">10–16 cumulative infected</p><p class="scen-rule">Some contacts still inside 7–42 d window</p></div>
+        <div class="scen-card scen-c"><p class="scen-label">C. Stress test</p><p class="scen-pred">14–26 cumulative infected</p><p class="scen-rule">Crowding + late isolation (upper tail)</p></div></div></div>
+
+    <div class="snapshot-grid">
+      <div class="snapshot-block">
+        <h3 class="section-label">Situation snapshot</h3>
+        <dl class="snap-dl">
+          <dt>Notification</dt><dd>ECDC notified 2 May 2026 by the Netherlands through the EU Early Warning and Response System (EWRS).</dd>
+          <dt>Setting</dt><dd>Cruise ship in the South Atlantic; Dutch flag; ~149 people on board from 23 nationalities (including passengers and crew from multiple EU/EEA countries).</dd>
+          <dt>Cases (6 May)</dt><dd>Seven cases in the hantavirus-associated cluster: three deaths; one person medically evacuated to South Africa and in intensive care; two symptomatic on board; one person diagnosed after disembarking and returning to Switzerland.</dd>
+          <dt>Laboratory</dt><dd>Samples from two patients PCR-positive for hantavirus; one additional patient PCR-positive for Andes virus (ANDV). Further laboratory work ongoing.</dd>
+          <dt>Working hypothesis</dt><dd>Some travellers may have been exposed to ANDV in Argentina before embarkation (endemic area), with subsequent transmission to others on board during close, prolonged contact in a closed setting.</dd>
+          <dt>EU/EEA population risk</dt><dd>ECDC: risk to the general EU/EEA population from spread off the ship is assessed as very low when infection prevention and control measures are applied; ANDV rodent reservoir is not expected to establish in Europe.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="dt-wrap">
+      <h3 class="section-label">Decision tree for investigators and clinicians</h3>
+      <p class="explainer">
+        Each row is one branch: <em>if</em> the signal applies, take the control step.
+        Teaching schematic from ECDC's preliminary assessment — not a substitute
+        for national protocols or shipboard medical orders.
+      </p>
+      <div class="dt-scroll" role="region" aria-label="Decision tree" tabindex="0">
+        <table class="dt-table">
+          <thead>
+            <tr>
+              <th scope="col" class="dt-num">#</th>
+              <th scope="col" class="dt-if-h">If you see&hellip;</th>
+              <th scope="col">Then do&hellip;</th>
+              <th scope="col" class="dt-why-h">ECDC framing</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr class="dt-d0"><th scope="row" class="dt-num">1</th><td class="dt-if" style="padding-left:0.50rem">Unexplained cluster of severe febrile illness with respiratory and/or gastrointestinal features on a passenger vessel, especially after time ashore in South America.</td><td class="dt-then">Treat as a public health event: activate ship medical surge, line list, exposure history (ports, excursions, cabin contacts), and notify competent authorities per flag state, port state, and international health regulations as applicable.</td><td class="dt-why">Matches the initial signal ECDC describes from the Dutch notification.</td></tr>
+          <tr class="dt-d1"><th scope="row" class="dt-num">2</th><td class="dt-if" style="padding-left:1.60rem">Any person develops rapid progression to pneumonia, acute respiratory distress, or shock.</td><td class="dt-then">Arrange urgent medical evacuation to a facility that can provide intensive supportive care; obtain diagnostic samples before or during transfer.</td><td class="dt-why">ECDC reports at least four of seven cases progressed rapidly; one evacuee tested hantavirus PCR-positive on 3 May.</td></tr>
+          <tr class="dt-d1"><th scope="row" class="dt-num">3</th><td class="dt-if" style="padding-left:1.60rem">PCR shows hantavirus and/or ANDV, or clinical picture strongly suggests HPS in an appropriate exposure context.</td><td class="dt-then">Isolate confirmed and suspected cases on board where feasible; cohort nursing; trace and monitor close contacts; reinforce hand hygiene, respiratory etiquette, and distancing.</td><td class="dt-why">ECDC: ANDV person-to-person transmission is rare but documented with close, prolonged contact.</td></tr>
+          <tr class="dt-d2"><th scope="row" class="dt-num">4</th><td class="dt-if" style="padding-left:2.70rem">Early in investigation, everyone on board shares common indoor spaces and social activities (closed environment).</td><td class="dt-then">Apply the precautionary principle: consider all on board close contacts until epidemiology refines risk tiers.</td><td class="dt-why">Explicit in ECDC risk assessment for this cluster.</td></tr>
+          <tr class="dt-d1"><th scope="row" class="dt-num">5</th><td class="dt-if" style="padding-left:1.60rem">Symptomatic patient will disembark or be transferred between jurisdictions.</td><td class="dt-then">Use PCR and/or serology for diagnosis; communicate that negative tests early in illness may not exclude infection; give written follow-up and reporting instructions.</td><td class="dt-why">ECDC recommendations; EURL network can assist EU labs lacking ANDV capacity.</td></tr>
+          <tr class="dt-d1"><th scope="row" class="dt-num">6</th><td class="dt-if" style="padding-left:1.60rem">Healthcare facility receives a patient from the ship or an epidemiologically linked contact.</td><td class="dt-then">Apply standard and droplet precautions; escalate to airborne precautions if aerosol-generating procedures are performed.</td><td class="dt-why">ECDC IPC guidance for ANDV-compatible illness.</td></tr>
+          <tr class="dt-d1"><th scope="row" class="dt-num">7</th><td class="dt-if" style="padding-left:1.60rem">Media or port communities ask whether shore-side outbreaks are likely in Europe.</td><td class="dt-then">Cite reservoir ecology: ANDV is not expected to establish in European rodents; focus messaging on case/contact management rather than widespread community contagion.</td><td class="dt-why">ECDC stresses very low EU/EEA population risk under proper controls.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+    <section class="panel" aria-labelledby="r0-heading">
+      <h2 class="panel-title" id="r0-heading">R&#x2080; &amp; Spread Speed</h2>
+      <div class="r0-inner">
+        <div>
+          <p style="margin:0 0 0.7rem;font-size:0.92rem;">
+            Orthohantaviruses are primarily <strong>rodent-borne</strong>.
+            Person-to-person transmission is documented for
+            <strong>Andes virus</strong> under close-contact conditions.
+            Sin&nbsp;Nombre&ndash;type HPS in the U.S. is treated as
+            a dead-end zoonotic spillover.
+          </p>
+          <dl class="metrics-dl">
+            <dt>Andes (pre-control)</dt>
+            <dd><strong>2.12</strong> &mdash; median R, Epu&yacute;n 2018&ndash;19</dd>
+            <dt>Andes (post-control)</dt>
+            <dd><strong>0.96</strong> &mdash; after isolation &amp; quarantine</dd>
+            <dt>Doubling (illustrative)</dt>
+            <dd>~14-day generations at R=2.12 &rarr; scale &asymp; <strong>12.9 days</strong></dd>
+            <dt>Sin Nombre (U.S. HPS)</dt>
+            <dd>Human-to-human R &asymp; <strong>0</strong> for sustained spread</dd>
+          </dl>
+          <div class="callout">
+            <strong>Source:</strong>
+            Martinez et al., NEJM 2020 &mdash;
+            <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2009040">Andes person-to-person transmission</a>.
+            R values describe the Epu&yacute;n outbreak, not a global constant.
+          </div>
+        </div>
+        <div>
+          <p style="margin:0 0 0.5rem;font-size:0.88rem;">
+            Crude geometric branching from a seed of <strong>5</strong> index cases;
+            ~<strong>14</strong>-day generation interval. Illustrative only.
+          </p>
+          <table class="data">
+            <caption>Cumulative modeled infections by generation</caption>
+            <thead>
+              <tr>
+                <th scope="col">Gen.</th>
+                <th scope="col">Days elapsed</th>
+                <th scope="col">Cumulative (crude)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td>5</td></tr>
+            <tr><td>1</td><td>14</td><td>16</td></tr>
+            <tr><td>2</td><td>28</td><td>38</td></tr>
+            <tr><td>3</td><td>42</td><td>86</td></tr>
+            <tr><td>4</td><td>56</td><td>187</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="sources-heading">
+      <h2 class="panel-title" id="sources-heading">Public Sources to Monitor</h2>
+      <p style="margin:0 0 0.75rem;font-size:0.88rem;">
+        No single live API covers all orthohantavirus events.
+        Use these official feeds; edit <code>data/outbreaks.json</code> and rebuild when new data arrive.
+      </p>
+      <ul class="sources-ul">
+        <li><a href="https://www.cdc.gov/hantavirus/hps/index.html">CDC &mdash; HPS overview</a></li>
+        <li><a href="https://www.ecdc.europa.eu/en/infectious-disease-topics/hantavirus-infection">ECDC &mdash; Hantavirus factsheet</a></li>
+        <li><a href="https://www.who.int/emergencies/disease-outbreak-news">WHO &mdash; Disease Outbreak News</a></li>
+        <li><a href="https://www.paho.org/en/topics/hantavirus">PAHO &mdash; Hantavirus Americas</a></li>
+        <li><a href="https://promedmail.org/">ProMED-mail (search &ldquo;hantavirus&rdquo;)</a></li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="table-heading">
+      <h2 class="panel-title" id="table-heading">Historical Outbreak Table</h2>
+      <div class="table-scroll-wrap">
+        <table class="data">
+          <caption>Curated events and sources</caption>
+          <thead>
+            <tr>
+              <th scope="col">Event</th>
+              <th scope="col">Country</th>
+              <th scope="col">Year</th>
+              <th scope="col">Cases</th>
+              <th scope="col">Deaths</th>
+              <th scope="col">Virus / syndrome</th>
+              <th scope="col">Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Dutch-flag cruise ship — hantavirus / ANDV cluster</th><td>South Atlantic (vessel); links to Argentina exposure</td><td>2026</td><td>7</td><td>3</td><td>Orthohantavirus; Andes virus (ANDV) confirmed in subset</td><td><a href="https://www.ecdc.europa.eu/en/publications-data/hantavirus-associated-cluster-illness-cruise-ship-ecdc-assessment-and">ECDC assessment (6 May 2026)</a></td></tr>
+<tr><th scope="row">Four Corners HPS cluster</th><td>United States</td><td>1993</td><td>48</td><td>—</td><td>Sin Nombre virus (then novel)</td><td><a href="https://www.cdc.gov/hantavirus/hps/index.html">CDC / MMWR — recognition of HPS in southwestern U.S.</a></td></tr>
+<tr><th scope="row">El Bolsón ANDV outbreak</th><td>Argentina</td><td>1996</td><td>16</td><td>—</td><td>Andes virus</td><td><a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2009040">NEJM / peer literature on ANDV (background in NEJM 2020 outbreak report)</a></td></tr>
+<tr><th scope="row">Epuyén ANDV outbreak</th><td>Argentina</td><td>2019</td><td>34</td><td>11</td><td>Andes virus (Epuyén/18–19)</td><td><a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2009040">New England Journal of Medicine — super-spreading investigation</a></td></tr>
+<tr><th scope="row">Yosemite National Park HPS</th><td>United States</td><td>2012</td><td>10</td><td>3</td><td>Sin Nombre virus</td><td><a href="https://www.cdc.gov/hantavirus/hps/index.html">CDC HPS information</a></td></tr>
+<tr><th scope="row">PUUV / HFRS cluster (Baden-Württemberg)</th><td>Germany</td><td>2012</td><td>814</td><td>—</td><td>Puumala virus (HFRS)</td><td><a href="https://www.eurosurveillance.org/content/10.2807/ese.17.28.20218-en">Eurosurveillance — record HFRS year in Germany</a></td></tr>
+<tr><th scope="row">Finland — endemic nephropathy (PUUV)</th><td>Finland</td><td>2011</td><td>3,134</td><td>—</td><td>Puumala virus</td><td><a href="https://www.eurosurveillance.org/content/10.2807/ese.16.17.19878-en">Eurosurveillance — Finland HFRS 2011</a></td></tr>
+<tr><th scope="row">China — national HFRS burden (reported year)</th><td>China</td><td>1994</td><td>112,786</td><td>—</td><td>Multiple orthohantaviruses (HFRS)</td><td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3294515/">PMC / Emerging Infectious Diseases — China HFRS trends</a></td></tr>
+<tr><th scope="row">Chile — ANDV / HPS (illustrative national focus)</th><td>Chile</td><td>2019</td><td>—</td><td>—</td><td>Andes virus lineage</td><td><a href="https://www.cdc.gov/hantavirus/about/andesvirus.html">CDC — Andes virus background</a></td></tr>
+<tr><th scope="row">Paraguay — HPS cases (public reporting year)</th><td>Paraguay</td><td>2019</td><td>12</td><td>—</td><td>Laguna Negra / regional orthohantavirus</td><td><a href="https://www.paho.org/en/topics/hantavirus">PAHO — HPS in the Americas (verify year)</a></td></tr>
+<tr><th scope="row">Brazil — HPS foci (illustrative)</th><td>Brazil</td><td>2015</td><td>—</td><td>—</td><td>Juquitiba / regional variants</td><td><a href="https://www.paho.org/en/topics/hantavirus">PAHO hantavirus</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><strong>Built:</strong> 2026-05-08 17:44 UTC</p>
+    <p><strong>R&#x2080; citation:</strong>
+      <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2009040">Martinez et al., NEJM &mdash; Andes person-to-person transmission</a>.
+    </p>
+    <p><strong>CDC transmission:</strong>
+      <a href="https://www.cdc.gov/hantavirus/hps/transmission.html">HPS transmission overview</a>.
+    </p>
+    
+    <ul>
+      <li>Daily browser reload set to 24 h; data refresh requires running <code>scripts/build_tracker.py</code>.</li>
+      <li>Not medical advice; consult public health authorities for outbreak response.</li>
+    </ul>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,112 @@
+{
+  "label": "Hantavirus-associated cluster on a Dutch-flag cruise ship (2026)",
+  "deck": "Facts below follow the European Centre for Disease Prevention and Control preliminary assessment of 6 May 2026. The incident is described as rapidly evolving.",
+  "primary_source": {
+    "name": "ECDC — Hantavirus-associated cluster of illness on a cruise ship",
+    "url": "https://www.ecdc.europa.eu/en/publications-data/hantavirus-associated-cluster-illness-cruise-ship-ecdc-assessment-and"
+  },
+  "secondary_source": {
+    "name": "WHO — Response to hantavirus cases linked to a cruise ship",
+    "url": "https://www.who.int/papuanewguinea/news/detail-global/07-05-2026-who-s-response-to-hantavirus-cases-linked-to-a-cruise-ship"
+  },
+  "situation_snapshot": {
+    "notification": "ECDC notified 2 May 2026 by the Netherlands through the EU Early Warning and Response System (EWRS).",
+    "setting": "Cruise ship in the South Atlantic; Dutch flag; ~149 people on board from 23 nationalities (including passengers and crew from multiple EU/EEA countries).",
+    "counts_as_of_6_may": "Seven cases in the hantavirus-associated cluster: three deaths; one person medically evacuated to South Africa and in intensive care; two symptomatic on board; one person diagnosed after disembarking and returning to Switzerland.",
+    "laboratory": "Samples from two patients PCR-positive for hantavirus; one additional patient PCR-positive for Andes virus (ANDV). Further laboratory work ongoing.",
+    "working_hypothesis": "Some travellers may have been exposed to ANDV in Argentina before embarkation (endemic area), with subsequent transmission to others on board during close, prolonged contact in a closed setting.",
+    "risk_eu_population": "ECDC: risk to the general EU/EEA population from spread off the ship is assessed as very low when infection prevention and control measures are applied; ANDV rodent reservoir is not expected to establish in Europe."
+  },
+  "sankey": {
+    "ewrs_notification": "2 May 2026",
+    "ecdc_assessment": "6 May 2026",
+    "ship_n": 149,
+    "cluster_n": 7,
+    "contacts_n": 142,
+    "values_head": [142, 7, 0],
+    "head_rules": [
+      "All people on board (closed vessel)",
+      "EU EWRS notification (Netherlands)"
+    ],
+    "split_rule": "Precautionary contact pool vs. persons in the seven-case hantavirus cluster (ECDC 6 May)",
+    "outcomes": [
+      { "label": "Fatal", "count": 3, "color": "#4a1942" },
+      { "label": "ICU (medevac ZA)", "count": 1, "color": "#6b2d5c" },
+      { "label": "Symptomatic on board", "count": 2, "color": "#57068c" },
+      { "label": "Post-disembark (CH)", "count": 1, "color": "#9b7cb8" }
+    ],
+    "outcome_rule": "Cluster of seven: severe HPS-compatible illness; PCR hantavirus (n=2) and ANDV (n=1) among confirmations to date",
+    "prediction_horizon_days": 28,
+    "prediction_note": "Scenario bands are illustrative only: they blend observed counts with simple branching intuition (post-control R≈0.96 vs. delayed isolation). They are not ECDC or WHO forecasts.",
+    "scenarios": [
+      {
+        "label": "Strong on-board IPC",
+        "rule": "Analogous to Andes post-control R≈0.96",
+        "values_line": "142 monitored · few new conversions",
+        "predict": "7–10 cumulative infected",
+        "weight": 0.45,
+        "flow_color": "#dfd6ec"
+      },
+      {
+        "label": "Base (incubation tail)",
+        "rule": "Some contacts still inside 7–42 d window",
+        "values_line": "delayed PCR / mild index",
+        "predict": "10–16 cumulative infected",
+        "weight": 0.35,
+        "flow_color": "#c5b3dc"
+      },
+      {
+        "label": "Stress test",
+        "rule": "Crowding + late isolation (upper tail)",
+        "values_line": "not current official scenario",
+        "predict": "14–26 cumulative infected",
+        "weight": 0.20,
+        "flow_color": "#a384c9"
+      }
+    ]
+  },
+  "decision_tree": [
+    {
+      "level": 0,
+      "if": "Unexplained cluster of severe febrile illness with respiratory and/or gastrointestinal features on a passenger vessel, especially after time ashore in South America.",
+      "then": "Treat as a public health event: activate ship medical surge, line list, exposure history (ports, excursions, cabin contacts), and notify competent authorities per flag state, port state, and international health regulations as applicable.",
+      "note": "Matches the initial signal ECDC describes from the Dutch notification."
+    },
+    {
+      "level": 1,
+      "if": "Any person develops rapid progression to pneumonia, acute respiratory distress, or shock.",
+      "then": "Arrange urgent medical evacuation to a facility that can provide intensive supportive care; obtain diagnostic samples before or during transfer.",
+      "note": "ECDC reports at least four of seven cases progressed rapidly; one evacuee tested hantavirus PCR-positive on 3 May."
+    },
+    {
+      "level": 1,
+      "if": "PCR shows hantavirus and/or ANDV, or clinical picture strongly suggests HPS in an appropriate exposure context.",
+      "then": "Isolate confirmed and suspected cases on board where feasible; cohort nursing; trace and monitor close contacts; reinforce hand hygiene, respiratory etiquette, and distancing.",
+      "note": "ECDC: ANDV person-to-person transmission is rare but documented with close, prolonged contact."
+    },
+    {
+      "level": 2,
+      "if": "Early in investigation, everyone on board shares common indoor spaces and social activities (closed environment).",
+      "then": "Apply the precautionary principle: consider all on board close contacts until epidemiology refines risk tiers.",
+      "note": "Explicit in ECDC risk assessment for this cluster."
+    },
+    {
+      "level": 1,
+      "if": "Symptomatic patient will disembark or be transferred between jurisdictions.",
+      "then": "Use PCR and/or serology for diagnosis; communicate that negative tests early in illness may not exclude infection; give written follow-up and reporting instructions.",
+      "note": "ECDC recommendations; EURL network can assist EU labs lacking ANDV capacity."
+    },
+    {
+      "level": 1,
+      "if": "Healthcare facility receives a patient from the ship or an epidemiologically linked contact.",
+      "then": "Apply standard and droplet precautions; escalate to airborne precautions if aerosol-generating procedures are performed.",
+      "note": "ECDC IPC guidance for ANDV-compatible illness."
+    },
+    {
+      "level": 1,
+      "if": "Media or port communities ask whether shore-side outbreaks are likely in Europe.",
+      "then": "Cite reservoir ecology: ANDV is not expected to establish in European rodents; focus messaging on case/contact management rather than widespread community contagion.",
+      "note": "ECDC stresses very low EU/EEA population risk under proper controls."
+    }
+  ]
+}
