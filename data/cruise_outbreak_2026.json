@@ -1,8 +1,8 @@
 {
   "label": "Hantavirus-associated cluster on Dutch-flag cruise ship MV Hondius (2026)",
   "label_zh": "荷兰籍游轮MV Hondius汉坦病毒相关群聚事件（2026年）",
-  "deck": "Multi-country outbreak. WHO Disease Outbreak News DON599 issued 4 May 2026; CBC/WHO updated 7 May 2026. Investigation ongoing — further cases possible within the 45-day monitoring window.",
-  "deck_zh": "多国疫情。世卫组织疾病暴发消息DON599于2026年5月4日发布；CBC/世卫组织5月7日更新。调查持续进行——45天监测窗口内可能出现新增病例。",
+  "deck": "Multi-country outbreak. WHO DON599 issued 4 May 2026; ECDC Rapid Scientific Advice published 9 May 2026. All 147 aboard classified as high-risk contacts (42-day monitoring, Day 0 = 6 May). Ship arrives Tenerife 10 May; repatriation flights arranged by 7+ nations. WHO Director-General Tedros flew to Spain 9 May to oversee evacuation.",
+  "deck_zh": "多国疫情。世卫组织DON599于5月4日发布；欧洲疾控中心快速科学建议于5月9日发布。147名在船人员均被列为高风险接触者（42天监测，第0天=5月6日）。船预计5月10日抵达特内里费；7个以上国家已安排遣返航班。世卫组织总干事谭德塞于5月9日飞赴西班牙主持遣返工作。",
   "primary_source": {
     "name": "WHO DON599 — Hantavirus cluster, multi-country (4 May 2026)",
     "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON599"
@@ -16,11 +16,11 @@
     "vessel": "MV Hondius, Dutch flag, operated by Oceanwide Expeditions. Departed Ushuaia, Argentina 1 April 2026.",
     "itinerary": "Ushuaia → Antarctica → South Georgia → Nightingale Island → Tristan da Cunha → St. Helena → Ascension Island → Cabo Verde → Canary Islands (Spain).",
     "persons_aboard": "147 total: 88 passengers + 59 crew; 23 nationalities (EU/EEA countries include BE, DE, ES, FR, GR, IE, NL, PL, PT).",
-    "counts_as_of_7_may": "8 cases total; 5 confirmed by PCR as of 7 May (WHO); 3 deaths; 1 ICU in South Africa (improving); 3 transferred to Canary Islands; 1 diagnosed post-disembark (Switzerland).",
-    "laboratory": "PCR-confirmed ANDV (Andes virus) in multiple patients. South Africa NICD confirmed Case 3 on 2 May; Dutch woman (Case 2) confirmed 4 May; Swiss man (Case 5) confirmed 6 May. Serology, sequencing and metagenomics ongoing at Institut Pasteur de Dakar.",
+    "counts_as_of_7_may": "8 cases total; 6 confirmed (PCR/serology) + 2 probable as of 9 May 2026; 0 suspected cases remaining on ship; 3 deaths; 1 ICU South Africa (improving); 3 transferred to Canary Islands; 1 diagnosed post-disembark (Switzerland).",
+    "laboratory": "ANDV confirmed by PCR/serology in 6 of 8 cases as of 9 May. Cases 3, 2, 5 confirmed earlier (NICD, Netherlands, Switzerland labs). Serology, sequencing and metagenomics ongoing at Institut Pasteur de Dakar. Argentina's Tierra del Fuego epidemiology director: 'almost zero' probability of Ushuaia zoonotic acquisition.",
     "index_cases": "Cases 1 and 2 (Dutch couple) had travelled through Argentina, Chile, and Uruguay for ~4 months before boarding — believed primary zoonotic exposure pre-embarkation.",
     "working_hypothesis": "Zoonotic acquisition by index cases in South America (endemic Andes virus rodent reservoir); subsequent limited person-to-person transmission in closed-ship setting.",
-    "risk_eu_population": "WHO and ECDC: global and EU/EEA population risk assessed as low. WHO: 'not the start of a pandemic.' ANDV reservoir absent from European rodents. All contacts advised 45-day symptom monitoring."
+    "risk_eu_population": "ECDC (9 May): EU/EEA general population risk VERY LOW; passengers/crew risk MODERATE. All 147 aboard reclassified as high-risk contacts; 42-day monitoring (Day 0 = 6 May 2026). WHO: global risk LOW; 'not the start of a pandemic.' ANDV reservoir absent from European rodents."
   },
   "timeline": [
     {"date": "1 Apr 2026",  "event": "MV Hondius departs Ushuaia, Argentina (147 aboard).",
@@ -44,7 +44,13 @@
     {"date": "6 May 2026",  "event": "ECDC assessment published. Swiss man (Case 5) PCR confirmed. Ship heads to Canary Islands.",
      "event_zh": "欧洲疾控中心评估报告发布。瑞士男性（5号病例）PCR确认。船前往加那利群岛。"},
     {"date": "7 May 2026",  "event": "5 of 8 suspected cases confirmed (WHO briefing). 3 symptomatic passengers transferred to Spain for care.",
-     "event_zh": "8例疑似病例中5例确认（世卫组织简报）。3名有症状乘客转运至西班牙接受治疗。"}
+     "event_zh": "8例疑似病例中5例确认（世卫组织简报）。3名有症状乘客转运至西班牙接受治疗。"},
+    {"date": "8 May 2026",
+     "event": "WHO confirms 6 of 8 cases laboratory-confirmed (PCR/serology); 0 suspected cases remain on ship. US CDC arranges evacuation flight: Offutt AFB, Omaha → National Quarantine Unit, Univ. Nebraska Medical Center. Argentina's Tierra del Fuego epidemiology director states 'almost zero' chance index cases contracted ANDV in Ushuaia.",
+     "event_zh": "世卫组织确认8例中6例已获实验室确认（PCR/血清学）；船上0例疑似病例。美国疾控中心安排遣返航班：奥马哈奥富特空军基地→内布拉斯加大学医学中心国家检疫隔离单元。阿根廷火地岛流行病学主任表示指示病例在乌斯怀亚感染ANDV的概率「几乎为零」。"},
+    {"date": "9 May 2026",
+     "event": "ECDC publishes Rapid Scientific Advice: all 147 aboard classified as high-risk contacts; 42-day quarantine/monitoring (Day 0 = 6 May 2026). Updated totals: 6 confirmed + 2 probable, 0 suspected. WHO Director-General Tedros flies to Spain; meets PM Sánchez and accompanies health/interior ministers to Tenerife command post. Repatriation flights arranged by Germany, France, Belgium, Ireland, Netherlands, US, and UK. Ship (MV Hondius) expected to arrive Granadilla, Tenerife, 10 May.",
+     "event_zh": "欧洲疾控中心发布快速科学建议：147名在船人员均被列为高风险接触者；42天检疫/监测（第0天=2026年5月6日）。最新数据：6例确认+2例可能，0例疑似。世卫组织总干事谭德塞飞赴西班牙，与首相桑切斯会面，并陪同卫生/内政部长赶赴特内里费指挥中心。德国、法国、比利时、爱尔兰、荷兰、美国、英国安排遣返航班。MV Hondius预计5月10日抵达特内里费格拉纳迪利亚港。"}
   ],
   "sankey": {
     "ewrs_notification": "2 May 2026",
@@ -54,10 +60,11 @@
     "crew_n": 59,
     "nationalities_note": "23 nationalities: NL · GB · DE · CH · ES · BE · FR · GR · IE · PL · PT + 12 others",
     "cluster_n": 8,
+    "confirmed_n": 6,
     "contacts_n": 139,
     "values_head": [139, 8, 0],
     "split_rule": "Precautionary pool (139) vs. 8-case hantavirus cluster — WHO DON599",
-    "outcome_rule": "3 deaths (NL ×2, DE ×1); 1 ICU S. Africa (GB); 3 transferred Canary Islands (nat. TBC); 1 Switzerland (CH)",
+    "outcome_rule": "3 deaths (NL ×2, DE ×1); 1 ICU S. Africa (GB); 3 transferred Canary Islands (nat. TBC); 1 Switzerland (CH); 6 of 8 PCR/serology-confirmed as of 9 May 2026",
     "outcomes": [
       { "label": "Fatal",         "nat": "Netherlands",    "nat_code": "NL", "count": 2, "color": "#1565C0", "detail": "Dutch couple — index cases",        "is_death": true },
       { "label": "Fatal",         "nat": "Germany",        "nat_code": "DE", "count": 1, "color": "#E65100", "detail": "Died on board, 2 May 2026",          "is_death": true },

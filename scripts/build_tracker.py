@@ -81,7 +81,7 @@ STRINGS: dict[str, dict[str, str]] = {
         "snap_vessel":     "Vessel",
         "snap_itinerary":  "Itinerary",
         "snap_persons":    "Persons aboard",
-        "snap_counts":     "Cases (7 May)",
+        "snap_counts":     "Cases (9 May)",
         "snap_lab":        "Laboratory",
         "snap_index":      "Index cases",
         "snap_hypo":       "Working hypothesis",
@@ -178,7 +178,7 @@ STRINGS: dict[str, dict[str, str]] = {
         "snap_vessel":     "船舶",
         "snap_itinerary":  "行程",
         "snap_persons":    "在船人数",
-        "snap_counts":     "病例（5月7日）",
+        "snap_counts":     "病例（5月9日）",
         "snap_lab":        "实验室",
         "snap_index":      "指示病例",
         "snap_hypo":       "工作假说",
@@ -428,11 +428,13 @@ def build_sankey_svg(sk: dict, esc, S: dict, lang: str = "en") -> str:
         (S["contacts_p2"],        "400", "#57068c", "9"),
     ]))
 
+    confirmed_n = int(sk.get("confirmed_n", 5))
+
     # ── SPLIT cluster label (col1, right, lower band) ─────────────────────────
     lbls.append(block(x1r + 16, (y_k0 + y_k1) / 2, [
-        (S["cluster_lbl"],                "700", "#121212", "11"),
-        (f"n = {cluster_n} \u00b7 5 PCR+","400", "#121212", "10"),
-        (S["cluster_p1"],                 "700", "#8b1a1a", "9"),
+        (S["cluster_lbl"],                              "700", "#121212", "11"),
+        (f"n = {cluster_n} \u00b7 {confirmed_n} PCR+", "400", "#121212", "10"),
+        (S["cluster_p1"],                               "700", "#8b1a1a", "9"),
     ]))
 
     # ── OUTCOMES contacts-end label (col2, right, upper band — muted) ─────────
@@ -1429,8 +1431,12 @@ def main() -> None:
       <p style="margin:0 0 0.75rem;font-size:0.88rem;">{S["src_intro"]}</p>
       <ul class="sources-ul">
         <li><a href="https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON599">WHO DON599 &mdash; MV Hondius cluster (4 May 2026)</a></li>
+        <li><a href="https://www.who.int/emergencies/emergency-events/item/2026-e000227">WHO Emergency Event 2026-E000227 &mdash; live situation tracking</a></li>
+        <li><a href="https://www.ecdc.europa.eu/en/infectious-disease-topics/hantavirus-infection/surveillance-and-updates/andes-hantavirus-outbreak">ECDC &mdash; Andes hantavirus cruise ship outbreak (updated daily)</a></li>
+        <li><a href="https://www.ecdc.europa.eu/en/publications-data/rapid-scientific-advice-management-passengers-context-andes-virus-outbreak-cruise">ECDC Rapid Scientific Advice &mdash; passenger management (9 May 2026)</a></li>
         <li><a href="https://www.ecdc.europa.eu/en/publications-data/hantavirus-associated-cluster-illness-cruise-ship-ecdc-assessment-and">ECDC &mdash; Cruise ship cluster assessment (6 May 2026)</a></li>
-        <li><a href="https://www.cdc.gov/hantavirus/hps/index.html">CDC &mdash; HPS overview</a></li>
+        <li><a href="https://www.ecdc.europa.eu/en/infectious-disease-topics/hantavirus-infection/surveillance-and-updates/questions-answers-outbreak">ECDC &mdash; Q&amp;A on the hantavirus cruise ship outbreak</a></li>
+        <li><a href="https://www.cdc.gov/hantavirus/hps/index.html">CDC &mdash; HPS overview &amp; US repatriation response</a></li>
         <li><a href="https://www.ecdc.europa.eu/en/infectious-disease-topics/hantavirus-infection">ECDC &mdash; Hantavirus factsheet</a></li>
         <li><a href="https://www.who.int/emergencies/disease-outbreak-news">WHO &mdash; Disease Outbreak News (all)</a></li>
         <li><a href="https://www.paho.org/en/topics/hantavirus">PAHO &mdash; Hantavirus Americas</a></li>
