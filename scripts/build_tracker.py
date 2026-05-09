@@ -700,15 +700,15 @@ def build_cruise_section(c: dict, S: dict, lang: str = "en") -> str:
       <div class="snapshot-block">
         <h3 class="section-label">{S["snap_heading"]}</h3>
         <dl class="snap-dl">
-          <dt>{S["snap_notif"]}</dt><dd>{esc(snap.get("notification",""))}</dd>
-          <dt>{S["snap_vessel"]}</dt><dd>{esc(snap.get("vessel", snap.get("setting","—")))}</dd>
-          <dt>{S["snap_itinerary"]}</dt><dd>{esc(snap.get("itinerary","—"))}</dd>
-          <dt>{S["snap_persons"]}</dt><dd>{esc(snap.get("persons_aboard","—"))}</dd>
-          <dt>{S["snap_counts"]}</dt><dd>{esc(snap.get("counts_as_of_7_may", snap.get("counts_as_of_6_may","—")))}</dd>
-          <dt>{S["snap_lab"]}</dt><dd>{esc(snap.get("laboratory",""))}</dd>
-          <dt>{S["snap_index"]}</dt><dd>{esc(snap.get("index_cases","—"))}</dd>
-          <dt>{S["snap_hypo"]}</dt><dd>{esc(snap.get("working_hypothesis",""))}</dd>
-          <dt>{S["snap_risk"]}</dt><dd>{esc(snap.get("risk_eu_population",""))}</dd>
+          <dt>{S["snap_notif"]}</dt><dd>{esc(snap.get("notification_zh", snap.get("notification","")) if lang == "zh" else snap.get("notification",""))}</dd>
+          <dt>{S["snap_vessel"]}</dt><dd>{esc(snap.get("vessel_zh", snap.get("vessel", snap.get("setting","—"))) if lang == "zh" else snap.get("vessel", snap.get("setting","—")))}</dd>
+          <dt>{S["snap_itinerary"]}</dt><dd>{esc(snap.get("itinerary_zh", snap.get("itinerary","—")) if lang == "zh" else snap.get("itinerary","—"))}</dd>
+          <dt>{S["snap_persons"]}</dt><dd>{esc(snap.get("persons_aboard_zh", snap.get("persons_aboard","—")) if lang == "zh" else snap.get("persons_aboard","—"))}</dd>
+          <dt>{S["snap_counts"]}</dt><dd>{esc(snap.get("counts_as_of_7_may_zh", snap.get("counts_as_of_7_may", snap.get("counts_as_of_6_may","—"))) if lang == "zh" else snap.get("counts_as_of_7_may", snap.get("counts_as_of_6_may","—")))}</dd>
+          <dt>{S["snap_lab"]}</dt><dd>{esc(snap.get("laboratory_zh", snap.get("laboratory","")) if lang == "zh" else snap.get("laboratory",""))}</dd>
+          <dt>{S["snap_index"]}</dt><dd>{esc(snap.get("index_cases_zh", snap.get("index_cases","—")) if lang == "zh" else snap.get("index_cases","—"))}</dd>
+          <dt>{S["snap_hypo"]}</dt><dd>{esc(snap.get("working_hypothesis_zh", snap.get("working_hypothesis","")) if lang == "zh" else snap.get("working_hypothesis",""))}</dd>
+          <dt>{S["snap_risk"]}</dt><dd>{esc(snap.get("risk_eu_population_zh", snap.get("risk_eu_population","")) if lang == "zh" else snap.get("risk_eu_population",""))}</dd>
         </dl>
       </div>
     </div>
