@@ -16,8 +16,8 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting hourly rebuild..."
 # 1. Rebuild the HTML
 python3 scripts/build_tracker.py
 
-# 2. Stage only the generated file (data edits commit separately)
-git add index.html
+# 2. Stage generated files (data edits commit separately)
+git add index.html zh/index.html
 
 # 3. Commit only if there are staged changes
 if git diff --cached --quiet; then

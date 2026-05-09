@@ -20,8 +20,8 @@
     "itinerary_zh": "乌斯怀亚 → 南极洲 → 南乔治亚岛 → 南丁格尔岛 → 特里斯坦-达库尼亚 → 圣赫勒拿岛 → 阿森松岛 → 佛得角 → 加那利群岛（西班牙）。",
     "persons_aboard": "147 total: 88 passengers + 59 crew; 23 nationalities (EU/EEA countries include BE, DE, ES, FR, GR, IE, NL, PL, PT).",
     "persons_aboard_zh": "共147人：88名乘客 + 59名船员；23个国籍（欧盟/欧洲经济区国家包括BE、DE、ES、FR、GR、IE、NL、PL、PT）。",
-    "counts_as_of_7_may": "8 cases total; 6 confirmed (PCR/serology) + 2 probable as of 9 May 2026; 0 suspected cases remaining on ship; 3 deaths; 1 ICU South Africa (improving); 3 transferred to Canary Islands; 1 diagnosed post-disembark (Switzerland).",
-    "counts_as_of_7_may_zh": "共8例；截至2026年5月9日6例确认（PCR/血清学）+2例可能；船上0例疑似；3例死亡；1例南非重症监护（好转中）；3例转运至加那利群岛；1例下船后确诊（瑞士）。",
+    "counts_as_of_7_may": "8 cases total; 6 confirmed (PCR/serology); 2 probable; as of 09 May 2026; 3 deaths",
+    "counts_as_of_7_may_zh": "共8例；截至2026年5月9日6例确认（PCR/血清学）+2例可能；3例死亡",
     "laboratory": "ANDV confirmed by PCR/serology in 6 of 8 cases as of 9 May. Cases 3, 2, 5 confirmed earlier (NICD, Netherlands, Switzerland labs). Serology, sequencing and metagenomics ongoing at Institut Pasteur de Dakar. Argentina's Tierra del Fuego epidemiology director: 'almost zero' probability of Ushuaia zoonotic acquisition.",
     "laboratory_zh": "截至5月9日，8例中6例经PCR/血清学确认为ANDV。第3、2、5号病例此前分别由NICD、荷兰、瑞士实验室确认。血清学、测序及宏基因组学检测在达喀尔巴斯德研究所进行中。阿根廷火地岛流行病学主任表示：乌斯怀亚人畜共患感染概率「几乎为零」。",
     "index_cases": "Cases 1 and 2 (Dutch couple) had travelled through Argentina, Chile, and Uruguay for ~4 months before boarding — believed primary zoonotic exposure pre-embarkation.",
@@ -32,34 +32,71 @@
     "risk_eu_population_zh": "欧洲疾控中心（5月9日）：欧盟/欧洲经济区一般人群风险极低；在船乘客/船员风险中等。全部147名在船人员被重新列为高风险接触者；42天监测（第0天=2026年5月6日）。世卫组织：全球风险低；「这不是一场大流行的开始」。欧洲啮齿动物中不存在ANDV储存宿主。"
   },
   "timeline": [
-    {"date": "1 Apr 2026",  "event": "MV Hondius departs Ushuaia, Argentina (147 aboard).",
-     "event_zh": "MV Hondius从阿根廷乌斯怀亚出发（147人在船）。"},
-    {"date": "6 Apr 2026",  "event": "Case 1 (Dutch male, 70) develops fever, headache, diarrhoea on board.",
-     "event_zh": "1号病例（荷兰男性，70岁）在船上出现发热、头痛、腹泻。"},
-    {"date": "11 Apr 2026", "event": "Case 1 dies aboard; respiratory distress. Ship between South Georgia and St. Helena.",
-     "event_zh": "1号病例在船上死亡；呼吸窘迫。船位于南乔治亚岛与圣赫勒拿岛之间。"},
-    {"date": "24 Apr 2026", "event": "Case 2 (Dutch female, 69, wife of Case 1) disembarks at St. Helena with GI symptoms. Body of Case 1 removed.",
-     "event_zh": "2号病例（荷兰女性，69岁，1号病例妻子）携胃肠道症状在圣赫勒拿岛下船。1号病例遗体运离。"},
-    {"date": "25 Apr 2026", "event": "Case 2 deteriorates on flight to Johannesburg.",
-     "event_zh": "2号病例在飞往约翰内斯堡的航班上病情恶化。"},
-    {"date": "26 Apr 2026", "event": "Case 2 dies at Johannesburg hospital. Case 3 (British male) evacuated from Ascension Island to South Africa ICU.",
-     "event_zh": "2号病例在约翰内斯堡医院死亡。3号病例（英国男性）从阿森松岛撤离至南非重症监护室。"},
-    {"date": "2 May 2026",  "event": "Case 4 (German female) dies on board. South Africa lab confirms hantavirus PCR-positive in Case 3 — first lab confirmation, 21 days after first death.",
-     "event_zh": "4号病例（德国女性）在船上死亡。南非实验室确认3号病例汉坦病毒PCR阳性——首次实验室确认，距首次死亡已21天。"},
-    {"date": "3 May 2026",  "event": "WHO announces investigation. Ship moored off Cabo Verde.",
-     "event_zh": "世卫组织宣布调查。船停泊在佛得角外海。"},
-    {"date": "4 May 2026",  "event": "WHO DON599 issued: 7 cases (2 confirmed, 5 suspected), 3 deaths. Dutch woman (Case 2) post-mortem PCR confirmed.",
-     "event_zh": "世卫组织DON599发布：7例（2例确诊，5例疑似），3例死亡。荷兰女性（2号病例）死后PCR确认。"},
-    {"date": "6 May 2026",  "event": "ECDC assessment published. Swiss man (Case 5) PCR confirmed. Ship heads to Canary Islands.",
-     "event_zh": "欧洲疾控中心评估报告发布。瑞士男性（5号病例）PCR确认。船前往加那利群岛。"},
-    {"date": "7 May 2026",  "event": "5 of 8 suspected cases confirmed (WHO briefing). 3 symptomatic passengers transferred to Spain for care.",
-     "event_zh": "8例疑似病例中5例确认（世卫组织简报）。3名有症状乘客转运至西班牙接受治疗。"},
-    {"date": "8 May 2026",
-     "event": "WHO confirms 6 of 8 cases laboratory-confirmed (PCR/serology); 0 suspected cases remain on ship. US CDC arranges evacuation flight: Offutt AFB, Omaha → National Quarantine Unit, Univ. Nebraska Medical Center. Argentina's Tierra del Fuego epidemiology director states 'almost zero' chance index cases contracted ANDV in Ushuaia.",
-     "event_zh": "世卫组织确认8例中6例已获实验室确认（PCR/血清学）；船上0例疑似病例。美国疾控中心安排遣返航班：奥马哈奥富特空军基地→内布拉斯加大学医学中心国家检疫隔离单元。阿根廷火地岛流行病学主任表示指示病例在乌斯怀亚感染ANDV的概率「几乎为零」。"},
-    {"date": "9 May 2026",
-     "event": "ECDC publishes Rapid Scientific Advice: all 147 aboard classified as high-risk contacts; 42-day quarantine/monitoring (Day 0 = 6 May 2026). Updated totals: 6 confirmed + 2 probable, 0 suspected. WHO Director-General Tedros flies to Spain; meets PM Sánchez and accompanies health/interior ministers to Tenerife command post. Repatriation flights arranged by Germany, France, Belgium, Ireland, Netherlands, US, and UK. Ship (MV Hondius) expected to arrive Granadilla, Tenerife, 10 May.",
-     "event_zh": "欧洲疾控中心发布快速科学建议：147名在船人员均被列为高风险接触者；42天检疫/监测（第0天=2026年5月6日）。最新数据：6例确认+2例可能，0例疑似。世卫组织总干事谭德塞飞赴西班牙，与首相桑切斯会面，并陪同卫生/内政部长赶赴特内里费指挥中心。德国、法国、比利时、爱尔兰、荷兰、美国、英国安排遣返航班。MV Hondius预计5月10日抵达特内里费格拉纳迪利亚港。"}
+    {
+      "date": "1 Apr 2026",
+      "event": "MV Hondius departs Ushuaia, Argentina (147 aboard).",
+      "event_zh": "MV Hondius从阿根廷乌斯怀亚出发（147人在船）。"
+    },
+    {
+      "date": "6 Apr 2026",
+      "event": "Case 1 (Dutch male, 70) develops fever, headache, diarrhoea on board.",
+      "event_zh": "1号病例（荷兰男性，70岁）在船上出现发热、头痛、腹泻。"
+    },
+    {
+      "date": "11 Apr 2026",
+      "event": "Case 1 dies aboard; respiratory distress. Ship between South Georgia and St. Helena.",
+      "event_zh": "1号病例在船上死亡；呼吸窘迫。船位于南乔治亚岛与圣赫勒拿岛之间。"
+    },
+    {
+      "date": "24 Apr 2026",
+      "event": "Case 2 (Dutch female, 69, wife of Case 1) disembarks at St. Helena with GI symptoms. Body of Case 1 removed.",
+      "event_zh": "2号病例（荷兰女性，69岁，1号病例妻子）携胃肠道症状在圣赫勒拿岛下船。1号病例遗体运离。"
+    },
+    {
+      "date": "25 Apr 2026",
+      "event": "Case 2 deteriorates on flight to Johannesburg.",
+      "event_zh": "2号病例在飞往约翰内斯堡的航班上病情恶化。"
+    },
+    {
+      "date": "26 Apr 2026",
+      "event": "Case 2 dies at Johannesburg hospital. Case 3 (British male) evacuated from Ascension Island to South Africa ICU.",
+      "event_zh": "2号病例在约翰内斯堡医院死亡。3号病例（英国男性）从阿森松岛撤离至南非重症监护室。"
+    },
+    {
+      "date": "2 May 2026",
+      "event": "Case 4 (German female) dies on board. South Africa lab confirms hantavirus PCR-positive in Case 3 — first lab confirmation, 21 days after first death.",
+      "event_zh": "4号病例（德国女性）在船上死亡。南非实验室确认3号病例汉坦病毒PCR阳性——首次实验室确认，距首次死亡已21天。"
+    },
+    {
+      "date": "3 May 2026",
+      "event": "WHO announces investigation. Ship moored off Cabo Verde.",
+      "event_zh": "世卫组织宣布调查。船停泊在佛得角外海。"
+    },
+    {
+      "date": "4 May 2026",
+      "event": "WHO DON599 issued: 7 cases (2 confirmed, 5 suspected), 3 deaths. Dutch woman (Case 2) post-mortem PCR confirmed.",
+      "event_zh": "世卫组织DON599发布：7例（2例确诊，5例疑似），3例死亡。荷兰女性（2号病例）死后PCR确认。"
+    },
+    {
+      "date": "6 May 2026",
+      "event": "ECDC assessment published. Swiss man (Case 5) PCR confirmed. Ship heads to Canary Islands.",
+      "event_zh": "欧洲疾控中心评估报告发布。瑞士男性（5号病例）PCR确认。船前往加那利群岛。"
+    },
+    {
+      "date": "7 May 2026",
+      "event": "5 of 8 suspected cases confirmed (WHO briefing). 3 symptomatic passengers transferred to Spain for care.",
+      "event_zh": "8例疑似病例中5例确认（世卫组织简报）。3名有症状乘客转运至西班牙接受治疗。"
+    },
+    {
+      "date": "8 May 2026",
+      "event": "WHO confirms 6 of 8 cases laboratory-confirmed (PCR/serology); 0 suspected cases remain on ship. US CDC arranges evacuation flight: Offutt AFB, Omaha → National Quarantine Unit, Univ. Nebraska Medical Center. Argentina's Tierra del Fuego epidemiology director states 'almost zero' chance index cases contracted ANDV in Ushuaia.",
+      "event_zh": "世卫组织确认8例中6例已获实验室确认（PCR/血清学）；船上0例疑似病例。美国疾控中心安排遣返航班：奥马哈奥富特空军基地→内布拉斯加大学医学中心国家检疫隔离单元。阿根廷火地岛流行病学主任表示指示病例在乌斯怀亚感染ANDV的概率「几乎为零」。"
+    },
+    {
+      "date": "9 May 2026",
+      "event": "ECDC publishes Rapid Scientific Advice: all 147 aboard classified as high-risk contacts; 42-day quarantine/monitoring (Day 0 = 6 May 2026). Updated totals: 6 confirmed + 2 probable, 0 suspected. WHO Director-General Tedros flies to Spain; meets PM Sánchez and accompanies health/interior ministers to Tenerife command post. Repatriation flights arranged by Germany, France, Belgium, Ireland, Netherlands, US, and UK. Ship (MV Hondius) expected to arrive Granadilla, Tenerife, 10 May.",
+      "event_zh": "欧洲疾控中心发布快速科学建议：147名在船人员均被列为高风险接触者；42天检疫/监测（第0天=2026年5月6日）。最新数据：6例确认+2例可能，0例疑似。世卫组织总干事谭德塞飞赴西班牙，与首相桑切斯会面，并陪同卫生/内政部长赶赴特内里费指挥中心。德国、法国、比利时、爱尔兰、荷兰、美国、英国安排遣返航班。MV Hondius预计5月10日抵达特内里费格拉纳迪利亚港。"
+    }
   ],
   "sankey": {
     "ewrs_notification": "2 May 2026",
@@ -71,15 +108,56 @@
     "cluster_n": 8,
     "confirmed_n": 6,
     "contacts_n": 139,
-    "values_head": [139, 8, 0],
+    "values_head": [
+      139,
+      8,
+      0
+    ],
     "split_rule": "Precautionary pool (139) vs. 8-case hantavirus cluster — WHO DON599",
     "outcome_rule": "3 deaths (NL ×2, DE ×1); 1 ICU S. Africa (GB); 3 transferred Canary Islands (nat. TBC); 1 Switzerland (CH); 6 of 8 PCR/serology-confirmed as of 9 May 2026",
     "outcomes": [
-      { "label": "Fatal",         "nat": "Netherlands",    "nat_code": "NL", "count": 2, "color": "#1565C0", "detail": "Dutch couple — index cases",        "is_death": true },
-      { "label": "Fatal",         "nat": "Germany",        "nat_code": "DE", "count": 1, "color": "#E65100", "detail": "Died on board, 2 May 2026",          "is_death": true },
-      { "label": "ICU",           "nat": "United Kingdom", "nat_code": "GB", "count": 1, "color": "#0D47A1", "detail": "S. Africa ICU, improving" },
-      { "label": "Transferred",   "nat": "Nationality TBC","nat_code": "?",  "count": 3, "color": "#6A1B9A", "detail": "Canary Islands, Spain" },
-      { "label": "Post-disembark","nat": "Switzerland",    "nat_code": "CH", "count": 1, "color": "#B71C1C", "detail": "Diagnosed post-disembark, 6 May" }
+      {
+        "label": "Fatal",
+        "nat": "Netherlands",
+        "nat_code": "NL",
+        "count": 2,
+        "color": "#1565C0",
+        "detail": "Dutch couple — index cases",
+        "is_death": true
+      },
+      {
+        "label": "Fatal",
+        "nat": "Germany",
+        "nat_code": "DE",
+        "count": 1,
+        "color": "#E65100",
+        "detail": "Died on board, 2 May 2026",
+        "is_death": true
+      },
+      {
+        "label": "ICU",
+        "nat": "United Kingdom",
+        "nat_code": "GB",
+        "count": 1,
+        "color": "#0D47A1",
+        "detail": "S. Africa ICU, improving"
+      },
+      {
+        "label": "Transferred",
+        "nat": "Nationality TBC",
+        "nat_code": "?",
+        "count": 3,
+        "color": "#6A1B9A",
+        "detail": "Canary Islands, Spain"
+      },
+      {
+        "label": "Post-disembark",
+        "nat": "Switzerland",
+        "nat_code": "CH",
+        "count": 1,
+        "color": "#B71C1C",
+        "detail": "Diagnosed post-disembark, 6 May"
+      }
     ],
     "prediction_horizon_days": 45,
     "prediction_note": "45-day monitoring window per WHO guidance (incubation up to 8 weeks). Scenario projections below are illustrative — they are not WHO or ECDC forecasts.",
@@ -91,7 +169,7 @@
         "rule_zh": "R ≈ 0.96 — 类比安第斯干预后（埃普延2019年NEJM）",
         "values_line": "Isolation + quarantine maintained throughout",
         "predict": "8–12 total infected",
-        "weight": 0.50,
+        "weight": 0.5,
         "flow_color": "#dfd6ec"
       },
       {
@@ -179,6 +257,19 @@
       "then_zh": "引用世卫组织评估：全球风险低。欧洲不存在安第斯病毒啮齿动物储存宿主。传播需要密切、持续接触——不同于类似新冠的空气传播。",
       "note": "WHO Director-General Tedros, 7 May 2026: 'Not the start of a pandemic.' Low EU/EEA population risk affirmed by ECDC.",
       "note_zh": "世卫组织总干事谭德塞，2026年5月7日：'这不是一场大流行的开始。'欧洲疾控中心确认欧盟/欧洲经济区人群风险低。"
+    }
+  ],
+  "data_fetch_log": [
+    {
+      "fetched_at": "2026-05-09 23:42 UTC",
+      "source": "ECDC surveillance page",
+      "parsed": {
+        "confirmed": 6,
+        "probable": 2,
+        "suspected": 0,
+        "deaths": 3
+      },
+      "data_changed": true
     }
   ]
 }
