@@ -21,6 +21,21 @@ OUT_HTML   = ROOT / "index.html"
 OUT_HTML_ZH = ROOT / "zh" / "index.html"
 
 # ── translated outcome / nationality labels ───────────────────────────────────
+_MONTH_ZH: dict[str, str] = {
+    "Jan": "1月", "Feb": "2月", "Mar": "3月", "Apr": "4月",
+    "May": "5月", "Jun": "6月", "Jul": "7月", "Aug": "8月",
+    "Sep": "9月", "Oct": "10月", "Nov": "11月", "Dec": "12月",
+}
+
+def format_date_zh(date_str: str) -> str:
+    """Convert '1 Apr 2026' → '2026年4月1日'."""
+    parts = date_str.strip().split()
+    if len(parts) == 3:
+        day, month, year = parts
+        return f"{year}年{_MONTH_ZH.get(month, month)}{day}日"
+    return date_str
+
+
 _OUTCOME_ZH: dict[str, str] = {
     "Fatal":         "死亡",
     "ICU":           "重症监护",
@@ -628,10 +643,11 @@ def build_cruise_section(c: dict, S: dict, lang: str = "en") -> str:
     if c.get("timeline"):
         items = []
         for evt in c["timeline"]:
-            ev_text = evt.get("event_zh", evt["event"]) if lang == "zh" else evt["event"]
+            ev_text  = evt.get("event_zh", evt["event"]) if lang == "zh" else evt["event"]
+            date_str = format_date_zh(evt["date"]) if lang == "zh" else evt["date"]
             items.append(
                 f'<li class="tl-item">'
-                f'<span class="tl-date">{esc(evt["date"])}</span>'
+                f'<span class="tl-date">{esc(date_str)}</span>'
                 f'<span class="tl-event">{esc(ev_text)}</span>'
                 f'</li>'
             )
