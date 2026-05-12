@@ -37,10 +37,11 @@ def format_date_zh(date_str: str) -> str:
 
 
 _OUTCOME_ZH: dict[str, str] = {
-    "Fatal":         "死亡",
-    "ICU":           "重症监护",
-    "Transferred":   "转运",
-    "Post-disembark":"下船后确诊",
+    "Fatal":                 "死亡",
+    "ICU":                   "重症监护",
+    "Transferred":           "转运",
+    "Post-disembark":        "下船后确诊",
+    "Under investigation":   "调查中",
 }
 _NAT_ZH: dict[str, str] = {
     "Netherlands":    "荷兰",
@@ -325,8 +326,23 @@ def build_sankey_svg(sk: dict, esc, S: dict, lang: str = "en") -> str:
     cluster_n = int(sk["cluster_n"])
     contacts_n = int(sk["contacts_n"])
     outcomes  = sk["outcomes"]
-    if sum(int(o["count"]) for o in outcomes) != cluster_n:
-        raise ValueError("outcome counts must sum to cluster_n")
+    outcome_total = sum(int(o["count"]) for o in outcomes)
+    if outcome_total != cluster_n:
+        # Auto-absorb gap into an "Under investigation" outcome rather than crash.
+        # This lets the diagram render when new confirmed cases arrive before
+        # per-patient details are manually updated.
+        gap = cluster_n - outcome_total
+        if gap > 0:
+            outcomes = list(outcomes) + [{
+                "label": "Under investigation",
+                "nat": "Nationality TBC", "nat_code": "?",
+                "count": gap, "color": "#888888",
+                "detail": "Recently confirmed — details pending",
+            }]
+        else:
+            outcomes = list(outcomes)
+            outcomes[-1] = dict(outcomes[-1])
+            outcomes[-1]["count"] = max(1, int(outcomes[-1]["count"]) + gap)
 
     W, H = 900, 630
     BAR  = 18

@@ -1,8 +1,8 @@
 {
   "label": "Hantavirus-associated cluster on Dutch-flag cruise ship MV Hondius (2026)",
   "label_zh": "荷兰籍游轮MV Hondius汉坦病毒相关群聚事件（2026年）",
-  "deck": "Multi-country outbreak. WHO DON599 issued 4 May 2026; ECDC Rapid Scientific Advice published 9 May 2026. All 147 aboard classified as high-risk contacts (42-day monitoring, Day 0 = 6 May). Ship arrives Tenerife 10 May; repatriation flights arranged by 7+ nations. WHO Director-General Tedros flew to Spain 9 May to oversee evacuation.",
-  "deck_zh": "多国疫情。世卫组织DON599于5月4日发布；欧洲疾控中心快速科学建议于5月9日发布。147名在船人员均被列为高风险接触者（42天监测，第0天=5月6日）。船预计5月10日抵达特内里费；7个以上国家已安排遣返航班。世卫组织总干事谭德塞于5月9日飞赴西班牙主持遣返工作。",
+  "deck": "Multi-country outbreak. As of 11 May: 9 cases (7 confirmed, 2 probable), 3 deaths. MV Hondius arrived Tenerife 10 May; full repatriation complete 11 May (94 people, 19 nationalities). Ship sails for Rotterdam decontamination. All 147 aboard under 42-day monitoring (Day 0 = 6 May 2026).",
+  "deck_zh": "多国疫情。截至5月11日：9例（7例确认，2例可能），3例死亡。MV Hondius于5月10日抵达特内里费；5月11日完成全部遣返（94人，19个国籍）。船启航前往鹿特丹进行去污消杀。全部147名在船人员接受42天监测（第0天=2026年5月6日）。",
   "primary_source": {
     "name": "WHO DON599 — Hantavirus cluster, multi-country (4 May 2026)",
     "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON599"
@@ -20,8 +20,8 @@
     "itinerary_zh": "乌斯怀亚 → 南极洲 → 南乔治亚岛 → 南丁格尔岛 → 特里斯坦-达库尼亚 → 圣赫勒拿岛 → 阿森松岛 → 佛得角 → 加那利群岛（西班牙）。",
     "persons_aboard": "147 total: 88 passengers + 59 crew; 23 nationalities (EU/EEA countries include BE, DE, ES, FR, GR, IE, NL, PL, PT).",
     "persons_aboard_zh": "共147人：88名乘客 + 59名船员；23个国籍（欧盟/欧洲经济区国家包括BE、DE、ES、FR、GR、IE、NL、PL、PT）。",
-    "counts_as_of_7_may": "8 cases total; 6 confirmed (PCR/serology); 2 probable; as of 09 May 2026; 3 deaths",
-    "counts_as_of_7_may_zh": "共8例；截至2026年5月9日6例确认（PCR/血清学）+2例可能；3例死亡",
+    "counts_as_of_7_may": "9 cases total; 7 confirmed (PCR/serology); 2 probable; as of 12 May 2026; 3 deaths",
+    "counts_as_of_7_may_zh": "共9例；截至2026年5月12日7例确认（PCR/血清学）+2例可能；3例死亡",
     "laboratory": "ANDV confirmed by PCR/serology in 6 of 8 cases as of 9 May. Cases 3, 2, 5 confirmed earlier (NICD, Netherlands, Switzerland labs). Serology, sequencing and metagenomics ongoing at Institut Pasteur de Dakar. Argentina's Tierra del Fuego epidemiology director: 'almost zero' probability of Ushuaia zoonotic acquisition.",
     "laboratory_zh": "截至5月9日，8例中6例经PCR/血清学确认为ANDV。第3、2、5号病例此前分别由NICD、荷兰、瑞士实验室确认。血清学、测序及宏基因组学检测在达喀尔巴斯德研究所进行中。阿根廷火地岛流行病学主任表示：乌斯怀亚人畜共患感染概率「几乎为零」。",
     "index_cases": "Cases 1 and 2 (Dutch couple) had travelled through Argentina, Chile, and Uruguay for ~4 months before boarding — believed primary zoonotic exposure pre-embarkation.",
@@ -83,6 +83,18 @@
       "event_zh": "欧洲疾控中心评估报告发布。瑞士男性（5号病例）PCR确认。船前往加那利群岛。"
     },
     {
+      "date": "6 may 2026",
+      "event": "ECDC assessment: Hantavirus-associated cluster of illness on a cruise ship: ECDC assessment and recommendations",
+      "event_zh": "欧洲疾控中心评估报告：Hantavirus-associated cluster of illness on a cruise ship: ECDC assessment and r",
+      "_source": "auto-ecdc"
+    },
+    {
+      "date": "6 may 2026",
+      "event": "ECDC press release: Cruise ship hantavirus outbreak: ECDC response activated",
+      "event_zh": "欧洲疾控中心新闻稿：Cruise ship hantavirus outbreak: ECDC response activated",
+      "_source": "auto-ecdc"
+    },
+    {
       "date": "7 May 2026",
       "event": "5 of 8 suspected cases confirmed (WHO briefing). 3 symptomatic passengers transferred to Spain for care.",
       "event_zh": "8例疑似病例中5例确认（世卫组织简报）。3名有症状乘客转运至西班牙接受治疗。"
@@ -93,9 +105,43 @@
       "event_zh": "世卫组织确认8例中6例已获实验室确认（PCR/血清学）；船上0例疑似病例。美国疾控中心安排遣返航班：奥马哈奥富特空军基地→内布拉斯加大学医学中心国家检疫隔离单元。阿根廷火地岛流行病学主任表示指示病例在乌斯怀亚感染ANDV的概率「几乎为零」。"
     },
     {
+      "date": "8 may 2026",
+      "event": "WHO Emergency Event page updated (8 may 2026).",
+      "event_zh": "世卫组织突发事件页面更新（8 may 2026）。",
+      "_source": "auto-who"
+    },
+    {
       "date": "9 May 2026",
       "event": "ECDC publishes Rapid Scientific Advice: all 147 aboard classified as high-risk contacts; 42-day quarantine/monitoring (Day 0 = 6 May 2026). Updated totals: 6 confirmed + 2 probable, 0 suspected. WHO Director-General Tedros flies to Spain; meets PM Sánchez and accompanies health/interior ministers to Tenerife command post. Repatriation flights arranged by Germany, France, Belgium, Ireland, Netherlands, US, and UK. Ship (MV Hondius) expected to arrive Granadilla, Tenerife, 10 May.",
       "event_zh": "欧洲疾控中心发布快速科学建议：147名在船人员均被列为高风险接触者；42天检疫/监测（第0天=2026年5月6日）。最新数据：6例确认+2例可能，0例疑似。世卫组织总干事谭德塞飞赴西班牙，与首相桑切斯会面，并陪同卫生/内政部长赶赴特内里费指挥中心。德国、法国、比利时、爱尔兰、荷兰、美国、英国安排遣返航班。MV Hondius预计5月10日抵达特内里费格拉纳迪利亚港。"
+    },
+    {
+      "date": "9 may 2026",
+      "event": "ECDC news: ECDC publishes guidance for the management of passengers linked to the Andes hantavirus outbreak on cruise ship",
+      "event_zh": "欧洲疾控中心消息：ECDC publishes guidance for the management of passengers linked to the Andes han",
+      "_source": "auto-ecdc"
+    },
+    {
+      "date": "9 may 2026",
+      "event": "ECDC assessment: Rapid Scientific Advice on the management of passengers - In the context of the Andes virus outbreak on the cruise ship MV Hondius",
+      "event_zh": "欧洲疾控中心评估报告：Rapid Scientific Advice on the management of passengers - In the context of the ",
+      "_source": "auto-ecdc"
+    },
+    {
+      "date": "10 May 2026",
+      "event": "MV Hondius arrives Granadilla, Tenerife (Canary Islands). First passengers disembark under medical escort; Spanish nationals evacuated first. WHO DG Tedros on site.",
+      "event_zh": "MV Hondius抵达特内里费格拉纳迪利亚港（加那利群岛）。首批乘客在医疗人员陪同下下船；西班牙籍乘客优先疏散。世卫组织总干事谭德塞在场。"
+    },
+    {
+      "date": "11 May 2026",
+      "event": "ECDC update: 9 total cases (7 confirmed + 2 probable + 0 suspected); 3 deaths. Full disembarkation complete: 94 people from 19 nationalities repatriated over 2 days. Final 6 passengers (4 Australians, 1 British-Australian, 1 New Zealander) + 19 crew + 2 doctors disembark. Repatriation flights to Netherlands (18 pax), Australia, US (Offutt AFB → Univ. Nebraska), France, UK, Spain (Madrid military hospital quarantine), others. MV Hondius sails for Rotterdam with ~25 crew for full decontamination. ECDC press release: 'ECDC continues working on the frontline to support EU Member States.'",
+      "event_zh": "欧洲疾控中心更新：共9例（7例确认+2例可能+0例疑似）；3例死亡。全部下船完成：94人（19个国籍）在两天内完成遣返。最后6名乘客（4名澳大利亚人、1名旅居澳洲的英国人、1名新西兰人）+19名船员+2名医生下船。遣返航班飞往荷兰（18人）、澳大利亚、美国（奥富特空军基地→内布拉斯加大学）、法国、英国、西班牙（马德里军事医院隔离）等地。MV Hondius携约25名船员启航前往鹿特丹进行全面去污消杀。欧洲疾控中心新闻稿：「欧洲疾控中心继续在一线支持欧盟成员国」。"
+    },
+    {
+      "date": "11 may 2026",
+      "event": "ECDC press release: Andes hantavirus outbreak: ECDC continues working on the frontline to support EU Member States",
+      "event_zh": "欧洲疾控中心新闻稿：Andes hantavirus outbreak: ECDC continues working on the frontline to support EU",
+      "_source": "auto-ecdc"
     }
   ],
   "sankey": {
@@ -105,9 +151,9 @@
     "passengers_n": 88,
     "crew_n": 59,
     "nationalities_note": "23 nationalities: NL · GB · DE · CH · ES · BE · FR · GR · IE · PL · PT + 12 others",
-    "cluster_n": 8,
-    "confirmed_n": 6,
-    "contacts_n": 139,
+    "cluster_n": 9,
+    "confirmed_n": 7,
+    "contacts_n": 138,
     "values_head": [
       139,
       8,
@@ -265,6 +311,17 @@
       "source": "ECDC surveillance page",
       "parsed": {
         "confirmed": 6,
+        "probable": 2,
+        "suspected": 0,
+        "deaths": 3
+      },
+      "data_changed": true
+    },
+    {
+      "fetched_at": "2026-05-12 00:54 UTC",
+      "source": "ECDC surveillance page",
+      "parsed": {
+        "confirmed": 7,
         "probable": 2,
         "suspected": 0,
         "deaths": 3
