@@ -291,6 +291,17 @@
         "deaths": 3
       },
       "data_changed": true
+    },
+    {
+      "fetched_at": "2026-05-12 10:21 UTC",
+      "source": "ECDC surveillance page",
+      "parsed": {
+        "confirmed": 7,
+        "probable": 2,
+        "suspected": 0,
+        "deaths": 3
+      },
+      "data_changed": false
     }
   ]
 }
