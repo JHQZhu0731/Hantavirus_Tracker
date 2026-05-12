@@ -1468,7 +1468,8 @@ def main() -> None:
         <li><a href="https://www.ecdc.europa.eu/en/publications-data/rapid-scientific-advice-management-passengers-context-andes-virus-outbreak-cruise">ECDC Rapid Scientific Advice &mdash; passenger management (9 May 2026)</a></li>
         <li><a href="https://www.ecdc.europa.eu/en/publications-data/hantavirus-associated-cluster-illness-cruise-ship-ecdc-assessment-and">ECDC &mdash; Cruise ship cluster assessment (6 May 2026)</a></li>
         <li><a href="https://www.ecdc.europa.eu/en/infectious-disease-topics/hantavirus-infection/surveillance-and-updates/questions-answers-outbreak">ECDC &mdash; Q&amp;A on the hantavirus cruise ship outbreak</a></li>
-        <li><a href="https://www.cdc.gov/hantavirus/hps/index.html">CDC &mdash; HPS overview &amp; US repatriation response</a></li>
+        <li><a href="https://www.cdc.gov/hantavirus/situation-summary/index.html">CDC &mdash; Hantavirus current situation &amp; US repatriation response</a></li>
+        <li><a href="https://www.cdc.gov/hantavirus/faq/index.html">CDC &mdash; Andes virus cruise ship outbreak FAQ</a></li>
         <li><a href="https://www.ecdc.europa.eu/en/infectious-disease-topics/hantavirus-infection">ECDC &mdash; Hantavirus factsheet</a></li>
         <li><a href="https://www.who.int/emergencies/disease-outbreak-news">WHO &mdash; Disease Outbreak News (all)</a></li>
         <li><a href="https://www.paho.org/en/topics/hantavirus">PAHO &mdash; Hantavirus Americas</a></li>

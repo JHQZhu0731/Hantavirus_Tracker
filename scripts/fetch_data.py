@@ -284,6 +284,24 @@ def _make_timeline_entry(
     }
 
 
+# ECDC press release titles that are purely organizational / administrative
+# (describe ECDC's own activities rather than new clinical/epidemiological facts)
+# — these are skipped when auto-populating the timeline.
+_SKIP_TITLE_PHRASES: list[str] = [
+    "continues working on the frontline",
+    "response activated",
+    "ecdc response",
+    "working on the frontline",
+    "ecdc continues",
+]
+
+
+def _is_org_only(title: str) -> bool:
+    """Return True if the ECDC news title is purely organizational noise."""
+    t = title.lower()
+    return any(phrase in t for phrase in _SKIP_TITLE_PHRASES)
+
+
 def update_timeline(
     ecdc_news: list[dict],
     who_info: dict | None,
@@ -291,19 +309,24 @@ def update_timeline(
 ) -> bool:
     """
     Add new timeline entries derived from ECDC news items, WHO updates, and
-    count changes.  Deduplicates against existing entries (by date + first
-    40 chars of event text).  Returns True if the timeline was changed.
+    count changes.
+
+    Rules to avoid noise / duplication:
+    1. Skip any auto-entry whose date already has ONE OR MORE existing entries
+       (manual or auto). Manual entries are authoritative for their date.
+    2. Skip ECDC items whose titles are purely organizational (see _SKIP_TITLE_PHRASES).
+    3. WHO page-update entries are never added — they duplicate count-change entries.
+    4. Count-change entries are only added on dates with no existing entry.
     """
     with CRUISE_PATH.open(encoding="utf-8") as f:
         data = json.load(f)
 
     timeline: list[dict] = data.get("timeline", [])
 
-    # Build dedup set: (date_iso, event_text[:40])
-    existing: set[tuple[str, str]] = {
-        (_to_iso(e["date"]), e["event"][:40]) for e in timeline
-    }
-    # Also a set of dates with auto-generated count entries to avoid duplicates
+    # Set of ISO dates that already have at least one entry
+    occupied_dates: set[str] = {_to_iso(e["date"]) for e in timeline}
+
+    # Set of ISO dates that already have an auto-count entry
     auto_count_dates: set[str] = {
         _to_iso(e["date"])
         for e in timeline
@@ -312,37 +335,32 @@ def update_timeline(
 
     new_entries: list[dict] = []
 
-    # 1. ECDC news items
+    # 1. ECDC news items — only for dates with NO existing entry
     for item in ecdc_news:
-        doc_zh = _DOC_TYPE_ZH.get(item["doc_type"], item["doc_type"])
-        org    = "欧洲疾控中心"
-        event  = f"ECDC {item['doc_type'].lower()}: {item['title']}"
-        event_zh = f"{org}{doc_zh}：{item['title'][:80]}"
-        key    = (item["date_iso"], event[:40])
-        if key not in existing:
-            new_entries.append(_make_timeline_entry(item["date"], event, event_zh, "auto-ecdc"))
-            existing.add(key)
+        if item["date_iso"] in occupied_dates:
+            continue  # date already covered by a (manual) entry
+        if _is_org_only(item["title"]):
+            continue  # purely organizational press release — skip
+        doc_zh   = _DOC_TYPE_ZH.get(item["doc_type"], item["doc_type"])
+        event    = f"ECDC {item['doc_type'].lower()}: {item['title']}"
+        event_zh = f"欧洲疾控中心{doc_zh}：{item['title'][:80]}"
+        new_entries.append(_make_timeline_entry(item["date"], event, event_zh, "auto-ecdc"))
+        occupied_dates.add(item["date_iso"])  # claim this date
 
-    # 2. Count-change entry (only one per date, only if counts actually changed)
-    if count_event and count_event["date_iso"] not in auto_count_dates:
-        new_entries.append(count_event)
-        auto_count_dates.add(count_event["date_iso"])
+    # 2. Count-change entry — only on dates not yet occupied
+    if count_event:
+        iso = count_event.get("date_iso") or _to_iso(count_event["date"])
+        if iso not in occupied_dates and iso not in auto_count_dates:
+            new_entries.append(count_event)
+            occupied_dates.add(iso)
+            auto_count_dates.add(iso)
 
-    # 3. WHO update (if it carries a new date)
-    if who_info:
-        who_event    = who_info["summary"]
-        who_event_zh = f"世卫组织突发事件页面更新（{who_info['date']}）。"
-        key = (who_info["date_iso"], who_event[:40])
-        if key not in existing and who_info["date_iso"] > _to_iso("7 May 2026"):
-            new_entries.append(
-                _make_timeline_entry(who_info["date"], who_event, who_event_zh, "auto-who")
-            )
-            existing.add(key)
+    # 3. WHO updates — skip entirely (they only duplicate count-change entries)
 
     if not new_entries:
         return False
 
-    # Merge + sort by date
+    # Merge + sort chronologically
     all_entries = timeline + new_entries
     all_entries.sort(key=lambda e: _to_iso(e["date"]))
     data["timeline"] = all_entries
