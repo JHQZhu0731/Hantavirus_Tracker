@@ -20,8 +20,8 @@
     "itinerary_zh": "乌斯怀亚 → 南极洲 → 南乔治亚岛 → 南丁格尔岛 → 特里斯坦-达库尼亚 → 圣赫勒拿岛 → 阿森松岛 → 佛得角 → 加那利群岛（西班牙）。",
     "persons_aboard": "147 total: 88 passengers + 59 crew; 23 nationalities (EU/EEA countries include BE, DE, ES, FR, GR, IE, NL, PL, PT).",
     "persons_aboard_zh": "共147人：88名乘客 + 59名船员；23个国籍（欧盟/欧洲经济区国家包括BE、DE、ES、FR、GR、IE、NL、PL、PT）。",
-    "counts_as_of_7_may": "11 cases total; 9 confirmed (PCR/serology); 2 probable; as of 13 May 2026; 3 deaths",
-    "counts_as_of_7_may_zh": "共11例；截至2026年5月13日9例确认（PCR/血清学）+2例可能；3例死亡",
+    "counts_as_of_7_may": "10 cases total; 8 confirmed (PCR/serology); 2 probable; as of 14 May 2026; 3 deaths",
+    "counts_as_of_7_may_zh": "共10例；截至2026年5月14日8例确认（PCR/血清学）+2例可能；3例死亡",
     "laboratory": "ANDV confirmed by PCR/serology in 6 of 8 cases as of 9 May. Cases 3, 2, 5 confirmed earlier (NICD, Netherlands, Switzerland labs). Serology, sequencing and metagenomics ongoing at Institut Pasteur de Dakar. Argentina's Tierra del Fuego epidemiology director: 'almost zero' probability of Ushuaia zoonotic acquisition.",
     "laboratory_zh": "截至5月9日，8例中6例经PCR/血清学确认为ANDV。第3、2、5号病例此前分别由NICD、荷兰、瑞士实验室确认。血清学、测序及宏基因组学检测在达喀尔巴斯德研究所进行中。阿根廷火地岛流行病学主任表示：乌斯怀亚人畜共患感染概率「几乎为零」。",
     "index_cases": "Cases 1 and 2 (Dutch couple) had travelled through Argentina, Chile, and Uruguay for ~4 months before boarding — believed primary zoonotic exposure pre-embarkation.",
@@ -112,6 +112,12 @@
       "event": "ECDC daily update (13 May 2026): 9 confirmed + 2 probable = 11 total cases; 3 deaths (was 7 confirmed + 2 probable)",
       "event_zh": "欧洲疾控中心每日更新（2026年5月13日）：9例确认+2例可能=共11例；3例死亡",
       "_source": "auto-count"
+    },
+    {
+      "date": "14 May 2026",
+      "event": "ECDC daily update (14 May 2026): 8 confirmed + 2 probable = 10 total cases; 3 deaths (was 9 confirmed + 2 probable)",
+      "event_zh": "欧洲疾控中心每日更新（2026年5月14日）：8例确认+2例可能=共10例；3例死亡",
+      "_source": "auto-count"
     }
   ],
   "sankey": {
@@ -121,9 +127,9 @@
     "passengers_n": 88,
     "crew_n": 59,
     "nationalities_note": "23 nationalities: NL · GB · DE · CH · ES · BE · FR · GR · IE · PL · PT + 12 others",
-    "cluster_n": 11,
-    "confirmed_n": 9,
-    "contacts_n": 136,
+    "cluster_n": 10,
+    "confirmed_n": 8,
+    "contacts_n": 137,
     "values_head": [
       139,
       8,
@@ -314,6 +320,17 @@
       "source": "ECDC surveillance page",
       "parsed": {
         "confirmed": 9,
+        "probable": 2,
+        "suspected": 0,
+        "deaths": 3
+      },
+      "data_changed": true
+    },
+    {
+      "fetched_at": "2026-05-14 10:03 UTC",
+      "source": "ECDC surveillance page",
+      "parsed": {
+        "confirmed": 8,
         "probable": 2,
         "suspected": 0,
         "deaths": 3
