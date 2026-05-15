@@ -151,7 +151,8 @@
         "label_zh": "死亡",
         "count": 3,
         "color": "#c0392b",
-        "detail": "3 deaths (1 aboard ship; 2 after evacuation to Johannesburg/aboard)"
+        "detail": "3 deaths (1 aboard ship; 2 after evacuation to Johannesburg/aboard)",
+        "is_death": true
       },
       {
         "label": "ICU / Critical",
