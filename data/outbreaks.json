@@ -13,9 +13,9 @@
       "lat": -18.0,
       "lng": -20.0,
       "year": 2026,
-      "cases": 10,
+      "cases": 11,
       "deaths": 3,
-      "virus": "Andes virus (ANDV) — PCR confirmed in 7 of 9 as of 11 May",
+      "virus": "PCR confirmed in 8 of 11 as of 15 May",
       "transmission_note": "Index cases (Dutch couple) had zoonotic exposure in South America pre-embarkation; subsequent limited person-to-person transmission aboard closed vessel. WHO DON599 (4 May 2026).",
       "source_name": "WHO DON599 — multi-country cluster (4–7 May 2026)",
       "source_url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON599"

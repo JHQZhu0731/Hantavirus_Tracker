@@ -125,25 +125,36 @@ def _today_display_zh() -> str:
 
 def parse_ecdc_counts(html: str) -> dict[str, int] | None:
     """
-    Extract confirmed / probable / suspected / deaths from the ECDC page.
-    Tries two regex variants to handle minor page restructures.
+    Extract confirmed / probable / suspected / inconclusive / deaths from the ECDC page.
+
+    The ECDC page uses labels like "Confirmed cases*** 8" where the asterisks are
+    wrapped in <sup> tags that get stripped.  After stripping, the text reads
+    "Confirmed cases  8".  Patterns are written to handle both the raw asterisk
+    form and the stripped-whitespace form.
     """
     plain = _strip_tags(html)
+    # Normalise multiple whitespace to single space for easier matching
+    plain = re.sub(r"[ \t]{2,}", " ", plain)
+
     patterns: dict[str, list[str]] = {
         "confirmed": [
-            r"Confirmed\s+cases\*+\s+(\d+)",
-            r"(\d+)\s+Confirmed",
+            r"Confirmed\s+cases[\s*]+(\d+)",   # after tag-strip: "Confirmed cases  8"
+            r"(\d+)\s+Confirmed\b",
         ],
         "probable": [
-            r"Probable\s+cases\*+\s+(\d+)",
-            r"(\d+)\s+Probable",
+            r"Probable\s+cases[\s*]+(\d+)",
+            r"(\d+)\s+Probable\b",
         ],
         "suspected": [
-            r"Suspected\s+cases\*+\s+(\d+)",
-            r"(\d+)\s+Suspected",
+            r"Suspected\s+cases[\s*]+(\d+)",
+            r"(\d+)\s+Suspected\b",
+        ],
+        "inconclusive": [
+            r"Inconclusive\s+cases[\s*]+(\d+)",
+            r"(\d+)\s+Inconclusive\b",
         ],
         "deaths": [
-            r"Number\s+of\s+deaths\s+(\d+)",
+            r"Number\s+of\s+deaths[\s*]+(\d+)",
             r"(\d+)\s+deaths?\b",
         ],
     }
@@ -154,7 +165,8 @@ def parse_ecdc_counts(html: str) -> dict[str, int] | None:
             if m:
                 results[key] = int(m.group(1))
                 break
-    return results if len(results) >= 3 else None
+    # Need at least confirmed + deaths to be useful
+    return results if ("confirmed" in results and "deaths" in results) else None
 
 
 def parse_ecdc_news_items(html: str) -> list[dict]:
@@ -386,11 +398,12 @@ def update_cruise_counts(counts: dict[str, int]) -> tuple[bool, dict | None]:
     snap = data.setdefault("situation_snapshot", {})
     changed = False
 
-    confirmed = counts.get("confirmed", int(sk.get("confirmed_n", 0)))
-    probable  = counts.get("probable",  0)
-    suspected = counts.get("suspected", 0)
-    deaths    = counts.get("deaths",    0)
-    total     = confirmed + probable + suspected
+    confirmed    = counts.get("confirmed",    int(sk.get("confirmed_n", 0)))
+    probable     = counts.get("probable",     0)
+    suspected    = counts.get("suspected",    0)
+    inconclusive = counts.get("inconclusive", 0)
+    deaths       = counts.get("deaths",       0)
+    total        = confirmed + probable + suspected + inconclusive
     ship_n    = int(sk.get("ship_n", 147))
     old_total = int(sk.get("cluster_n", 0))
     old_conf  = int(sk.get("confirmed_n", 0))
@@ -412,13 +425,15 @@ def update_cruise_counts(counts: dict[str, int]) -> tuple[bool, dict | None]:
         event = (
             f"ECDC daily update ({date_str}): {confirmed} confirmed + {probable} probable"
             + (f" + {suspected} suspected" if suspected else "")
+            + (f" + {inconclusive} inconclusive" if inconclusive else "")
             + f" = {total} total cases; {deaths} deaths"
-            + (f" (was {old_conf} confirmed + {old_total - old_conf} probable)" if old_total else "")
+            + (f" (was {old_conf} confirmed + {old_total - old_conf} probable/suspected)" if old_total else "")
         )
         event_zh = (
             f"欧洲疾控中心每日更新（{_today_display_zh()}）："
             f"{confirmed}例确认+{probable}例可能"
             + (f"+{suspected}例疑似" if suspected else "")
+            + (f"+{inconclusive}例待定" if inconclusive else "")
             + f"=共{total}例；{deaths}例死亡"
         )
         count_event = _make_timeline_entry(date_str, event, event_zh, "auto-count")

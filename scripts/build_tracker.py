@@ -37,11 +37,15 @@ def format_date_zh(date_str: str) -> str:
 
 
 _OUTCOME_ZH: dict[str, str] = {
-    "Fatal":                 "死亡",
-    "ICU":                   "重症监护",
-    "Transferred":           "转运",
-    "Post-disembark":        "下船后确诊",
-    "Under investigation":   "调查中",
+    "Fatal":                            "死亡",
+    "ICU":                              "重症监护",
+    "ICU / Critical":                   "重症监护/危重",
+    "Transferred":                      "转运",
+    "Transferred / Recovering":         "转运/康复中",
+    "Post-disembark":                   "下船后确诊",
+    "Post-disembark / Monitoring":      "下船后/监测中",
+    "Inconclusive / Under investigation": "待定/调查中",
+    "Under investigation":              "调查中",
 }
 _NAT_ZH: dict[str, str] = {
     "Netherlands":    "荷兰",

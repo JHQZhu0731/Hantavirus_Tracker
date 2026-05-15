@@ -20,8 +20,8 @@
     "itinerary_zh": "乌斯怀亚 → 南极洲 → 南乔治亚岛 → 南丁格尔岛 → 特里斯坦-达库尼亚 → 圣赫勒拿岛 → 阿森松岛 → 佛得角 → 加那利群岛（西班牙）。",
     "persons_aboard": "147 total: 88 passengers + 59 crew; 23 nationalities (EU/EEA countries include BE, DE, ES, FR, GR, IE, NL, PL, PT).",
     "persons_aboard_zh": "共147人：88名乘客 + 59名船员；23个国籍（欧盟/欧洲经济区国家包括BE、DE、ES、FR、GR、IE、NL、PL、PT）。",
-    "counts_as_of_7_may": "10 cases total; 8 confirmed (PCR/serology); 2 probable; as of 15 May 2026; 3 deaths",
-    "counts_as_of_7_may_zh": "共10例；截至2026年5月15日8例确认（PCR/血清学）+2例可能；3例死亡",
+    "counts_as_of_7_may": "11 cases total; 8 confirmed (PCR/serology), 2 probable, 1 inconclusive; as of 15 May 2026; 3 deaths",
+    "counts_as_of_7_may_zh": "共11例；截至2026年5月15日：8例确认（PCR/血清学）+2例可能+1例待定；3例死亡",
     "laboratory": "ANDV confirmed by PCR/serology in 6 of 8 cases as of 9 May. Cases 3, 2, 5 confirmed earlier (NICD, Netherlands, Switzerland labs). Serology, sequencing and metagenomics ongoing at Institut Pasteur de Dakar. Argentina's Tierra del Fuego epidemiology director: 'almost zero' probability of Ushuaia zoonotic acquisition.",
     "laboratory_zh": "截至5月9日，8例中6例经PCR/血清学确认为ANDV。第3、2、5号病例此前分别由NICD、荷兰、瑞士实验室确认。血清学、测序及宏基因组学检测在达喀尔巴斯德研究所进行中。阿根廷火地岛流行病学主任表示：乌斯怀亚人畜共患感染概率「几乎为零」。",
     "index_cases": "Cases 1 and 2 (Dutch couple) had travelled through Argentina, Chile, and Uruguay for ~4 months before boarding — believed primary zoonotic exposure pre-embarkation.",
@@ -108,16 +108,24 @@
       "event_zh": "欧洲疾控中心更新：共9例（7例确认+2例可能），3例死亡。美国方面：18名乘客在内布拉斯加大学医学中心接受评估——1人轻度阳性（无症状，生物隔离中）、15人在国家检疫隔离单元、2名有症状者转至埃默里大学（亚特兰大）生物隔离病房。全部下船完成：94人（19个国籍）完成遣返。MV Hondius携约25名船员启航前往鹿特丹进行全面去污消杀。美国疾控中心：此次疫情尚无在美确诊病例；对美国公众的风险极低。"
     },
     {
+      "date": "12 May 2026",
+      "event": "New confirmed case: France — female passenger in her 60s (comorbidities) developed acute symptoms on return flight, admitted to ICU with severe lung and heart failure. New confirmed case: Spain — former passenger confirmed positive. Both were MV Hondius passengers.",
+      "event_zh": "新增确认病例：法国——一名60多岁女性乘客（有基础疾病），在返程航班上出现急性症状，因严重肺部和心脏衰竭入住重症监护室。新增确认病例：西班牙——一名前乘客确认阳性。二者均为MV Hondius乘客。"
+    },
+    {
       "date": "13 May 2026",
-      "event": "ECDC daily update (13 May 2026): 9 confirmed + 2 probable = 11 total cases; 3 deaths (was 7 confirmed + 2 probable)",
-      "event_zh": "欧洲疾控中心每日更新（2026年5月13日）：9例确认+2例可能=共11例；3例死亡",
-      "_source": "auto-count"
+      "event": "WHO DON601 published: 11 total cases (8 confirmed, 2 probable, 1 inconclusive), 3 deaths, 27% case-fatality ratio. Since DON599 (8 May): 2 new confirmed (France, Spain) + 1 inconclusive (US, Nebraska Medicine). Working hypothesis confirms onboard human-to-human transmission supported by near-identical genetic sequences. Global risk assessed as low.",
+      "event_zh": "世卫组织DON601发布：共11例（8例确认、2例可能、1例待定），3例死亡，病死率27%。自DON599（5月8日）起新增：2例确认（法国、西班牙）+1例待定（美国，内布拉斯加州医疗机构）。工作假设确认船上人传人，基因序列高度相似佐证。全球风险评估为低。"
     },
     {
       "date": "14 May 2026",
-      "event": "ECDC daily update (14 May 2026): 8 confirmed + 2 probable = 10 total cases; 3 deaths (was 9 confirmed + 2 probable)",
-      "event_zh": "欧洲疾控中心每日更新（2026年5月14日）：8例确认+2例可能=共10例；3例死亡",
-      "_source": "auto-count"
+      "event": "ECDC publishes 'Advice on laboratory testing of Andes virus (ANDV) for high-risk contacts under the MV Hondius outbreak.' ECDC press conference held on management of contacts.",
+      "event_zh": "欧洲疾控中心发布《MV Hondius疫情高危接触者安第斯病毒实验室检测建议》。欧洲疾控中心就接触者管理召开新闻发布会。"
+    },
+    {
+      "date": "15 May 2026",
+      "event": "ECDC update: no new cases or deaths since previous update. Total remains 11 (8 confirmed, 2 probable, 1 inconclusive), 3 deaths. All 147 former passengers/crew continue 42-day monitoring. Risk to EU/EEA general population very low.",
+      "event_zh": "欧洲疾控中心更新：自上次更新以来无新增病例或死亡。合计仍为11例（8例确认、2例可能、1例待定），3例死亡。147名前乘客/船员继续接受42天监测。欧盟/欧经区普通人群风险极低。"
     }
   ],
   "sankey": {
@@ -127,9 +135,9 @@
     "passengers_n": 88,
     "crew_n": 59,
     "nationalities_note": "23 nationalities: NL · GB · DE · CH · ES · BE · FR · GR · IE · PL · PT + 12 others",
-    "cluster_n": 10,
+    "cluster_n": 11,
     "confirmed_n": 8,
-    "contacts_n": 137,
+    "contacts_n": 136,
     "values_head": [
       139,
       8,
@@ -140,45 +148,38 @@
     "outcomes": [
       {
         "label": "Fatal",
-        "nat": "Netherlands",
-        "nat_code": "NL",
-        "count": 2,
-        "color": "#1565C0",
-        "detail": "Dutch couple — index cases",
-        "is_death": true
-      },
-      {
-        "label": "Fatal",
-        "nat": "Germany",
-        "nat_code": "DE",
-        "count": 1,
-        "color": "#E65100",
-        "detail": "Died on board, 2 May 2026",
-        "is_death": true
-      },
-      {
-        "label": "ICU",
-        "nat": "United Kingdom",
-        "nat_code": "GB",
-        "count": 1,
-        "color": "#0D47A1",
-        "detail": "S. Africa ICU, improving"
-      },
-      {
-        "label": "Transferred",
-        "nat": "Nationality TBC",
-        "nat_code": "?",
+        "label_zh": "死亡",
         "count": 3,
-        "color": "#6A1B9A",
-        "detail": "Canary Islands, Spain"
+        "color": "#c0392b",
+        "detail": "3 deaths (1 aboard ship; 2 after evacuation to Johannesburg/aboard)"
       },
       {
-        "label": "Post-disembark",
-        "nat": "Switzerland",
-        "nat_code": "CH",
+        "label": "ICU / Critical",
+        "label_zh": "重症监护",
+        "count": 2,
+        "color": "#e67e22",
+        "detail": "2 in intensive care: Case 3 (British male) + France case (female, 60s, lung/heart failure)"
+      },
+      {
+        "label": "Transferred / Recovering",
+        "label_zh": "转运/康复中",
+        "count": 3,
+        "color": "#f1c40f",
+        "detail": "3 cases transferred to hospital care (Switzerland, Spain, others)"
+      },
+      {
+        "label": "Post-disembark / Monitoring",
+        "label_zh": "下船后/监测中",
+        "count": 2,
+        "color": "#27ae60",
+        "detail": "Cases identified after disembarkation; under monitoring"
+      },
+      {
+        "label": "Inconclusive / Under investigation",
+        "label_zh": "待定/调查中",
         "count": 1,
-        "color": "#B71C1C",
-        "detail": "Diagnosed post-disembark, 6 May"
+        "color": "#95a5a6",
+        "detail": "1 inconclusive case (US, Nebraska Medicine) — awaiting further lab testing"
       }
     ],
     "prediction_horizon_days": 45,

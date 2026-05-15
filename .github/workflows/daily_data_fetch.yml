@@ -4,24 +4,25 @@ name: Daily data fetch + rebuild
 # What this does
 # ──────────────────────────────────────────────────────────────────────────────
 # 1. Fetches the ECDC Andes hantavirus surveillance page once a day.
-# 2. Parses confirmed / probable / suspected / deaths counts.
+# 2. Parses confirmed / probable / suspected / inconclusive / deaths counts.
 # 3. Updates data/cruise_outbreak_2026.json and data/outbreaks.json if the
 #    numbers changed.
 # 4. Rebuilds index.html AND zh/index.html from the updated data.
-# 5. Commits and pushes all changed files (data + HTML).
+# 5. ALWAYS commits and pushes — the build timestamp in the footer changes on
+#    every run, which keeps this workflow active and lets visitors see the page
+#    was recently checked.
 #
-# This runs at 08:00 UTC (4 AM US East) — after ECDC typically publishes its
-# 14:00 CET daily update from the previous day.  You can also trigger it
-# manually from the GitHub Actions tab.
+# Runs at 14:30 UTC (= 16:30 CET) — 30 min after ECDC publishes its daily
+# update at 14:00 CET.  Also triggerable manually from the GitHub Actions tab.
 # ──────────────────────────────────────────────────────────────────────────────
 
 on:
   schedule:
-    - cron: "0 8 * * *"   # 08:00 UTC daily
-  workflow_dispatch:        # allow manual trigger
+    - cron: "30 14 * * *"   # 14:30 UTC daily (30 min after ECDC publishes)
+  workflow_dispatch:          # allow manual trigger from GitHub Actions tab
 
 permissions:
-  contents: write           # needed to push data files + HTML
+  contents: write             # needed to push data files + HTML
 
 jobs:
   fetch-and-rebuild:
@@ -39,28 +40,26 @@ jobs:
           python-version: "3.11"
 
       # ── Step 1: fetch latest case counts and update JSON ──────────────────
-      - name: Fetch latest data from ECDC
+      - name: Fetch latest data from ECDC + CDC
         run: python3 scripts/fetch_data.py
 
-      # ── Step 2: rebuild both HTML pages from (possibly updated) JSON ──────
+      # ── Step 2: rebuild both HTML pages (always produces new build timestamp)
       - name: Rebuild HTML (English + Chinese)
         run: python3 scripts/build_tracker.py
 
-      # ── Step 3: commit and push everything that changed ───────────────────
-      - name: Commit and push if anything changed
+      # ── Step 3: always commit — timestamp in footer changes every run ─────
+      - name: Commit and push
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          # Stage data files (only if changed) and HTML (always changed — new timestamp)
           git add data/cruise_outbreak_2026.json \
                   data/outbreaks.json \
                   index.html \
                   zh/index.html
 
-          if git diff --cached --quiet; then
-            echo "Nothing changed — no commit needed."
-          else
-            git commit -m "Auto data update $(date -u '+%Y-%m-%d %H:%M UTC')"
-            git push
-            echo "Pushed updated data + HTML to main."
-          fi
+          # Always commit — the build timestamp differs from the previous commit
+          git commit -m "Daily rebuild $(date -u '+%Y-%m-%d') — ECDC checked at $(date -u '+%H:%M UTC')"
+          git push
+          echo "✓ Pushed daily rebuild to main."
