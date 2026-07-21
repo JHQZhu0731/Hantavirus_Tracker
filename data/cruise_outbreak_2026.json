@@ -20,8 +20,8 @@
     "itinerary_zh": "乌斯怀亚 → 南极洲 → 南乔治亚岛 → 南丁格尔岛 → 特里斯坦-达库尼亚 → 圣赫勒拿岛 → 阿森松岛 → 佛得角 → 加那利群岛（西班牙）。",
     "persons_aboard": "147 total: 88 passengers + 59 crew; 23 nationalities (EU/EEA countries include BE, DE, ES, FR, GR, IE, NL, PL, PT).",
     "persons_aboard_zh": "共147人：88名乘客 + 59名船员；23个国籍（欧盟/欧洲经济区国家包括BE、DE、ES、FR、GR、IE、NL、PL、PT）。",
-    "counts_as_of_7_may": "13 cases total; 12 confirmed (PCR/serology); 1 probable; as of 20 Jul 2026; 3 deaths",
-    "counts_as_of_7_may_zh": "共13例；截至2026年7月20日12例确认（PCR/血清学）+1例可能；3例死亡",
+    "counts_as_of_7_may": "13 cases total; 12 confirmed (PCR/serology); 1 probable; as of 21 Jul 2026; 3 deaths",
+    "counts_as_of_7_may_zh": "共13例；截至2026年7月21日12例确认（PCR/血清学）+1例可能；3例死亡",
     "laboratory": "ANDV confirmed by PCR/serology in 6 of 8 cases as of 9 May. Cases 3, 2, 5 confirmed earlier (NICD, Netherlands, Switzerland labs). Serology, sequencing and metagenomics ongoing at Institut Pasteur de Dakar. Argentina's Tierra del Fuego epidemiology director: 'almost zero' probability of Ushuaia zoonotic acquisition.",
     "laboratory_zh": "截至5月9日，8例中6例经PCR/血清学确认为ANDV。第3、2、5号病例此前分别由NICD、荷兰、瑞士实验室确认。血清学、测序及宏基因组学检测在达喀尔巴斯德研究所进行中。阿根廷火地岛流行病学主任表示：乌斯怀亚人畜共患感染概率「几乎为零」。",
     "index_cases": "Cases 1 and 2 (Dutch couple) had travelled through Argentina, Chile, and Uruguay for ~4 months before boarding — believed primary zoonotic exposure pre-embarkation.",
@@ -308,17 +308,6 @@
     }
   ],
   "data_fetch_log": [
-    {
-      "fetched_at": "2026-05-21 17:17 UTC",
-      "source": "ECDC surveillance page",
-      "parsed": {
-        "confirmed": 9,
-        "probable": 2,
-        "suspected": 0,
-        "deaths": 3
-      },
-      "data_changed": true
-    },
     {
       "fetched_at": "2026-05-22 16:41 UTC",
       "source": "ECDC surveillance page",
@@ -959,6 +948,17 @@
     },
     {
       "fetched_at": "2026-07-20 16:09 UTC",
+      "source": "ECDC surveillance page",
+      "parsed": {
+        "confirmed": 12,
+        "probable": 1,
+        "suspected": 0,
+        "deaths": 3
+      },
+      "data_changed": true
+    },
+    {
+      "fetched_at": "2026-07-21 16:04 UTC",
       "source": "ECDC surveillance page",
       "parsed": {
         "confirmed": 12,
