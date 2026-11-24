@@ -309,17 +309,6 @@
   ],
   "data_fetch_log": [
     {
-      "fetched_at": "2026-09-25 18:49 UTC",
-      "source": "ECDC surveillance page",
-      "parsed": {
-        "confirmed": 12,
-        "probable": 1,
-        "suspected": 0,
-        "deaths": 3
-      },
-      "data_changed": true
-    },
-    {
       "fetched_at": "2026-09-26 17:55 UTC",
       "source": "ECDC surveillance page",
       "parsed": {
@@ -967,6 +956,17 @@
         "deaths": 3
       },
       "data_changed": true
+    },
+    {
+      "fetched_at": "2026-11-24 23:35 UTC",
+      "source": "ECDC surveillance page",
+      "parsed": {
+        "confirmed": 12,
+        "probable": 1,
+        "suspected": 0,
+        "deaths": 3
+      },
+      "data_changed": false
     }
   ]
 }
